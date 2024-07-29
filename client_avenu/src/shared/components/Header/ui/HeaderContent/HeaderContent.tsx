@@ -6,7 +6,7 @@ import { Logout } from '@/shared/assets/Logout';
 import HeaderNav from '../HeaderNav/HeaderNav';
 
 
-const HeaderContnent = () => {
+const HeaderContent = () => {
     const t = useTranslations();
     return (
         <header className={styles.header}>
@@ -49,4 +49,4 @@ const HeaderContnent = () => {
     );
 };
 
-export default HeaderContnent;
+export default HeaderContent;

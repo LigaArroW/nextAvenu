@@ -14,6 +14,7 @@ import { Menu } from '@/shared/assets/Menu';
 import { Close } from '@/shared/assets/Close';
 import Portal from '@/shared/components/ModalPortal/ModalPortal';
 import LoginModal from '@/shared/components/Modals/LoginModal';
+import { usePathname } from 'next/navigation';
 
 const HeaderNav = () => {
     const t = useTranslations();
@@ -58,7 +59,8 @@ const HeaderNav = () => {
                         <Link
                             key={link.id}
                             className={`${pathName === link.link_url ? styles.active : ""}`}
-                            href={`${locale}/${link.link_url}`}
+                            href={`/${locale}${link.link_url === "/" ? "" : link.link_url}`}
+                          
                         // onClick={() => handleMobileLinkOnClick(link.id)}
                         >
                             {t(`${link.link}`)}

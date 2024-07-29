@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 // import instance from "@/api/instance/instance";
 import Header from "@/shared/components/Header/Header";
+import Footer from "@/shared/components/Footer/Footer";
 // import Footer from "@/shared/components/Footer/Footer";
 // import ContactUsModal from "@/shared/components/Modals/ContactUsModal";
 // import RegisterModal from "@/shared/components/Modals/RegisterModal";
@@ -25,15 +26,16 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body className="wrapper">
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main>
-            <div id='root'>
+            <div id='root' >
               <div id="modal-portal"></div>
               {children}
             </div>
           </main>
+          <Footer />
           {/* <ContactUsModal /> */}
           {/* <RegisterModal /> */}
           {/* <LoginModal /> */}

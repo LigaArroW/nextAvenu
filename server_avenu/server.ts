@@ -30,7 +30,7 @@ const expressFileupload = require("express-fileupload");
 const path = require("path");
 const bodyParser = require("body-parser");
 const http = require("http");
-
+const fs = require("fs");
 //const port = 3000;
 const port = 8001;
 
@@ -181,6 +181,20 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use("/static", express.static(path.join(__dirname, "/static")));
 app.use("/locales", express.static(path.join(__dirname, "/locales")));
 
+app.get('/api/photos/:photo', (req, res) => {
+  const name = req.params.photo;
+  const folderPath = path.join(__dirname, '/uploads/media/photos');
+  const files = fs.readdirSync(folderPath);
+
+  const photo = files.find(file => file === name);
+  if (!photo) {
+    res.status(404).send('Photo not found');
+  } else {
+    // console.log('Photo found:', photo);
+    
+    res.sendFile(path.join(folderPath, photo));
+  }
+})
 
 app.listen(port, () => {
   console.log("Server is running on port :" + port);

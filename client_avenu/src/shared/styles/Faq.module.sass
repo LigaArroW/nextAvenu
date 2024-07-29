@@ -1,0 +1,107 @@
+$action-color: #98042D
+$text-color: #1B1B1B
+$card-color: #FFFFFF
+$answer-color: #FFFFFF55
+
+.content
+    display: flex
+    flex-direction: column
+    padding: 30px
+    gap: 50px
+    flex-grow: 1
+
+    .title
+        color: $action-color
+        font-weight: 500
+        font-size: 28px
+
+    .faq_list
+        display: flex
+        width: 100%
+        flex-direction: column
+        gap: 15px
+
+        .faq_item
+            display: flex
+            flex-direction: column
+            box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
+            border-radius: 5px
+            overflow: hidden
+
+            .question
+                font-size: 15px
+                font-weight: 500
+                padding: 25px
+                padding-right: 45px
+                position: relative
+                background-color: $card-color
+
+                svg
+                    position: absolute
+                    right: 15px
+                    height: 20px
+                    width: 20px
+                    top: 50%
+                    transform: translateY(-50%)
+
+            .answer
+                overflow: hidden
+                height: 0px
+                max-height: 0px
+                transition: all .25s ease-out
+                font-size: 14px
+                font-weight: 400
+                background-color: $answer-color
+
+                &.active
+                    border-top: 1px solid $action-color
+                    height: max-content
+                    padding: 25px
+                    max-height: 1000px
+
+@media (max-width: 1200px)
+    .content
+        gap: 30px
+        padding: 15px
+        align-items: center
+
+        .title
+            font-size: 22px
+
+        .faq_list
+            gap: 10px
+
+            .faq_item
+                .question
+                    font-size: 14px
+                    padding: 20px
+                    padding-right: 40px
+
+                .answer
+                    font-size: 13px
+
+                    &.active
+                        padding: 20px
+
+@media (max-width: 600px)
+    .content
+        gap: 30px
+        padding: 15px
+
+        .title
+            text-align: center
+            align-self: center
+            font-size: 15px
+
+        .faq_list
+            .faq_item
+                .question
+                    font-size: 12px
+                    padding: 15px
+                    padding-right: 35px
+
+                .answer
+                    font-size: 11px
+
+                    &.active
+                        padding: 15px

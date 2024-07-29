@@ -14,20 +14,8 @@ export async function generateMetadata() {
 
 export default async function StorePage() {
 
-  const model = await getModels()
- 
-
   return (
-    <Home type={HomePageType.AllModels} models={model} />
+    <Home type={HomePageType.AllModels}  />
   );
 }
 
-const getModels = async () => {
-  const response = await fetch('http://localhost:8001/api/models', {
-    method: 'GET',
-    next: { revalidate: 3600},
-  });
-  // console.log("🚀 ~ getModels ~ response:", response)
-
-  return response.json();
-}
