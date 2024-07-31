@@ -60,7 +60,7 @@ const HeaderNav = () => {
                             key={link.id}
                             className={`${pathName === link.link_url ? styles.active : ""}`}
                             href={`/${locale}${link.link_url === "/" ? "" : link.link_url}`}
-                          
+
                         // onClick={() => handleMobileLinkOnClick(link.id)}
                         >
                             {t(`${link.link}`)}
@@ -70,11 +70,11 @@ const HeaderNav = () => {
 
                 {isMobile && <Image src={LogoRedIcon} alt="logo" width={158} height={70} />}
             </ul>
-            {modalShow && (
+            {/* {modalShow && (
                 <Portal>
                     <LoginModal onClose={() => setModalShow(false)} />
                 </Portal>
-            )}
+            )} */}
         </>
 
 

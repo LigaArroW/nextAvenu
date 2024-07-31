@@ -1,27 +1,30 @@
 import styles from '@/shared/styles/Header.module.sass';
-import { useTranslations } from 'next-intl';
+
 
 import { User } from '@/shared/assets/User';
 import { Logout } from '@/shared/assets/Logout';
 import HeaderNav from '../HeaderNav/HeaderNav';
+import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 
-const HeaderContent = () => {
-    const t = useTranslations();
+const HeaderContent = async () => {
+    const t = await getTranslations();
     return (
         <header className={styles.header}>
             <div className={styles.main_navigation}>
                 <HeaderNav />
                 <div className={styles.user}>
                     <User />
-                    <div className={styles.user_name} >
+                    {/* <div className={styles.user_name} >
                         {false ? t("global.my_profile") : t("global.authorization")}
                     </div>
                     {false && (
                         <button className={styles.logout}>
                             <Logout />
                         </button>
-                    )}
+                    )} */}
+                    <Link href={'/ru/login'} className={styles.user_name} >{t("global.authorization")}</Link>
                 </div>
 
                 {/* {modalShow && (

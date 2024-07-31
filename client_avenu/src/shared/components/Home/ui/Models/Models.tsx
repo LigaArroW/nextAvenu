@@ -4,7 +4,7 @@ import styles from "./Models.module.sass";
 
 // import HomeModel from "../../../components/HomeModel/HomeModel";
 
-import { ViewType } from "./ViewType";
+import { ViewType } from "../ViewType";
 
 // import { IModel } from "../../../types/model/model/model";
 // import { initFilter } from "../../../types/model/filter/initFilter";
@@ -14,14 +14,14 @@ import { ViewType } from "./ViewType";
 // import { ITarif } from "../../../types/model/tarif/tarif";
 // import { IModelLanguage } from "../../../types/model/language/modelLanguage";
 
-import { Filter } from "../../../assets/Filter";
-import { Grid } from "../../../assets/Grid";
-import { List } from "../../../assets/List";
-import { Close } from "../../../assets/Close";
+import { Filter } from "../../../../assets/Filter";
+import { Grid } from "../../../../assets/Grid";
+import { List } from "../../../../assets/List";
+import { Close } from "../../../../assets/Close";
 import { useTranslations } from "next-intl";
 import { useMedia } from "react-use";
-import { useState } from "react";
-import { initFilter } from "@/types/model/filter/initFilter";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface IModelsProps {
   // isFiltersActive: boolean;
@@ -29,14 +29,29 @@ interface IModelsProps {
   forModerator: boolean;
 }
 
-const Models: React.FC<IModelsProps> = ({forModerator}) => {
+const Models: React.FC<IModelsProps> = ({ forModerator }) => {
   const [viewType, setViewType] = useState(ViewType.ListView);
   const t = useTranslations()
-
-
-  
-
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const isMobile = useMedia("(max-width: 1200px)");
+  const [isFiltersActive, setIsFiltersActive] = useState(false);
+
+
+  useEffect(() => {
+    const newViewType = searchParams.get("viewType");
+    if (newViewType) {
+      const existingSearchParams = new URLSearchParams(window.location.search);
+      existingSearchParams.set("viewType", viewType.toString());
+      const updatedSearchQuery = existingSearchParams.toString();
+      const updatedPathname = `${pathname}?${updatedSearchQuery}`;
+      router.replace(updatedPathname);
+    } else {
+      router.replace(pathname + '?viewType=' + viewType.toString());
+    }
+
+  }, [pathname, router, searchParams, viewType])
 
 
 
@@ -56,11 +71,11 @@ const Models: React.FC<IModelsProps> = ({forModerator}) => {
               <Filter />
               {t("global.filter")}
             </div>
-            {isFiltersSet ? (
+            {/* {isFiltersSet ? (
               <button type="button" className={styles.close} onClick={() => setFilter(initFilter())}>
                 <Close fill="#FFFFFF" />
               </button>
-            ) : null}
+            ) : null} */}
           </>
         )}
       </div>

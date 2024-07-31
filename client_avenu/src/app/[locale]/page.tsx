@@ -1,6 +1,7 @@
 import { HomePageType } from "@/enums/homePageType";
 import Home from "@/shared/components/Home/Home";
 import { IModel } from "@/types/model/model/model";
+
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata() {
@@ -12,10 +13,12 @@ export async function generateMetadata() {
 }
 
 
+
 export default async function StorePage() {
 
+
   return (
-    <Home type={HomePageType.AllModels}  />
+    <Home type={HomePageType.AllModels} />
   );
 }
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
 
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 
 // import { useActions } from "../../hooks/useActions";
 // import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -37,7 +37,7 @@ const LoginContent: React.FC<ILoginContentProps> = ({ registerContent, modalClos
   const [password, setPassword] = useState("");
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [errorForm, setErrorForm] = useState("");
-  const reCaptchaRef = useRef<ReCAPTCHA>(null);
+  // const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
   // useEffect(() => {
   //   setIsButtonEnabled(email !== "" && password.length > 5);

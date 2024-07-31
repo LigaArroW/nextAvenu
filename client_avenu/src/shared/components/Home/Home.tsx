@@ -2,12 +2,15 @@ import { getTranslations } from "next-intl/server";
 import styles from '@/shared/styles/Home.module.sass'
 import { HomePageType } from "@/enums/homePageType";
 import { IModel } from "@/types/model/model/model";
-import Models from "./ui/Models";
+import Models from "./ui/Models/Models";
 import { revalidateTag } from "next/cache";
 import { IVideo } from "@/types/model/video/video";
 import { VideoStatus } from "@/enums/videoStatus";
 import Image from "next/image";
 import { IPhoto } from "@/types/model/photo/photo";
+import Filters from "./ui/Filters/Filters";
+import { filtredFields } from "@/shared/constant/filtredFields";
+import { IGeneral } from "@/types/core/generalFilters";
 
 interface IHomeProps {
     type: HomePageType;
@@ -24,10 +27,38 @@ const getModels = async () => {
     return response.json();
 }
 
+interface FiltredFields {
+    [key: string]: [];
+}
+
+const getFiltredFields = async (): Promise<FiltredFields> => {
+    const responseJsons: FiltredFields = {};
+
+    await Promise.all(
+        filtredFields.map(async (field) => {
+
+            const response = await fetch(`http://localhost:8001/api/${field}`, {
+                method: 'GET',
+                cache: 'force-cache',
+            });
+            const json = await response.json();
+
+            responseJsons[field] = json;
+        })
+    );
+
+    return responseJsons;
+};
+
+
 const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
     const t = await getTranslations()
     const models = await getModels()
     // console.log(models);
+    const filtredFields: Partial<IGeneral> = await getFiltredFields()
+
+  
+
 
     let filtredModel: IModel[] = [];
     switch (type) {
@@ -76,6 +107,7 @@ const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
                 ))
             )} */}
             <Models forModerator={forModerator} />
+            <Filters generalfields={filtredFields}/>
             {/* <Models isFiltersActive={isFiltersActive} setIsFiltersActive={setIsFiltersActive} forModerator={forModerator} /> */}
             {/* <Filters isFiltersActive={isFiltersActive} setIsFiltersActive={setIsFiltersActive} /> */}
         </div>

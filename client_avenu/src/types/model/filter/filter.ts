@@ -5,7 +5,7 @@ export interface IFilter {
   searchedModel: string;
   selectedCountry: ICountry;
   selectedCity: ICity;
-  modelTypes: number[];
+  model_types: number[];
   countries: number[];
   cities: number[];
   districts: number[];

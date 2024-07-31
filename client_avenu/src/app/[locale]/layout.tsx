@@ -15,10 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children, params: { locale }
+  children,
+   params: { locale },
+   modal
 }: Readonly<{
   children: React.ReactNode;
   params: { locale: string };
+  modal: React.ReactNode
 }>) {
   const messages = await getMessages();
   // @ts-ignore
@@ -36,6 +39,7 @@ export default async function RootLayout({
             </div>
           </main>
           <Footer />
+          {modal}
           {/* <ContactUsModal /> */}
           {/* <RegisterModal /> */}
           {/* <LoginModal /> */}
