@@ -1,11 +1,11 @@
 export const ArrowRight = () => {
   return (
     <svg viewBox="-4.5 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
       <g id="SVGRepo_iconCarrier">
         <title>arrow_right [#FFFFFFFFFFF]</title> <desc>Created with Sketch.</desc> <defs> </defs>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="Dribbble-Light-Preview" transform="translate(-305.000000, -6679.000000)" fill="#FFFFFF">
             <g id="icons" transform="translate(56.000000, 160.000000)">
               <path

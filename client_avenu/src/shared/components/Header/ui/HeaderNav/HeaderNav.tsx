@@ -40,7 +40,7 @@ const HeaderNav = () => {
             )}
 
             <div className={styles.logo}>
-                <Image src={LogoIcon} alt="logo" />
+                <Image src={LogoIcon} alt="logo" priority/>
             </div>
             <ul
                 className={`${!isMobile ? styles.navigation : styles.navigation_mobile} ${true ? styles.active : ""

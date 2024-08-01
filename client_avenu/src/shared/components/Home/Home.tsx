@@ -58,7 +58,7 @@ const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 
   
-
+    
 
     let filtredModel: IModel[] = [];
     switch (type) {

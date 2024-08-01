@@ -34,6 +34,8 @@ import { IVideo } from "@/types/model/video/video";
 import { VideoStatus } from "@/enums/videoStatus";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 interface IHomeModelProps {
   model: IModel;
@@ -46,6 +48,7 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
   const t = useTranslations();
   const [isPhoneShowed, setIsPhoneShowed] = useState(false);
   const locale = useLocale();
+  const router = useRouter();
 
   const calcIsOnline = () => {
     const now = new Date();
@@ -76,24 +79,18 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
   return (
     <div
       className={`${styles.model} ${viewType === ViewType.GridView ? styles.grid_model : styles.list_model}`}
-    // onClick={() => {
-    //   navigate((forModerator ? '/admin-moderator' : '') + `/model/${String(model.id).padStart(8, "0")}`);
-    // }}
+      onClick={() => router.push((forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`)}
     >
       {model.photos.filter((photo: IPhoto) => photo.is_main).length > 0 && (
         <div className={styles.photo}>
-          {/* <img
-            className={styles.photo}
-            src={`/uploads${getThumbUrl(model.photos.find((photo: IPhoto) => photo.is_main)!.photo_url)}`}
-            alt=""
-            onClick={() => navigate((forModerator ? '/admin-moderator' : '') + `/model/${String(model.id).padStart(8, "0")}`)}
-          /> */}
+
           <Image src={`http://localhost:8001/api/photos/${(model.photos[0]?.photo_url)?.split('/')[3]}`}
             className={styles.photo}
             alt={model.name}
             width={180}
             height={250}
-
+            priority
+            onClick={() => router.push((forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`)}
           />
         </div>
       )}
@@ -104,13 +101,11 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
       ) : null}
       <div className={styles.info}>
         <div className={styles.main}>
-          {/* <Link className={styles.name} to={(forModerator ? '/admin-moderator' : '') + `/model/${String(model.id).padStart(8, "0")}`}>
-            {model.name}
-          </Link> */}
           <Link
             className={styles.name}
             // href={`${locale}/model/${String(model.id).padStart(8, "0")}`}
-          href={(forModerator ? `${locale}/admin-moderator` : '') + `${locale}/model/${String(model.id).padStart(8, "0")}`}
+            href={(forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`}
+          // href={(forModerator ? `${locale}/admin-moderator` : '') + `${locale}/model/${String(model.id).padStart(8, "0")}`}
           >{model.name}</Link>
           <div className={styles.statuses}>
             {model.is_vip ? <div className={styles.vip}>VIP</div> : null}

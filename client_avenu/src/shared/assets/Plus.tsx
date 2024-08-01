@@ -10,9 +10,9 @@ export const Plus = () => {
       <path
         d="M4 12H20M12 4V20"
         stroke="#FFFFFF"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
