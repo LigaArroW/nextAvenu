@@ -1,6 +1,6 @@
 import FAQ from "@/shared/components/FAQ/FAQ";
 import { IFaq } from "@/types/faq/faq";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 
 
@@ -18,7 +18,8 @@ async function getFAQs() {
     return responce.json();
 }
 
-export default async function FAQPage() {
+export default async function FAQPage({ params: { locale } }: { params: { locale: string } }) {
+    unstable_setRequestLocale(locale);
     const faqs: IFaq[] = await getFAQs();
 
     return (

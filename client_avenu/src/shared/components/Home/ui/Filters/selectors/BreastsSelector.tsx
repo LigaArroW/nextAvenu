@@ -5,18 +5,28 @@ import styles from "../Filters.module.sass";
 import { ComponentType } from "../ComponentType";
 
 
-import { ArrowDown} from "@/shared/assets/ArrowDown";
-import { ArrowUp} from "@/shared/assets/ArrowUp";
+import { ArrowDown } from "@/shared/assets/ArrowDown";
+import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { IGeneral } from "@/types/core/generalFilters";
+import { useSearchParams } from "next/navigation";
+import queryString from "query-string";
+import { IBreastSize } from "@/types/core/breastSize";
+import { IBreastType } from "@/types/core/breastType";
 
 interface IBreastsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
+  handleSearch: (search: string, value: string) => void;
+  filters: Partial<IGeneral>
 }
 
-const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, setActiveComponent }) => {
-  const  t= useTranslations();
+const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+  const t = useTranslations();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -30,90 +40,69 @@ const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, set
         }
       >
         {t("model.breast")}
-        {activeComponent === ComponentType.BreastsSelector ? <ArrowUp/> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.breastSizes.length + filter.breastTypes.length > 0 && (
-          <div className={styles.group_count}>{filter.breastSizes.length + filter.breastTypes.length}</div>
-        )} */}
+        {activeComponent === ComponentType.BreastsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
+
+        {(filter.breastSizes ? filter.breastSizes.length : 0) + (filter.breastTypes ? filter.breastTypes.length : 0) > 0 && (
+          <div className={styles.group_count}>{(filter.breastSizes ? filter.breastSizes.length : 0) + (filter.breastTypes ? filter.breastTypes.length : 0)}</div>
+        )}
       </div>
       <div className={styles.filters_list}>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.breast_size")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.BreastsSelector &&
-              breastSizes.map((breastSize: IBreastSize) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.BreastsSelector &&
+              filters.breast_sizes && filters.breast_sizes.map((breastSize: IBreastSize) => (
+                <div key={breastSize.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${
-                        filter.breastSizes.filter((item: number) => item === breastSize.id).length > 0
-                          ? 'active'
-                          : ""
-                      }`}
+                      className={`${'checkbox_mark'} ${(filter['breastSizes'] === breastSize.id.toString() || filter['breastSizes']?.includes(breastSize.id.toString()))
+                        ? 'active'
+                        : ""
+                        }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.breastSizes.filter((item: number) => item === breastSize.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            breastSizes: filter.breastSizes.filter((item: number) => item !== breastSize.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            breastSizes: [...filter.breastSizes, breastSize.id],
-                          });
-                        }
+                        handleSearch("breastSizes", breastSize.id.toString());
                       }}
                     >
-                      {filter.breastSizes.filter((item: number) => item === breastSize.id).length > 0 && (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['breastSizes'] === breastSize.id.toString() || filter['breastSizes']?.includes(breastSize.id.toString())) && (
+                        <Check fill="#98042D" />
                       )}
                     </span>
                     <div className={'text'}>{breastSize.breast_size}</div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.breast_type")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.BreastsSelector &&
-              breastTypes.map((breastType: IBreastType) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.BreastsSelector &&
+              filters.breast_types && filters.breast_types.map((breastType: IBreastType) => (
+                <div key={breastType.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${
-                        filter.breastTypes.filter((item: number) => item === breastType.id).length > 0
+                      className={`${'checkbox_mark'} ${(filter['breastTypes'] === breastType.id.toString() || filter['breastTypes']?.includes(breastType.id.toString()))
                           ? 'active'
                           : ""
-                      }`}
+                        }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.breastTypes.filter((item: number) => item === breastType.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            breastTypes: filter.breastTypes.filter((item: number) => item !== breastType.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            breastTypes: [...filter.breastTypes, breastType.id],
-                          });
-                        }
+                        handleSearch("breastTypes", breastType.id.toString());
                       }}
                     >
-                      {filter.breastTypes.filter((item: number) => item === breastType.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['breastTypes'] === breastType.id.toString() || filter['breastTypes']?.includes(breastType.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? breastType.breast_type : breastType.breast_type_eng}
+                      {locale === "ru" ? breastType.breast_type : breastType.breast_type_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
       </div>

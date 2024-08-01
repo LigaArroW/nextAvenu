@@ -106,7 +106,7 @@ const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
                     </div>
                 ))
             )} */}
-            <Models forModerator={forModerator} />
+            <Models forModerator={forModerator}  models={filtredModel} generalfields={filtredFields}/>
             <Filters generalfields={filtredFields}/>
             {/* <Models isFiltersActive={isFiltersActive} setIsFiltersActive={setIsFiltersActive} forModerator={forModerator} /> */}
             {/* <Filters isFiltersActive={isFiltersActive} setIsFiltersActive={setIsFiltersActive} /> */}

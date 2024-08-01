@@ -1,6 +1,6 @@
 import styles from '@/shared/styles/UserAgreement.module.sass'
 import { IPage } from '@/types/page/page';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import parse from "html-react-parser";
 
 export async function generateMetadata() {
@@ -17,6 +17,7 @@ const getPage = async () => {
 }
 
 export default async function UserAgreementPage({ params: { locale } }: { params: { locale: string } }) {
+    unstable_setRequestLocale(locale);
     const t = await getTranslations();
     const pages = await getPage();
     // console.log("🚀 ~ UserAgreementPage ~ pages:", pages)

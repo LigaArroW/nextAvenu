@@ -22,7 +22,7 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
   const searchParams = useSearchParams();
   const locale = useLocale();
   const filter = queryString.parse(searchParams.toString());
-  
+
 
   return (
     <div className={`${styles.filters_group} ${styles.active}`}>
@@ -38,7 +38,7 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
                 }`}
               aria-hidden="true"
               onClick={() => {
-                
+
                 handleSearch('modelTypes', '7')
               }}
             >
@@ -61,7 +61,7 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
                 }`}
               aria-hidden="true"
               onClick={() => {
-                
+
                 // if (filter === '8') {
                 //   return handleSearch('modelTypes', '', 'delete')
                 // }
@@ -81,12 +81,14 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
               'checkbox'}>
               <input type="checkbox" />
               <span
-                className={`${'checkbox_mark'} ${(filter['modelTypes'] === modelType.id.toString() || filter['modelTypes']?.includes(modelType.id.toString())) ?
-                  'active' : ""
+                className={`${'checkbox_mark'}
+                 ${(filter['modelTypes'] === modelType.id.toString() || filter['modelTypes']?.includes(modelType.id.toString()))
+                    ?
+                    'active' : ""
                   }`}
                 aria-hidden="true"
                 onClick={() => {
-                  
+
                   handleSearch('modelTypes', modelType.id.toString())
                 }}
               >

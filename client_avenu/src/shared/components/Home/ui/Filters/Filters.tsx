@@ -87,18 +87,18 @@ const Filters: React.FC<IFiltersProps> = ({ isFiltersActive, setIsFiltersActive,
       {/*<CountriesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
       <CitiesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />*/}
       <DistrictsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
-      <UndergroundsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields}  />
-      <AgeSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields}/>
-      <HairsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <TarifsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <BreastsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <TripsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <WeightSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
+      <UndergroundsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <AgeSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <HairsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <TarifsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <BreastsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <TripsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <WeightSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
       <HeightSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <ServicesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <EthnicGroupsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <LanguagesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-      <PreferencesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
+      <ServicesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <EthnicGroupsSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <LanguagesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
+      <PreferencesSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} handleSearch={handleSearchParams} filters={generalfields} />
       {isFiltersActive && isMobile && (
         // <div className={styles.close} onClick={() => setIsFiltersActive(false)}>
         <div className={styles.close} >

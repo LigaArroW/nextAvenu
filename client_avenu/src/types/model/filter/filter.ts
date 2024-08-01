@@ -34,3 +34,34 @@ export interface IFilter {
   orientations: number[];
   tarifs: number[][];
 }
+
+export interface ISearchFilter {
+  viewType: string;
+  modelTypes: string | string[];
+  orientations: string | string[];
+  districts: string | string[];
+  undergrounds: string[];
+  minAge: string;
+  maxAge: string;
+  minWeight: string;
+  maxWeight: string;
+  minHeight: string;
+  maxHeight: string;
+  hairColors: string | string[];
+  hairSizes: string | string[];
+  pubisHairs: string | string[];
+  breastSizes: string | string[];
+  breastTypes: string | string[];
+  trips: string | string[];
+  meetingPlaces: string | string[];
+  services: string | string[];
+  ethnicGroups: string | string[];
+  nationalities: string | string[];
+  languages: string | string[];
+  smookers: string | string[];
+  piercings: string | string[];
+  tatoos: string | string[];
+  eyesColors: string | string[];
+  searchedModel: string;
+}
+

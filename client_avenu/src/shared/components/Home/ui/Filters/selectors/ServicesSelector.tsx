@@ -6,19 +6,29 @@ import styles from "../Filters.module.sass";
 import { ComponentType } from "../ComponentType";
 
 
-import { ArrowDown  } from "@/shared/assets/ArrowDown";
-import { ArrowUp  } from "@/shared/assets/ArrowUp";
+import { ArrowDown } from "@/shared/assets/ArrowDown";
+import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { IGeneral } from "@/types/core/generalFilters";
+import { useSearchParams } from "next/navigation";
+import queryString from "query-string";
+import { IServiceCategory } from "@/types/core/serviceCategory";
+import { IService } from "@/types/core/service";
 
 interface IServicesSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
+  handleSearch: (search: string, value: string) => void;
+  filters: Partial<IGeneral>
 }
 
-const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, setActiveComponent }) => {
-  const  t= useTranslations();
+const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+  const t = useTranslations();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -33,100 +43,79 @@ const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, s
       >
         {t("model.services")}
         {activeComponent === ComponentType.ServicesSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.services.length + filter.meetingPlaces.length > 0 ? (
-          <div className={styles.group_count}>{filter.services.length + filter.meetingPlaces.length}</div>
-        ) : null} */}
+        {(filter.services ? filter.services.length : 0) + (filter.meetingPlaces ? filter.meetingPlaces.length : 0) > 0 ? (
+          <div className={styles.group_count}>{(filter.services ? filter.services.length : 0) + (filter.meetingPlaces ? filter.meetingPlaces.length : 0)}</div>
+        ) : null}
       </div>
       <div className={styles.filters_list}>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{`${t("model.incall")}-${t("model.outcall")}`}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.ServicesSelector &&
-              meetingPlaces
+            {activeComponent === ComponentType.ServicesSelector &&
+              filters.meeting_places && filters.meeting_places
                 .filter(
                   (meetingPlace: IMeetingPlace) =>
                     meetingPlace.meeting_place === "Аппартаменты" || meetingPlace.meeting_place === "Выезд"
                 )
                 .map((meetingPlace: IMeetingPlace) => (
-                  <div className={styles.filter_item}>
+                  <div key={meetingPlace.id} className={styles.filter_item}>
                     <label className={'checkbox'}>
                       <input type="checkbox" />
                       <span
-                        className={`${'checkbox_mark'} ${
-                          filter.meetingPlaces.filter((item: number) => item === meetingPlace.id).length > 0
-                            ? 'active'
-                            : ""
-                        }`}
+                        className={`${'checkbox_mark'} ${(filter['meetingPlaces'] === meetingPlace.id.toString() || filter['meetingPlaces']?.includes(meetingPlace.id.toString()))
+                          ? 'active'
+                          : ""
+                          }`}
                         aria-hidden="true"
                         onClick={() => {
-                          if (filter.meetingPlaces.filter((item: number) => item === meetingPlace.id).length > 0) {
-                            setFilter({
-                              ...filter,
-                              meetingPlaces: filter.meetingPlaces.filter((item: number) => item !== meetingPlace.id),
-                            });
-                          } else {
-                            setFilter({
-                              ...filter,
-                              meetingPlaces: [...filter.meetingPlaces, meetingPlace.id],
-                            });
-                          }
+
+                          handleSearch('meetingPlaces', meetingPlace.id.toString())
                         }}
                       >
-                        {filter.meetingPlaces.filter((item: number) => item === meetingPlace.id).length > 0 ? (
+                        {(filter['meetingPlaces'] === meetingPlace.id.toString() || filter['meetingPlaces']?.includes(meetingPlace.id.toString())) ? (
                           <Check fill="#98042D" />
                         ) : null}
                       </span>
                       <div className={'text'}>
-                        {i18n.resolvedLanguage === "ru" ? meetingPlace.meeting_place : meetingPlace.meeting_place_eng}
+                        {locale === "ru" ? meetingPlace.meeting_place : meetingPlace.meeting_place_eng}
                       </div>
                     </label>
                   </div>
-                ))} */}
+                ))}
           </div>
         </div>
-        {/* {activeComponent === ComponentType.ServicesSelector &&
-          serviceCategories.map((serviceCategory: IServiceCategory) => (
-            <div style={{ width: "100%" }}>
+        {activeComponent === ComponentType.ServicesSelector &&
+          filters.service_categories && filters.service_categories.map((serviceCategory: IServiceCategory) => (
+            <div key={serviceCategory.id} style={{ width: "100%" }}>
               <div className={styles.group_sub_name}>
-                {i18n.resolvedLanguage === "ru" ? serviceCategory.service_category : serviceCategory.service_category_eng}
+                {locale === "ru" ? serviceCategory.service_category : serviceCategory.service_category_eng}
               </div>
               <div className={styles.filters_list}>
                 {serviceCategory.services.map((service: IService) => (
-                  <div className={styles.filter_item}>
+                  <div key={service.id} className={styles.filter_item}>
                     <label className={'checkbox'}>
                       <input type="checkbox" />
                       <span
-                        className={`${'checkbox_mark'} ${
-                          filter.services.filter((item: number) => item === service.id).length > 0 ? 'active' : ""
-                        }`}
+                        className={`${'checkbox_mark'} ${(filter['services'] === service.id.toString() || filter['services']?.includes(service.id.toString())) ? 'active' : ""
+                          }`}
                         aria-hidden="true"
                         onClick={() => {
-                          if (filter.services.filter((item: number) => item === service.id).length > 0) {
-                            setFilter({
-                              ...filter,
-                              services: filter.services.filter((item: number) => item !== service.id),
-                            });
-                          } else {
-                            setFilter({
-                              ...filter,
-                              services: [...filter.services, service.id],
-                            });
-                          }
+                          handleSearch('services', service.id.toString())
                         }}
                       >
-                        {filter.services.filter((item: number) => item === service.id).length > 0 ? (
-                          <CheckIcon fill="#98042D" />
+                        {(filter['services'] === service.id.toString() || filter['services']?.includes(service.id.toString())) ? (
+                          <Check fill="#98042D" />
                         ) : null}
                       </span>
                       <div className={'text'}>
-                        {i18n.resolvedLanguage === "ru" ? service.service : service.service_eng}
+                        {locale === "ru" ? service.service : service.service_eng}
                       </div>
                     </label>
                   </div>
                 ))}
               </div>
             </div>
-          ))} */}
+          ))}
       </div>
     </div>
   );

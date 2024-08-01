@@ -6,17 +6,26 @@ import { ComponentType } from "../ComponentType";
 
 
 import { ArrowDown } from "@/shared/assets/ArrowDown";
-import { ArrowUp  } from "@/shared/assets/ArrowUp";
-import { Check  } from "@/shared/assets/Check";
-import { useTranslations } from "next-intl";
+import { ArrowUp } from "@/shared/assets/ArrowUp";
+import { Check } from "@/shared/assets/Check";
+import { useLocale, useTranslations } from "next-intl";
+import { IGeneral } from "@/types/core/generalFilters";
+import { useSearchParams } from "next/navigation";
+import queryString from "query-string";
+import { ITrip } from "@/types/core/trip";
 
 interface ITripsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
+  handleSearch: (search: string, value: string) => void;
+  filters: Partial<IGeneral>
 }
 
-const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActiveComponent }) => {
-  const  t= useTranslations();
+const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+  const t = useTranslations();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -31,39 +40,30 @@ const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActi
       >
         {t("model.trips")}
         {activeComponent === ComponentType.TripsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.trips.length > 0 ? <div className={styles.group_count}>{filter.trips.length}</div> : null} */}
+        {filter.trips && filter.trips.length > 0 ? <div className={styles.group_count}>{filter.trips.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
-        {/* {activeComponent === ComponentType.TripsSelector &&
-          trips.map((trip: ITrip) => (
-            <div className={styles.filter_item}>
+        {activeComponent === ComponentType.TripsSelector &&
+          filters.trips && filters.trips.map((trip: ITrip) => (
+            <div key={trip.id} className={styles.filter_item}>
               <label className={'checkbox'}>
                 <input type="checkbox" />
                 <span
-                  className={`${'checkbox_mark'} ${
-                    filter.trips.filter((item: number) => item === trip.id).length > 0 ? 'active' : ""
-                  }`}
+                  className={`${'checkbox_mark'} ${(filter['trips'] === trip.id.toString() || filter['trips']?.includes(trip.id.toString()))
+                    ? 'active' : ""
+                    }`}
                   aria-hidden="true"
                   onClick={() => {
-                    if (filter.trips.filter((item: number) => item === trip.id).length > 0) {
-                      setFilter({
-                        ...filter,
-                        trips: filter.trips.filter((item: number) => item !== trip.id),
-                      });
-                    } else {
-                      setFilter({
-                        ...filter,
-                        trips: [...filter.trips, trip.id],
-                      });
-                    }
+
+                    handleSearch('trips', trip.id.toString())
                   }}
                 >
-                  {filter.trips.filter((item: number) => item === trip.id).length > 0 ? <Check fill="#98042D" /> : null}
+                  {(filter['trips'] === trip.id.toString() || filter['trips']?.includes(trip.id.toString())) ? <Check fill="#98042D" /> : null}
                 </span>
-                <div className={'text'}>{i18n.resolvedLanguage === "ru" ? trip.trip : trip.trip_eng}</div>
+                <div className={'text'}>{locale === "ru" ? trip.trip : trip.trip_eng}</div>
               </label>
             </div>
-          ))} */}
+          ))}
       </div>
     </div>
   );

@@ -8,15 +8,27 @@ import { ComponentType } from "../ComponentType";
 import { ArrowDown } from "@/shared/assets/ArrowDown";
 import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import queryString from "query-string";
+import { IGeneral } from "@/types/core/generalFilters";
+import { IHairColor } from "@/types/core/hairColor";
+import { IHairSize } from "@/types/core/hairSize";
+import { IPubisHair } from "@/types/core/pubisHair";
 
 interface IHairsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
+  handleSearch: (search: string, value: string) => void;
+  filters: Partial<IGeneral>
 }
 
-const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActiveComponent }) => {
+const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -30,130 +42,100 @@ const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActi
         }
       >
         {t("model.hairs")}
-        {activeComponent === ComponentType.HairsSelector ? <ArrowUp/> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.hairSizes.length + filter.hairColors.length + filter.pubisHairs.length > 0 ? (
+        {activeComponent === ComponentType.HairsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
+        {(filter.hairSizes ? filter.hairSizes.length : 0) + (filter.hairColors ? filter.hairColors.length : 0) + (filter.pubisHairs ? filter.pubisHairs.length : 0) > 0 ? (
           <div className={styles.group_count}>
-            {filter.hairSizes.length + filter.hairColors.length + filter.pubisHairs.length}
+            {(filter.hairSizes ? filter.hairSizes.length : 0) + (filter.hairColors ? filter.hairColors.length : 0) + (filter.pubisHairs ? filter.pubisHairs.length : 0)}
           </div>
-        ) : null} */}
+        ) : null}
       </div>
       <div className={styles.filters_list}>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.hair_color")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.HairsSelector &&
-              hairColors.map((hairColor: IHairColor) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.HairsSelector &&
+              filters.hair_colors && filters.hair_colors.map((hairColor: IHairColor) => (
+                <div key={hairColor.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.hairColors.filter((item: number) => item === hairColor.id).length > 0
-                          ? 'active'
-                          : ""
+                      className={`${'checkbox_mark'} ${(filter['hairColors'] === hairColor.id.toString() || filter['hairColors']?.includes(hairColor.id.toString()))
+                        ? 'active'
+                        : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.hairColors.filter((item: number) => item === hairColor.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            hairColors: filter.hairColors.filter((item: number) => item !== hairColor.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            hairColors: [...filter.hairColors, hairColor.id],
-                          });
-                        }
+                        handleSearch('hairColors', hairColor.id.toString())
                       }}
                     >
-                      {filter.hairColors.filter((item: number) => item === hairColor.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['hairColors'] === hairColor.id.toString() || filter['hairColors']?.includes(hairColor.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? hairColor.hair_color : hairColor.hair_color_eng}
+                      {locale === "ru" ? hairColor.hair_color : hairColor.hair_color_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.hair_size")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.HairsSelector &&
-              hairSizes.map((hairSize: IHairSize) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.HairsSelector &&
+              filters.hair_sizes && filters.hair_sizes.map((hairSize: IHairSize) => (
+                <div key={hairSize.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.hairSizes.filter((item: number) => item === hairSize.id).length > 0 ? 'active' : ""
+                      className={`${'checkbox_mark'} ${(filter['hairSizes'] === hairSize.id.toString() || filter['hairSizes']?.includes(hairSize.id.toString())) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.hairSizes.filter((item: number) => item === hairSize.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            hairSizes: filter.hairSizes.filter((item: number) => item !== hairSize.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            hairSizes: [...filter.hairSizes, hairSize.id],
-                          });
-                        }
+                        handleSearch('hairSizes', hairSize.id.toString())
                       }}
                     >
-                      {filter.hairSizes.filter((item: number) => item === hairSize.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['hairSizes'] === hairSize.id.toString() || filter['hairSizes']?.includes(hairSize.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? hairSize.hair_size : hairSize.hair_size_eng}
+                      {locale === "ru" ? hairSize.hair_size : hairSize.hair_size_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.pubic_hair")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.HairsSelector &&
-              pubisHairs.map((pubisHair: IPubisHair) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.HairsSelector &&
+              filters.pubis_hairs && filters.pubis_hairs.map((pubisHair: IPubisHair) => (
+                <div key={pubisHair.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.pubisHairs.filter((item: number) => item === pubisHair.id).length > 0
-                          ? 'active'
-                          : ""
+                      className={`${'checkbox_mark'} ${(filter['pubisHairs'] === pubisHair.id.toString() || filter['pubisHairs']?.includes(pubisHair.id.toString()))
+                        ? 'active'
+                        : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.pubisHairs.filter((item: number) => item === pubisHair.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            pubisHairs: filter.pubisHairs.filter((item: number) => item !== pubisHair.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            pubisHairs: [...filter.pubisHairs, pubisHair.id],
-                          });
-                        }
+                        handleSearch('pubisHairs', pubisHair.id.toString())
                       }}
                     >
-                      {filter.pubisHairs.filter((item: number) => item === pubisHair.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['pubisHairs'] === pubisHair.id.toString() || filter['pubisHairs']?.includes(pubisHair.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? pubisHair.pubis_hair : pubisHair.pubis_hair_eng}
+                      {locale === "ru" ? pubisHair.pubis_hair : pubisHair.pubis_hair_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
       </div>

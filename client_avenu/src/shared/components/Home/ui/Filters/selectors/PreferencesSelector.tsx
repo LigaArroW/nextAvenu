@@ -9,15 +9,27 @@ import { ComponentType } from "../ComponentType";
 import { ArrowDown } from "@/shared/assets/ArrowDown";
 import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { IGeneral } from "@/types/core/generalFilters";
+import { useSearchParams } from "next/navigation";
+import queryString from "query-string";
+import { ISmooker } from "@/types/core/smooker";
+import { IPiercing } from "@/types/model/piercing/piercing";
+import { ITatoo } from "@/types/core/tatoo";
+import { IEyesColor } from "@/types/core/eyesColor";
 
 interface IPreferencesSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
+  handleSearch: (search: string, value: string) => void;
+  filters: Partial<IGeneral>
 }
 
-const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeComponent, setActiveComponent }) => {
+const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -32,163 +44,127 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
       >
         {t("model.preferences")}
         {activeComponent === ComponentType.PreferencesSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.smookers.length + filter.piercings.length + filter.tatoos.length + filter.eyesColors.length > 0 ? (
+        {(filter.smookers ? filter.smookers.length : 0) + (filter.piercings ? filter.piercings.length : 0) + (filter.tatoos ? filter.tatoos.length : 0) + (filter.eyesColors ? filter.eyesColors.length : 0) > 0 ? (
           <div className={styles.group_count}>
-            {filter.smookers.length + filter.piercings.length + filter.tatoos.length + filter.eyesColors.length}
+            {(filter.smookers ? filter.smookers.length : 0) + (filter.piercings ? filter.piercings.length : 0) + (filter.tatoos ? filter.tatoos.length : 0) + (filter.eyesColors ? filter.eyesColors.length : 0)}
           </div>
-        ) : null} */}
+        ) : null}
       </div>
       <div className={styles.filters_list}>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.smoker")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.PreferencesSelector &&
-              smookers.map((smooker: ISmooker) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.PreferencesSelector &&
+              filters.smookers && filters.smookers.map((smooker: ISmooker) => (
+                <div key={smooker.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.smookers.filter((item: number) => item === smooker.id).length > 0 ? 'active' : ""
+                      className={`${'checkbox_mark'} ${(filter['smookers'] === smooker.id.toString() || filter['smookers']?.includes(smooker.id.toString())) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.smookers.filter((item: number) => item === smooker.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            smookers: filter.smookers.filter((item: number) => item !== smooker.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            smookers: [...filter.smookers, smooker.id],
-                          });
-                        }
+
+                        handleSearch('smookers', smooker.id.toString())
                       }}
                     >
-                      {filter.smookers.filter((item: number) => item === smooker.id).length > 0 ? (
+                      {(filter['smookers'] === smooker.id.toString() || filter['smookers']?.includes(smooker.id.toString())) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? smooker.smooker : smooker.smooker_eng}
+                      {locale === "ru" ? smooker.smooker : smooker.smooker_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.piercing")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.PreferencesSelector &&
-              piercings.map((piercing: IPiercing) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.PreferencesSelector &&
+              filters.piercings && filters.piercings.map((piercing: IPiercing) => (
+                <div key={piercing.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.piercings.filter((item: number) => item === piercing.id).length > 0 ? 'active' : ""
+                      className={`${'checkbox_mark'} ${(filter['piercings'] === piercing.id.toString() || filter['piercings']?.includes(piercing.id.toString())) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.piercings.filter((item: number) => item === piercing.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            piercings: filter.piercings.filter((item: number) => item !== piercing.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            piercings: [...filter.piercings, piercing.id],
-                          });
-                        }
+
+                        handleSearch('piercings', piercing.id.toString())
                       }}
                     >
-                      {filter.piercings.filter((item: number) => item === piercing.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['piercings'] === piercing.id.toString() || filter['piercings']?.includes(piercing.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? piercing.piercing : piercing.piercing_eng}
+                      {locale === "ru" ? piercing.piercing : piercing.piercing_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.tattoo")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.PreferencesSelector &&
-              tatoos.map((tatoo: ITatoo) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.PreferencesSelector &&
+              filters.tatoos && filters.tatoos.map((tatoo: ITatoo) => (
+                <div key={tatoo.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.tatoos.filter((item: number) => item === tatoo.id).length > 0 ? 'active' : ""
+                      className={`${'checkbox_mark'} ${(filter['tatoos'] === tatoo.id.toString() || filter['tatoos']?.includes(tatoo.id.toString())) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.tatoos.filter((item: number) => item === tatoo.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            tatoos: filter.tatoos.filter((item: number) => item !== tatoo.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            tatoos: [...filter.tatoos, tatoo.id],
-                          });
-                        }
+
+                        handleSearch('tatoos', tatoo.id.toString())
                       }}
                     >
-                      {filter.tatoos.filter((item: number) => item === tatoo.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['tatoos'] === tatoo.id.toString() || filter['tatoos']?.includes(tatoo.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
-                    <div className={'text'}>{i18n.resolvedLanguage === "ru" ? tatoo.tatoo : tatoo.tatoo_eng}</div>
+                    <div className={'text'}>{locale === "ru" ? tatoo.tatoo : tatoo.tatoo_eng}</div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
         <div style={{ width: "100%" }}>
           <div className={styles.group_sub_name}>{t("model.eyes_color")}</div>
           <div className={styles.filters_list}>
-            {/* {activeComponent === ComponentType.PreferencesSelector &&
-              eyesColors.map((eyesColor: IEyesColor) => (
-                <div className={styles.filter_item}>
+            {activeComponent === ComponentType.PreferencesSelector &&
+              filters.eyes_colors && filters.eyes_colors.map((eyesColor: IEyesColor) => (
+                <div key={eyesColor.id} className={styles.filter_item}>
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${filter.eyesColors.filter((item: number) => item === eyesColor.id).length > 0
-                          ? 'active'
-                          : ""
+                      className={`${'checkbox_mark'} ${(filter['eyesColors'] === eyesColor.id.toString() || filter['eyesColors']?.includes(eyesColor.id.toString()))
+                        ? 'active'
+                        : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        if (filter.eyesColors.filter((item: number) => item === eyesColor.id).length > 0) {
-                          setFilter({
-                            ...filter,
-                            eyesColors: filter.eyesColors.filter((item: number) => item !== eyesColor.id),
-                          });
-                        } else {
-                          setFilter({
-                            ...filter,
-                            eyesColors: [...filter.eyesColors, eyesColor.id],
-                          });
-                        }
+
+                        handleSearch('eyesColors', eyesColor.id.toString())
                       }}
                     >
-                      {filter.eyesColors.filter((item: number) => item === eyesColor.id).length > 0 ? (
-                        <CheckIcon fill="#98042D" />
+                      {(filter['eyesColors'] === eyesColor.id.toString() || filter['eyesColors']?.includes(eyesColor.id.toString())) ? (
+                        <Check fill="#98042D" />
                       ) : null}
                     </span>
                     <div className={'text'}>
-                      {i18n.resolvedLanguage === "ru" ? eyesColor.eyes_color : eyesColor.eyes_color_eng}
+                      {locale === "ru" ? eyesColor.eyes_color : eyesColor.eyes_color_eng}
                     </div>
                   </label>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>
       </div>

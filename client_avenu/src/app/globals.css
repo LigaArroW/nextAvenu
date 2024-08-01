@@ -430,6 +430,22 @@ button[disabled] {
     justify-content: center;
 }
 
+/* .thumb {
+    height: 23px;
+    width: 23px;
+    border-radius: 20px;
+    background-color: #1b1b1b;
+    cursor: pointer;
+    top: -7px;
+} */
+
+.track-1 {
+    background-color: #98042d;
+    height: 10px;
+    border-radius: 5px;
+}
+
+
 @media (min-width: 1201px) {
     button:hover {
         background-color: var(--action-hover-color);

@@ -30,8 +30,7 @@ const UndergroundsSelector: React.FC<IUndergroundsSelectorProps> = ({ activeComp
   const searchParams = useSearchParams();
   // console.log("🚀 ~ searchParams:", searchParams)
   const locale = useLocale();
-  let filter = queryString.parse(searchParams.toString(), {
-  });
+  let filter = queryString.parse(searchParams.toString());
 
   filter = typeof filter['undergrounds'] === 'string' ? { undergrounds: [filter['undergrounds']] } : filter
 
