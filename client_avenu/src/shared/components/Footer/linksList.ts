@@ -10,8 +10,8 @@ export const LinksList = [
   {
     id: 1,
     link: "navigation.contact_us",
-    is_for_modal: true,
-    link_url: "/",
+    is_for_modal: false,
+    link_url: "/contact",
   } as INavigationLink,
   {
     id: 2,

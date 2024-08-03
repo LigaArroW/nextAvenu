@@ -5,11 +5,12 @@ import { User } from '@/shared/assets/User';
 import { Logout } from '@/shared/assets/Logout';
 import HeaderNav from '../HeaderNav/HeaderNav';
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 
 const HeaderContent = async () => {
     const t = await getTranslations();
+    const locale = await getLocale();
     return (
         <header className={styles.header}>
             <div className={styles.main_navigation}>
@@ -24,7 +25,7 @@ const HeaderContent = async () => {
                             <Logout />
                         </button>
                     )} */}
-                    <Link href={'/ru/login'} className={styles.user_name} >{t("global.authorization")}</Link>
+                    <Link href={`/${locale}/login`} className={styles.user_name} >{t("global.authorization")}</Link>
                 </div>
 
                 {/* {modalShow && (

@@ -5,16 +5,16 @@ import styles from "./Modal.module.sass";
 import { Close as CloseIcon } from "../../assets/Close";
 
 interface IMessageModalProps {
-  isShow: boolean;
+  // isShow: boolean;
   text: string;
   buttonText: string;
   handlerButtonClick: Function;
 }
 
-const MessageModal: React.FC<IMessageModalProps> = ({ text, buttonText, handlerButtonClick, isShow }) => {
+const MessageModal: React.FC<IMessageModalProps> = ({ text, buttonText, handlerButtonClick }) => {
   return (
-    <div className={`${styles.modal} ${styles.info} ${isShow ? styles.active : ""}`}>
-      <div className={`${styles.overlay} ${isShow ? styles.active : ""}`} onClick={() => handlerButtonClick()} />
+    <div className={`${styles.modal} ${styles.info} ${styles.active}`}>
+      <div className={`${styles.overlay} ${styles.active}`} onClick={() => handlerButtonClick()} />
       <div className={styles.modal_content}>
         <div className={styles.modal_close} onClick={() => handlerButtonClick()}>
           <CloseIcon fill="#1B1B1B" />

@@ -42,12 +42,12 @@ export default async function RootLayout({
           <Header />
           <main>
             <div id='root' >
+              {modal}
               <div id="modal-portal"></div>
               {children}
             </div>
           </main>
           <Footer />
-          {modal}
           {/* <ContactUsModal /> */}
           {/* <RegisterModal /> */}
           {/* <LoginModal /> */}

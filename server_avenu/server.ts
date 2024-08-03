@@ -31,6 +31,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const http = require("http");
 const fs = require("fs");
+const cors = require("cors");
 //const port = 3000;
 const port = 8001;
 
@@ -39,6 +40,10 @@ app.use(function (req, res, next) { res.set('Cache-Control', 'no-cache'); next()
 app.set("trust proxy", true);
 
 app.use(expressFileupload());
+app.use(cors({
+  origin: "*",
+
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -182,6 +187,8 @@ app.use("/static", express.static(path.join(__dirname, "/static")));
 app.use("/locales", express.static(path.join(__dirname, "/locales")));
 
 app.get('/api/photos/:photo', (req, res) => {
+  // console.log('Photo requested:', req.params.photo);
+  
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/photos');
   const files = fs.readdirSync(folderPath);
@@ -191,7 +198,7 @@ app.get('/api/photos/:photo', (req, res) => {
     res.status(404).send('Photo not found');
   } else {
     // console.log('Photo found:', photo);
-    
+
     res.sendFile(path.join(folderPath, photo));
   }
 })

@@ -288,5 +288,11 @@
     "captcha_pass": "Verification successfully passed",
     "captcha_not_pass": "You didn't pass the verification",
     "captcha_error": "An error occurred"
+  },
+  "validation": {
+    "name": "The name must be at least 3 characters long",
+    "password": "The password must be at least 6 characters long",
+    "email": "Enter a valid email address",
+    "message": "The message must be at least 10 characters long"
   }
 }
