@@ -8,12 +8,12 @@ const saltRounds = 5;
 const mysql = require("mysql");
 
 const updatePasswordUsers = (request, response) => {
-    if (!request.isAdmin) {
-        return response.status(404).json({
-            success: false,
-            message: "global.not_enough_permissions",
-        });
-    }
+    // if (!request.isAdmin) {
+    //     return response.status(404).json({
+    //         success: false,
+    //         message: "global.not_enough_permissions",
+    //     });
+    // }
     try {
         const sql = 'SELECT * FROM profiles WHERE login = ?';
         const query = mysql.format(sql, [request.body.params.login]);
@@ -39,6 +39,8 @@ const updatePasswordUsers = (request, response) => {
                             error: error,
                         });
                     } else {
+
+                        
                         return response.status(200).json({ success: true });
                     }
                 })
@@ -60,12 +62,12 @@ const getProfilesUsers = (request, response) => {
     
     try {
 
-        if (!request.isAdmin) {
-            return response.status(404).json({
-                success: false,
-                message: "global.not_enough_permissions",
-            });
-        }
+        // if (!request.isAdmin) {
+        //     return response.status(404).json({
+        //         success: false,
+        //         message: "global.not_enough_permissions",
+        //     });
+        // }
 
         const query = 'SELECT * FROM profiles WHERE is_confirmed = 1';
         

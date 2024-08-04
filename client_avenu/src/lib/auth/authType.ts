@@ -9,6 +9,7 @@ export enum RolesUsers {
     Agency = "Agency",
     Admin = "Admin",
     SuperAdmin = "SuperAdmin",
+    None= "None",
 }
 
 // export { Roles };

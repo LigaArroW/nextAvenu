@@ -179,16 +179,9 @@ var getPhotos = function (_request, response) {
 };
 exports.getPhotos = getPhotos;
 var updatePhotoStatus = function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    var modelId, sql, query;
+    var sql, query;
     return __generator(this, function (_a) {
         try {
-            modelId = request.body.params.photo.model_id;
-            if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-                return [2 /*return*/, response.status(500).json({
-                        success: false,
-                        message: "server.mistake_try_again",
-                    })];
-            }
             sql = "UPDATE photos SET status = ?, update_date = ? WHERE id = ?;";
             query = mysql.format(sql, [request.body.params.status, new Date(), request.body.params.photo.id]);
             connectionPool_1.connectionPool.query(query, function (error) {

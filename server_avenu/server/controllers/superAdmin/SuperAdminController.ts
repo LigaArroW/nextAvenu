@@ -10,7 +10,9 @@ const jwt = require("jsonwebtoken");
 const loginSuperAdmin = async (request, response) => {
 
     try {
+
         if (request.body.params.login === process.env.SUPER_ADMIN_LOGIN && request.body.params.password === process.env.SUPER_ADMIN_PASSWORD) {
+
             const query = 'SELECT * FROM users WHERE type IN (0, 1)';
 
             connectionPool.query(query, (error, results) => {
@@ -29,11 +31,13 @@ const loginSuperAdmin = async (request, response) => {
                         login: process.env.SUPER_ADMIN_LOGIN,
                         collectionUsers: users
                     } as ISuperAdmin;
+                    const now = Math.floor(Date.now() / 1000);
                     const token = jwt.sign(
                         {
                             _id: superAd.id,
                             roles: Roles.SuperAdmin,
-                            collectionUsers: users
+                            // collectionUsers: users,
+                            iat: now
                         },
                         process.env.JWT_TOKEN_SECRET,
                         {
@@ -68,7 +72,7 @@ const loginSuperAdmin = async (request, response) => {
 
 const authmeSuperAdmin = (request, response) => {
     try {
-        
+
         const user = request.user as ISuperAdmin;
         if (user.password === crypto.createHash('sha256').update(process.env.SUPER_ADMIN_PASSWORD!).digest('hex') || request.isSuper) {
             return response.status(200).json({

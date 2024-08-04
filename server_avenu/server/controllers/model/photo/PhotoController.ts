@@ -153,13 +153,13 @@ const getPhotos = (_request, response) => {
 
 const updatePhotoStatus = async (request, response) => {
   try {
-    const modelId = request.body.params.photo.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.photo.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "UPDATE photos SET status = ?, update_date = ? WHERE id = ?;";
     const query = mysql.format(sql, [request.body.params.status, new Date(), request.body.params.photo.id]);

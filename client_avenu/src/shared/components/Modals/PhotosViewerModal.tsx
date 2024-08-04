@@ -19,7 +19,7 @@ import '../../components/Model/content/media/slick.css';
 import '../../components/Model/content/media/slick-theme.css';
 
 interface IPhotosViewerModalProps {
-  photos?: string[];
+  photos?: IPhoto[] | string[];
   index?: number;
   setIndex?: React.Dispatch<React.SetStateAction<number>>;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
@@ -76,8 +76,8 @@ const PhotosViewerModal: React.FC<IPhotosViewerModalProps> = ({ photos, index, s
               }}
             >
               <Slider ref={slider} {...settings}>
-                {photos && photos.map((photo: string) => (
-                  <div key={photo}>
+                {photos && photos.map((photo: string | IPhoto) => (
+                  <div key={typeof photo === "string" ? photo : photo.id}>
                     {/* <Image
                            src={photo}
                            alt=""
@@ -86,7 +86,7 @@ const PhotosViewerModal: React.FC<IPhotosViewerModalProps> = ({ photos, index, s
                       
                         /> */}
                     <img
-                      src={photo}
+                      src={typeof photo === "string" ? photo : `http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
                       alt=""
                       style={{
                         height: window.innerWidth > window.innerHeight / 1.333 ? "calc(100vh - 30px)" : "auto",

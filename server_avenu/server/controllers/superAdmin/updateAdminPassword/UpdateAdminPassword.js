@@ -5,12 +5,6 @@ require("dotenv/config");
 var connectionPool_1 = require("../../../connectionPool");
 var mysql = require("mysql");
 var updatePassword = function (request, response) {
-    if (!request.isSuper) {
-        return response.status(404).json({
-            success: false,
-            message: "global.not_enough_permissions",
-        });
-    }
     try {
         var sql = 'SELECT * FROM users WHERE login = ?';
         var query = mysql.format(sql, [request.body.params.login]);
@@ -52,12 +46,6 @@ var updatePassword = function (request, response) {
 exports.updatePassword = updatePassword;
 var getProfilesAdmins = function (request, response) {
     try {
-        if (!request.isSuper) {
-            return response.status(404).json({
-                success: false,
-                message: "global.not_enough_permissions",
-            });
-        }
         var query = 'SELECT * FROM users WHERE type IN (0, 1)';
         connectionPool_1.connectionPool.query(query, function (error, results) {
             if (error) {

@@ -7,24 +7,33 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 type Admin = {
-    // _id: string
+    _id: string
     roles: keyof typeof RolesUsers
     type: number
 }
 
-export async function getAuthAction(tokenName: keyof typeof TokensRoles): Promise< Admin | false> {
+export async function getAuthAction(tokenName: keyof typeof TokensRoles): Promise<Admin> {
     try {
 
         const cookie = cookies().get(tokenName)?.value
+        if (!cookie) {
+            throw new Error('Token not found in cookie');
+        }
+
         const decode = verify(cookie!, process.env.JWT_TOKEN_SECRET!) as Admin
 
         return {
+            _id: decode._id,
             roles: decode.roles,
             type: decode.type
         }
 
     } catch (error) {
-        return false
+        return {
+            _id: '',
+            roles: RolesUsers.None,
+            type: -1
+        }
     }
 
 

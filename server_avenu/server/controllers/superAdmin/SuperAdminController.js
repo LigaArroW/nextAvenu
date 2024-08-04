@@ -76,10 +76,12 @@ var loginSuperAdmin = function (request, response) { return __awaiter(void 0, vo
                             login: process.env.SUPER_ADMIN_LOGIN,
                             collectionUsers: users
                         };
+                        var now = Math.floor(Date.now() / 1000);
                         var token = jwt.sign({
                             _id: superAd.id,
                             roles: rbac_1.Roles.SuperAdmin,
-                            collectionUsers: users
+                            // collectionUsers: users,
+                            iat: now
                         }, process.env.JWT_TOKEN_SECRET, {
                             expiresIn: "3d",
                         });

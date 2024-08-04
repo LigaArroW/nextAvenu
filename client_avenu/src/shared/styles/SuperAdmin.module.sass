@@ -1,0 +1,209 @@
+$action-color: #98042D
+$text-color: #1B1B1B
+$card-color: #FFFFFF
+$background-color: #E1E2E7
+$avaliable-color: #049898
+$money-color: #D16161
+$accepts-color: #007ecc
+$disabled-color: #8b8b8b
+
+// .wrapper_content
+//     display: flex
+//     flex-grow: 1
+//     flex-direction: column
+//     height: 100vh
+//     overflow-y: scroll
+
+.content
+    display: flex
+    margin: auto
+    flex-direction: column
+    align-items: center
+
+    .title
+        color: $action-color
+        font-weight: 500
+        font-size: 28px
+
+        form
+            display: flex
+            flex-direction: column
+            gap: 15px
+            align-items: center
+            margin-top: 50px
+            margin-bottom: 25px
+
+            input
+                width: 375px
+
+            button
+                margin-top: 45px
+
+            .error
+                color: $action-color
+                font-size: 15px
+
+    .header
+        height: 60px
+        display: flex
+        align-self: center
+        align-items: center
+        justify-content: center
+        width: 100%
+        background-color: $text-color
+        position: relative
+        flex-shrink: 0
+
+        .logout
+            width: 35px
+            height: 35px
+            background-color: $card-color
+            position: absolute
+            z-index: 1
+            right: 15px
+            top: 50%
+            transform: translateY(-50%)
+
+            svg
+                width: 25px
+                height: 25px
+
+            &:hover
+                background-color: $background-color
+
+        .navigation_item
+            cursor: pointer
+            position: relative
+            padding: 0 5px
+            color: $background-color
+            transition: 0.25s all ease-out
+
+        &::after
+            content: ""
+            position: absolute
+            background-color: $card-color
+            width: 0
+            height: 2px
+            left: 50%
+            bottom: -10px
+            transition: 0.25s all ease-out
+
+            &.active
+                &::after
+                    left: 0
+                    width: 100%
+
+                &:hover
+                    &::after
+                        left: 0
+                        width: 100%
+
+.main_content
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 30px
+    padding: 45px
+
+    .title
+        color: $action-color
+        font-weight: 500
+        font-size: 28px
+
+        .container
+            display: flex
+            flex-direction: column
+            justify-content: center
+            gap: 50px
+
+        .change_block
+            display: flex
+            gap: 15px
+            border: 2px solid $accepts-color
+            padding: 30px
+
+            .user_block
+                display: flex
+                gap: 15px
+                flex-direction: column
+                align-items: center
+                justify-self: center
+                color: $text-color
+                font-weight: 400
+                font-size: 15px
+
+                .user_name
+                    color: $action-color
+                    font-weight: 500
+                    align-self: center
+
+            .save
+                cursor: pointer
+                width: 100px
+                height: 30px
+                background-color: $action-color
+                color: $card-color
+                border: none
+                border-radius: 5px
+                font-weight: 500
+                font-size: 15px
+                align-self: center
+
+                &:disabled
+                    background-color: $disabled-color
+                    cursor: default
+                    user-select: none
+
+        .users
+            display: flex
+            flex-direction: column
+            gap: 15px
+            border: 2px solid $accepts-color
+
+            .user
+                display: flex
+                gap: 15px
+                align-items: center
+                padding: 20px
+                color: $text-color
+                font-weight: 400
+                font-size: 15px
+                border-bottom: 2px solid $accepts-color
+
+                .user_name
+                    color: $action-color
+                    font-weight: 500
+
+                .password
+                    color: $money-color
+                    font-weight: 500
+
+                .btn_user
+                    cursor: pointer
+
+.sub_navigation
+    height: 60px
+    width: 100%
+    background-color: $action-color
+    color: $card-color
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0 30px
+    font-weight: 500
+    font-size: 15px
+
+@media (max-width: 650px)
+    .content
+        width: 100%
+
+        form
+            width: 100%
+
+            .input_field,
+            .textarea_field
+                font-size: 12px
+
+                input,
+                textarea
+                    width: calc(100% - 175px)

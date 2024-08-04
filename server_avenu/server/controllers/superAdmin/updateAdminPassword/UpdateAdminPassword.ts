@@ -6,12 +6,7 @@ import { IUser } from '../../../../types/user/user';
 const mysql = require("mysql");
 
 const updatePassword = (request, response) => {
-    if (!request.isSuper) {
-        return response.status(404).json({
-            success: false,
-            message: "global.not_enough_permissions",
-        });
-    }
+
     try {
         const sql = 'SELECT * FROM users WHERE login = ?';
         const query = mysql.format(sql, [request.body.params.login]);
@@ -57,12 +52,7 @@ const updatePassword = (request, response) => {
 const getProfilesAdmins = (request, response) => {
     try {
 
-        if (!request.isSuper) {
-            return response.status(404).json({
-                success: false,
-                message: "global.not_enough_permissions",
-            });
-        }
+
 
         const query = 'SELECT * FROM users WHERE type IN (0, 1)';
 

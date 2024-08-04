@@ -43,12 +43,12 @@ var connectionPool_1 = require("../../../connectionPool");
 var saltRounds = 5;
 var mysql = require("mysql");
 var updatePasswordUsers = function (request, response) {
-    if (!request.isAdmin) {
-        return response.status(404).json({
-            success: false,
-            message: "global.not_enough_permissions",
-        });
-    }
+    // if (!request.isAdmin) {
+    //     return response.status(404).json({
+    //         success: false,
+    //         message: "global.not_enough_permissions",
+    //     });
+    // }
     try {
         var sql = 'SELECT * FROM profiles WHERE login = ?';
         var query = mysql.format(sql, [request.body.params.login]);
@@ -99,12 +99,12 @@ var updatePasswordUsers = function (request, response) {
 exports.updatePasswordUsers = updatePasswordUsers;
 var getProfilesUsers = function (request, response) {
     try {
-        if (!request.isAdmin) {
-            return response.status(404).json({
-                success: false,
-                message: "global.not_enough_permissions",
-            });
-        }
+        // if (!request.isAdmin) {
+        //     return response.status(404).json({
+        //         success: false,
+        //         message: "global.not_enough_permissions",
+        //     });
+        // }
         var query = 'SELECT * FROM profiles WHERE is_confirmed = 1';
         connectionPool_1.connectionPool.query(query, function (error, results) {
             if (error) {
