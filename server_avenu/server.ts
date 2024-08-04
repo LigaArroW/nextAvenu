@@ -32,6 +32,7 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const fs = require("fs");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 //const port = 3000;
 const port = 8001;
 
@@ -40,10 +41,18 @@ app.use(function (req, res, next) { res.set('Cache-Control', 'no-cache'); next()
 app.set("trust proxy", true);
 
 app.use(expressFileupload());
+
+app.use(cookieParser());
 app.use(cors({
   origin: "*",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 
 }));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -188,7 +197,7 @@ app.use("/locales", express.static(path.join(__dirname, "/locales")));
 
 app.get('/api/photos/:photo', (req, res) => {
   // console.log('Photo requested:', req.params.photo);
-  
+
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/photos');
   const files = fs.readdirSync(folderPath);

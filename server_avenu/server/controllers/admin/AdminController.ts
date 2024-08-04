@@ -11,7 +11,7 @@ const loginAdmin = (request, response) => {
   try {
     const sql = "SELECT * FROM users WHERE login = ? AND password = ?";
     const query = mysql.format(sql, [request.body.params.login, request.body.params.password]);
-    connectionPool.query(query, (error, data) => {
+    connectionPool.query(query, async (error, data) => {
       if (error) {
         return response.status(200).json({
           success: false,
@@ -20,27 +20,45 @@ const loginAdmin = (request, response) => {
         });
       } else {
         const auth = data as IUser[];
+
         if (auth.length === 0) {
           return response.status(200).json({
             success: false,
             message: "global.invalid_username",
           });
         } else {
-          const token = jwt.sign(
+          const now = Math.floor(Date.now() / 1000);
+          const token = await jwt.sign(
             {
               _id: auth[0].id,
-              roles: Roles.Admin
+              roles: Roles.Admin,
+              type: auth[0].type,
+              iat: now
             },
             process.env.JWT_TOKEN_SECRET,
             {
               expiresIn: "3d",
+
             }
           );
+
           response.json({
             ...auth[0],
             token,
             success: true,
-          });
+          })
+
+
+          // response.json({
+          //   ...auth[0],
+          //   token,
+          //   success: true,
+          // })
+          // response.json({
+          //   ...auth[0],
+          //   token,
+          //   success: true,
+          // });
         }
       }
     });

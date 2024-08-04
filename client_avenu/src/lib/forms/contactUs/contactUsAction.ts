@@ -1,8 +1,8 @@
 'use server'
 
 import { IMessage } from "@/types/message/message";
-import { contactUsSchema } from "../validation/validation";
-import { IContactUsForm } from "./formTypes";
+import { contactUsSchema } from "../../validation/validation";
+import { IContactUsForm } from "../formTypes";
 import { render } from "@react-email/components";
 import ContactUsEmail from "@/shared/components/Emails/ContactUsEmail";
 import { getTranslations } from "next-intl/server";

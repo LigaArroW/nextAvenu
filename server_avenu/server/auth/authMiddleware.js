@@ -23,6 +23,7 @@ exports.verifyToken = verifyToken;
 var checkPermissions = function (requiredPermissions) {
     return function (req, res, next) {
         var token = req.headers.authorization;
+        console.log("🚀 ~ checkPermissions ~ token:", req.cookies.AdminToken);
         if (!token) {
             return res.status(200).json({
                 isSuccess: false,

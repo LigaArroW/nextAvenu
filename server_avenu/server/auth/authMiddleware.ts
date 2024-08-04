@@ -23,6 +23,7 @@ const verifyToken = (req, res, next) => {
 const checkPermissions = (requiredPermissions) => {
     return (req, res, next) => {
         const token = req.headers.authorization;
+        console.log("🚀 ~ checkPermissions ~ token:", req.cookies.AdminToken);
 
         if (!token) {
             return res.status(200).json({

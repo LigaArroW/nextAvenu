@@ -1,7 +1,7 @@
 'use client'
 
 
-import { contactUsAction } from '@/lib/forms/contactUsAction';
+import { contactUsAction } from '@/lib/forms/contactUs/contactUsAction';
 import styles from '@/shared/styles/ContactUs.module.sass'
 import ButtonSubmitForm from '@/widgets/ButtonSubmitForm/ButtonSubmitForm';
 import { useTranslations } from 'next-intl';

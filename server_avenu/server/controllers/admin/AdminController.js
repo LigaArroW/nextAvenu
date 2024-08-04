@@ -57,33 +57,42 @@ var loginAdmin = function (request, response) {
     try {
         var sql = "SELECT * FROM users WHERE login = ? AND password = ?";
         var query = mysql.format(sql, [request.body.params.login, request.body.params.password]);
-        connectionPool_1.connectionPool.query(query, function (error, data) {
-            if (error) {
-                return response.status(200).json({
-                    success: false,
-                    message: "global.invalid_username",
-                    error: error,
-                });
-            }
-            else {
-                var auth = data;
-                if (auth.length === 0) {
-                    return response.status(200).json({
-                        success: false,
-                        message: "global.invalid_username",
-                    });
+        connectionPool_1.connectionPool.query(query, function (error, data) { return __awaiter(void 0, void 0, void 0, function () {
+            var auth, now, token;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!error) return [3 /*break*/, 1];
+                        return [2 /*return*/, response.status(200).json({
+                                success: false,
+                                message: "global.invalid_username",
+                                error: error,
+                            })];
+                    case 1:
+                        auth = data;
+                        if (!(auth.length === 0)) return [3 /*break*/, 2];
+                        return [2 /*return*/, response.status(200).json({
+                                success: false,
+                                message: "global.invalid_username",
+                            })];
+                    case 2:
+                        now = Math.floor(Date.now() / 1000);
+                        return [4 /*yield*/, jwt.sign({
+                                _id: auth[0].id,
+                                roles: rbac_1.Roles.Admin,
+                                type: auth[0].type,
+                                iat: now
+                            }, process.env.JWT_TOKEN_SECRET, {
+                                expiresIn: "3d",
+                            })];
+                    case 3:
+                        token = _a.sent();
+                        response.json(__assign(__assign({}, auth[0]), { token: token, success: true }));
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
-                else {
-                    var token = jwt.sign({
-                        _id: auth[0].id,
-                        roles: rbac_1.Roles.Admin
-                    }, process.env.JWT_TOKEN_SECRET, {
-                        expiresIn: "3d",
-                    });
-                    response.json(__assign(__assign({}, auth[0]), { token: token, success: true }));
-                }
-            }
-        });
+            });
+        }); });
     }
     catch (error) {
         response.status(500).json({
