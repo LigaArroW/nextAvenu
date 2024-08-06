@@ -1,6 +1,6 @@
 'use client';
 
-import updateModel from "@/lib/models/updateModel";
+import { updateModel } from "@/lib/models/postDataModels";
 import { IModel } from "@/types/model/model/model";
 import { useRouter } from "next/navigation";
 
@@ -17,45 +17,20 @@ interface ITextAreaProps {
 
 const TextArea: React.FC<ITextAreaProps> = ({ model, style }) => {
     const [textValue, setTextValue] = useState(model.about_self);
-    const router = useRouter()
 
-    useEffect(() => {
 
-        // const updateAboutData = async (tmpModel: IModel) => {
-        //     try {
-        //         await fetch('http://localhost:8001/api/update_model', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json;charset=utf-8'
-        //             },
-        //             body: JSON.stringify({
-        //                 params: {
-        //                     model: tmpModel
-        //                 }
-        //             })
-        //         }).then((res) => res.json())
-        //     } catch (error) {
-        //         console.log('🚀 ~ updateAboutData ~ error:', error);
-        //     }
-        // }
+    const handleChange = async (value: string) => {
 
-        if (textValue !== model.about_self) {
-            const tmpModel = { ...model, about_self: textValue }
-            updateModel(tmpModel)
-        }
-    }, [model, textValue])
-
-    useEffect(() => {
-        router.refresh()
-    }, [textValue])
-
+        updateModel({ model: { ...model, about_self: value } })
+        setTextValue(value)
+    }
 
 
     return (
         <textarea
             className={style}
             value={textValue}
-            onChange={e => setTextValue(e.target.value)}
+            onChange={e => handleChange(e.target.value)}
         />
     );
 

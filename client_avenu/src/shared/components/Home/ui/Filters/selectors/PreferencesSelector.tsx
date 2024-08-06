@@ -11,25 +11,23 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { ISmooker } from "@/types/core/smooker";
 import { IPiercing } from "@/types/model/piercing/piercing";
 import { ITatoo } from "@/types/core/tatoo";
 import { IEyesColor } from "@/types/core/eyesColor";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IPreferencesSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { smookers, piercings, tatoos, eyesColors, setSmookers, setPiercings, setTatoos, setEyesColors } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
+
 
 
   return (
@@ -44,9 +42,9 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
       >
         {t("model.preferences")}
         {activeComponent === ComponentType.PreferencesSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {(filter.smookers ? filter.smookers.length : 0) + (filter.piercings ? filter.piercings.length : 0) + (filter.tatoos ? filter.tatoos.length : 0) + (filter.eyesColors ? filter.eyesColors.length : 0) > 0 ? (
+        {(smookers.length + piercings.length + tatoos.length + eyesColors.length) > 0 ? (
           <div className={styles.group_count}>
-            {(filter.smookers ? filter.smookers.length : 0) + (filter.piercings ? filter.piercings.length : 0) + (filter.tatoos ? filter.tatoos.length : 0) + (filter.eyesColors ? filter.eyesColors.length : 0)}
+            {smookers.length + piercings.length + tatoos.length + eyesColors.length}
           </div>
         ) : null}
       </div>
@@ -60,15 +58,18 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['smookers'] === smooker.id.toString() || filter['smookers']?.includes(smooker.id.toString())) ? 'active' : ""
+                      className={`${'checkbox_mark'} ${smookers.includes(smooker.id) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
+                        if (smookers.includes(smooker.id)) {
+                          return setSmookers(smookers.filter((id) => id !== smooker.id));
+                        }
+                        setSmookers([...smookers, smooker.id]);
 
-                        handleSearch('smookers', smooker.id.toString())
                       }}
                     >
-                      {(filter['smookers'] === smooker.id.toString() || filter['smookers']?.includes(smooker.id.toString())) ? (
+                      {smookers.includes(smooker.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -89,15 +90,18 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['piercings'] === piercing.id.toString() || filter['piercings']?.includes(piercing.id.toString())) ? 'active' : ""
+                      className={`${'checkbox_mark'} ${piercings.includes(piercing.id) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
 
-                        handleSearch('piercings', piercing.id.toString())
+                        if (piercings.includes(piercing.id)) {
+                          return setPiercings(piercings.filter((id) => id !== piercing.id));
+                        }
+                        setPiercings([...piercings, piercing.id]);
                       }}
                     >
-                      {(filter['piercings'] === piercing.id.toString() || filter['piercings']?.includes(piercing.id.toString())) ? (
+                      {piercings.includes(piercing.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -118,15 +122,18 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['tatoos'] === tatoo.id.toString() || filter['tatoos']?.includes(tatoo.id.toString())) ? 'active' : ""
+                      className={`${'checkbox_mark'} ${tatoos.includes(tatoo.id) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
 
-                        handleSearch('tatoos', tatoo.id.toString())
+                        if (tatoos.includes(tatoo.id)) {
+                          return setTatoos(tatoos.filter((id) => id !== tatoo.id));
+                        }
+                        setTatoos([...tatoos, tatoo.id]);
                       }}
                     >
-                      {(filter['tatoos'] === tatoo.id.toString() || filter['tatoos']?.includes(tatoo.id.toString())) ? (
+                      {tatoos.includes(tatoo.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -145,17 +152,20 @@ const PreferencesSelector: React.FC<IPreferencesSelectorProps> = ({ activeCompon
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['eyesColors'] === eyesColor.id.toString() || filter['eyesColors']?.includes(eyesColor.id.toString()))
+                      className={`${'checkbox_mark'} ${eyesColors.includes(eyesColor.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
 
-                        handleSearch('eyesColors', eyesColor.id.toString())
+                        if (eyesColors.includes(eyesColor.id)) {
+                          return setEyesColors(eyesColors.filter((id) => id !== eyesColor.id));
+                        }
+                        setEyesColors([...eyesColors, eyesColor.id]);
                       }}
                     >
-                      {(filter['eyesColors'] === eyesColor.id.toString() || filter['eyesColors']?.includes(eyesColor.id.toString())) ? (
+                      {eyesColors.includes(eyesColor.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>

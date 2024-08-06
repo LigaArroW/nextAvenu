@@ -34,7 +34,8 @@ import { IVideo } from "@/types/model/video/video";
 import { VideoStatus } from "@/enums/videoStatus";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { usePathName } from "@/shared/hooks/usePathName";
 
 
 interface IHomeModelProps {
@@ -49,6 +50,8 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
   const [isPhoneShowed, setIsPhoneShowed] = useState(false);
   const locale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
+  const patnName = usePathName();
 
   const calcIsOnline = () => {
     const now = new Date();
@@ -79,7 +82,14 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
   return (
     <div
       className={`${styles.model} ${viewType === ViewType.GridView ? styles.grid_model : styles.list_model}`}
-      onClick={() => router.push((forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`)}
+      // onClick={() => router.push((forModerator ? `${pathname}` : `${locale}`) + `/model/${String(model.id)}`)}
+      onClick={() => {
+        router.push(forModerator
+          ?
+          pathname + `/model/${String(model.id)}`
+          :
+          (patnName === '/' ? `${locale}` : `/${locale}`) + `/model/${String(model.id)}`)
+      }}
     >
       {model.photos.filter((photo: IPhoto) => photo.is_main).length > 0 && (
         <div className={styles.photo}>
@@ -90,7 +100,12 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
             width={180}
             height={250}
             priority
-            onClick={() => router.push((forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`)}
+            // onClick={() => router.push((forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`)}
+            onClick={() => router.push(forModerator
+              ?
+              pathname + `/model/${String(model.id)}`
+              :
+              (patnName === '/' ? `${locale}` : `/${locale}`) + `/model/${String(model.id)}`)}
           />
         </div>
       )}
@@ -104,7 +119,14 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
           <Link
             className={styles.name}
             // href={`${locale}/model/${String(model.id).padStart(8, "0")}`}
-            href={(forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`}
+            // href={(forModerator ? `${locale}/admin-moderator` : `${locale}`) + `/model/${String(model.id)}`}
+            // href={(forModerator ? `${pathname}` : `${locale}`) + `/model/${String(model.id)}`}
+            href={forModerator
+              ?
+              pathname + `/model/${String(model.id)}`
+              :
+              (patnName === '/' ? `${locale}` : `/${locale}`) + `/model/${String(model.id)}`}
+          // patnName === '/' ? `${locale}` + `/model/${String(model.id)}` : `/model/${String(model.id)}`}
           // href={(forModerator ? `${locale}/admin-moderator` : '') + `${locale}/model/${String(model.id).padStart(8, "0")}`}
           >{model.name}</Link>
           <div className={styles.statuses}>

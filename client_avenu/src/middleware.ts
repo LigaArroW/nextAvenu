@@ -30,18 +30,10 @@ export async function middleware(request: NextRequest) {
       token: cookie
     })
 
-    // if (!auth) {
-    //   return NextResponse.redirect(new URL('/admin-moderator', request.url))
-    // }
-
   }
   if (request.nextUrl.pathname.startsWith('/(en|ru)/admin-4c458ba3adfa8005a9df1c8fa74e28e0')) {
 
     const cookie = request.cookies.get('SuperAdminToken')?.value
-    // console.log("🚀 ~ middleware ~ cookie:", cookie)
-
-
-
     if (!cookie) {
       NextResponse.redirect(new URL('/admin-moderator', request.url))
     }
@@ -49,12 +41,8 @@ export async function middleware(request: NextRequest) {
       token: cookie
     })
 
-    // if (!auth) {
-    //   return NextResponse.redirect(new URL('/admin-moderator', request.url))
-    // }
-
   }
-
+ 
 
 
 

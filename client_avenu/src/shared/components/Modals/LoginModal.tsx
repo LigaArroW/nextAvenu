@@ -73,7 +73,7 @@ const RegisterModal: React.FC<ILoginModalProps> = ({ onClose }) => {
           <div className={styles.modal_close} onClick={onClose}>
             <Close fill="#1B1B1B" />
           </div>
-          <LoginContent registerContent={() => setLoginContent(true)} modalClose={onClose}/>
+          {/* <LoginContent registerContent={() => setLoginContent(true)} modalClose={onClose}/> */}
         </div>
       </div>
       {

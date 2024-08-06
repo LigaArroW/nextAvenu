@@ -12,23 +12,20 @@ import { Check } from "@/shared/assets/Check";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { IServiceCategory } from "@/types/core/serviceCategory";
 import { IService } from "@/types/core/service";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IServicesSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { services, meetingPlaces, setServices, setMeetingPlaces } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -43,8 +40,8 @@ const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, s
       >
         {t("model.services")}
         {activeComponent === ComponentType.ServicesSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {(filter.services ? filter.services.length : 0) + (filter.meetingPlaces ? filter.meetingPlaces.length : 0) > 0 ? (
-          <div className={styles.group_count}>{(filter.services ? filter.services.length : 0) + (filter.meetingPlaces ? filter.meetingPlaces.length : 0)}</div>
+        {(services.length + meetingPlaces.length) > 0 ? (
+          <div className={styles.group_count}>{services.length + meetingPlaces.length}</div>
         ) : null}
       </div>
       <div className={styles.filters_list}>
@@ -62,17 +59,19 @@ const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, s
                     <label className={'checkbox'}>
                       <input type="checkbox" />
                       <span
-                        className={`${'checkbox_mark'} ${(filter['meetingPlaces'] === meetingPlace.id.toString() || filter['meetingPlaces']?.includes(meetingPlace.id.toString()))
+                        className={`${'checkbox_mark'} ${meetingPlaces.includes(meetingPlace.id)
                           ? 'active'
                           : ""
                           }`}
                         aria-hidden="true"
                         onClick={() => {
-
-                          handleSearch('meetingPlaces', meetingPlace.id.toString())
+                          if (meetingPlaces.includes(meetingPlace.id)) {
+                            return setMeetingPlaces(meetingPlaces.filter((id) => id !== meetingPlace.id))
+                          }
+                          setMeetingPlaces([...meetingPlaces, meetingPlace.id])
                         }}
                       >
-                        {(filter['meetingPlaces'] === meetingPlace.id.toString() || filter['meetingPlaces']?.includes(meetingPlace.id.toString())) ? (
+                        {meetingPlaces.includes(meetingPlace.id) ? (
                           <Check fill="#98042D" />
                         ) : null}
                       </span>
@@ -96,14 +95,17 @@ const ServicesSelector: React.FC<IServicesSelectorProps> = ({ activeComponent, s
                     <label className={'checkbox'}>
                       <input type="checkbox" />
                       <span
-                        className={`${'checkbox_mark'} ${(filter['services'] === service.id.toString() || filter['services']?.includes(service.id.toString())) ? 'active' : ""
+                        className={`${'checkbox_mark'} ${services.includes(service.id) ? 'active' : ""
                           }`}
                         aria-hidden="true"
                         onClick={() => {
-                          handleSearch('services', service.id.toString())
+                          if (services.includes(service.id)) {
+                            return setServices(services.filter((id) => id !== service.id))
+                          }
+                          setServices([...services, service.id])
                         }}
                       >
-                        {(filter['services'] === service.id.toString() || filter['services']?.includes(service.id.toString())) ? (
+                        {services.includes(service.id) ? (
                           <Check fill="#98042D" />
                         ) : null}
                       </span>

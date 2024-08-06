@@ -1,10 +1,11 @@
 'use server'
 
+import { IModel } from "@/types/model/model/model"
 import { IPhoto } from "@/types/model/photo/photo"
 
 
-export async function getModels({ profile_id }: { profile_id: number }) {
-    const response = await fetch(`http://localhost:8001/api/models?profile_id=${profile_id}`,
+export async function getModels() {
+    const response = await fetch(`http://localhost:8001/api/models`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
             next: { tags: ['Models'] }
@@ -13,6 +14,24 @@ export async function getModels({ profile_id }: { profile_id: number }) {
     return await response.json()
 
 }
+
+
+export const getModelOne = async (id: string) => {
+    // const response = await fetch(`http://localhost:8001/api/models`, {
+    //     next: { tags: ['modelsPage'] },
+    //     // next: { revalidate: 5 }
+    //     // cache: 'no-store'
+    // })
+    const models: IModel[] = await getModels()
+
+    const model: IModel | undefined = models.find((model: IModel) => model.id === Number(id));
+    if (!model) {
+        throw new Error(`Model with id ${id} not found`);
+    }
+    return model;
+}
+
+
 export async function getPhotos(): Promise<IPhoto[]> {
     const response = await fetch('http://localhost:8001/api/photos',
         {
@@ -45,7 +64,7 @@ export async function getModelsAdmin({ profile_id }: { profile_id: number }) {
     const response = await fetch(`http://localhost:8001/api/models?profile_id=${profile_id}`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
-            next: { tags: ['ModelsAdmin'] }
+            next: { tags: ['ModelsAdmin', 'Models'] }
         }
     )
     return await response.json()

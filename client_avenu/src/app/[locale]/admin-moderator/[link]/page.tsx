@@ -11,45 +11,12 @@ import Faq from "@/shared/components/Admin/ui/Faq/Faq";
 import { IDistrict } from "@/types/core/district";
 import { IUnderground } from "@/types/core/underground";
 import { IFaq } from "@/types/faq/faq";
-import { INavigationLink } from "@/types/main/navigationLink"
-import { verify } from "jsonwebtoken";
-import { cookies } from "next/headers";
-
-
-// export async function generateStaticParams() {
-//     // const auth = await getAuthAction('AdminToken')
-//     // console.log("🚀 ~ generateStaticParams ~ auth:", auth) 
-//     // console.log("🚀 ~ generateStaticParams ~ auth: type", auth.type) 
 
 
 
 
 
-//     // const linksList: Record<string, INavigationLink[]> = LinksList
-//     console.log("🚀 ~ file: page.tsx:generateStaticParams ~ linksList:", LinksList[auth.type]);
-
-
-//     return LinksList[auth.type].map((link: INavigationLink) => ({
-//         id: link.link_url
-//     }))
-
-
-
-//     // const listLink = LinksList[auth.type]
-//     // const models = await fetch('http://localhost:8001/api/models', {
-//     //     method: 'GET',
-//     //     next: { revalidate: 10 },
-//     // }).then((res) => res.json());
-
-//     // return models.map((model: IModel) => ({
-//     //     id: String(model.id),
-//     //     // id: String(model.id).padStart(8, "0"),
-//     // }))
-
-
-// }
-
-export default async function AdminModeratorPage({ params: { id } }: { params: { id: string } }) {
+export default async function AdminModeratorPage({ params: { link} }: { params: { link: string } }) {
     const district: IDistrict[] = await getDistricts()
     const underground: IUnderground[] = await getUndergrounds()
     const faqs: IFaq[] = await getFaqs()
@@ -57,15 +24,15 @@ export default async function AdminModeratorPage({ params: { id } }: { params: {
 
 
 
-    switch (id) {
+    switch (link) {
         case 'checking_reviews':
             return (
-                <CheckingReviews id={id} />
+                <CheckingReviews id={link} />
             )
 
         case 'all_proposals':
             return (
-                <AllProposal id={id} />
+                <AllProposal id={link} />
             )
         case 'editing_configuration':
             return (

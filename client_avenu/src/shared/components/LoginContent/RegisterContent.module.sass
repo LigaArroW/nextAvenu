@@ -1,0 +1,303 @@
+$background-color: #E1E2E7
+$action-color: #98042D
+$action-hover-color: #98042DD9
+$card-color: #FFFFFF
+
+.content
+
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    .title
+        color: $action-color
+        font-weight: 500
+        font-size: 28px
+
+.form
+    display: flex
+    flex-direction: column
+    gap: 15px
+    align-items: start !important
+    width: 550px
+    margin-top: 50px
+    margin-bottom: 25px
+
+    button
+        align-self: center
+
+    .radio_group_container
+        gap: 15px
+        display: flex
+        flex-direction: column
+        width: 100%
+        font-size: 15px
+
+        .label
+            word-wrap: break-word
+            flex-shrink: 0
+
+        .radio_group
+            display: flex
+            flex-wrap: wrap
+            gap: 15px
+            align-items: center
+            border-radius: 5px
+            background-color: $card-color
+            padding: 10px
+            box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
+            justify-content: space-between
+
+            .item
+                display: flex
+                align-items: center
+                gap: 15px
+                width: 45%
+
+                .item_text
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    gap: 5px
+
+                .item_text > p
+                    align-self: start
+                    font-size: 10px
+
+                .button
+                    height: 22px
+                    width: 22px
+                    border-radius: 30px
+                    border: 4px solid $card-color
+                    background-color: $background-color
+                    cursor: pointer
+                    flex-shrink: 0
+                    transition: all .2s ease-out
+
+                    &.active
+                        background-color: $action-color
+                        border: 4px solid $background-color
+
+    .input_field
+        display: flex
+        justify-content: space-between
+        position: relative
+        font-size: 15px
+        width: 100%
+        align-items: center
+
+        input
+            width: calc(100% - 200px)
+
+        button
+            margin-top: 45px
+            align-self: center
+            width: 325px
+
+        .error
+            color: $action-color
+            font-size: 15px
+            align-self: center
+
+    .authorization,
+    .contact_us
+        cursor: pointer
+        font-weight: 500
+        color: $action-color
+        border-bottom: 1px solid $action-color
+        transition: .1s all ease-out
+        align-self: center
+        width: max-content
+
+    .authorization
+        font-size: 18px
+
+    .success_content
+        display: flex
+        flex-direction: column
+        text-align: center
+        gap: 25px
+        font-size: 18px
+        width: 475px
+        font-weight: 500
+        margin-top: 50px
+
+        .success_title
+            color: $action-color
+
+        .success_description
+            width: 100%
+
+    .bottom_content
+        margin-top: 50px
+        font-size: 15px
+        display: flex
+        flex-direction: column
+        text-align: center
+        font-weight: 500
+
+// input[type='checkbox']
+.type_checkbox
+    clip: rect(0 0 0 0)
+    clip-path: inset(50%)
+    height: 1px
+    overflow: hidden
+    position: absolute
+    white-space: nowrap
+    width: 1px
+
+.checkbox
+    display: flex
+    align-items: center
+    gap: 10px
+    color: var(--text-color)
+
+    &_mark
+        height: 25px
+        width: 25px
+        background: var(--background-color)
+        border: 1px var(--background-color) solid
+        border-radius: 3px
+        display: flex
+        align-items: center
+        justify-content: center
+        transition: all .2s ease-out
+        cursor: pointer
+        flex-shrink: 0
+
+        & svg
+            height: 21px
+            width: 21px
+
+        &.white
+            background: var(--card-color)
+            box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25)
+
+    &_mark.active
+        background-color: var(--card-color)
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25)
+        border: 1px solid var(--action-color)
+
+    &.empty .text
+        display: none
+
+    & .content
+        display: flex
+        gap: 10px
+
+    & .text
+        font-size: 15px
+        font-weight: 500
+        word-wrap: break-word
+
+        span
+            text-decoration: underline
+            color: var(--action-color)
+            cursor: pointer
+
+    & .count
+        font-size: 13px
+        font-weight: 400
+
+@media (min-width: 1201px)
+    .content
+        .authorization,
+        .contact_us
+            &:hover
+                color: $action-hover-color
+
+@media (max-width: 1200px)
+    .content
+        .title
+            font-size: 24px
+
+        form
+            .radio_group_container,
+            .input_field
+                font-weight: 500
+                font-size: 14px
+
+            .radio_group_container
+                .radio_group
+                    gap: 10px
+
+                    .item
+                        gap: 10px
+
+                        .button
+                            height: 18px
+                            width: 18px
+
+            button
+                width: 225px
+
+            .error
+                font-size: 14px
+
+        .authorization
+            font-size: 14px
+
+        .success_content
+            font-size: 14px
+
+        .bottom_content
+            font-size: 14px
+
+    .checkbox
+        gap: 5px
+
+        .checkbox_mark
+            width: 20px
+            height: 20px
+
+        svg
+            width: 16px
+            height: 16px
+
+    .checkbox .content
+        flex-direction: column
+        gap: 2px
+
+    .checkbox .text
+        display: flex
+        font-size: 14px
+
+    .checkbox .count
+        font-size: 10px
+
+@media (max-width: 600px)
+    .content
+        width: 100%
+
+        form
+            width: 100%
+
+            .radio_group_container,
+            .input_field
+                font-size: 12px
+
+                input
+                    width: calc(100% - 175px)
+
+            .radio_group_container
+                .radio_group
+                    gap: 5px
+
+            .error
+                font-size: 12px
+
+        .title
+            font-size: 18px
+
+        .success_content
+            width: 100%
+            font-size: 13px
+
+        .bottom_content
+            font-size: 12px
+
+    .checkbox .text
+        font-size: 10px
+
+    .checkbox .count
+        font-size: 7px

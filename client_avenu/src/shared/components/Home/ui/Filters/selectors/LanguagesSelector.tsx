@@ -9,22 +9,21 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { ILanguage } from "@/types/model/language/language";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface ILanguagesSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const LanguagesSelector: React.FC<ILanguagesSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const LanguagesSelector: React.FC<ILanguagesSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { languages, setLanguages } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
+
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
+
 
 
   return (
@@ -39,7 +38,7 @@ const LanguagesSelector: React.FC<ILanguagesSelectorProps> = ({ activeComponent,
       >
         {t("model.languages")}
         {activeComponent === ComponentType.LanguagesSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {filter.languages && filter.languages.length > 0 ? <div className={styles.group_count}>{filter.languages.length}</div> : null}
+        {languages.length > 0 ? <div className={styles.group_count}>{languages.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
         {activeComponent === ComponentType.LanguagesSelector &&
@@ -48,15 +47,19 @@ const LanguagesSelector: React.FC<ILanguagesSelectorProps> = ({ activeComponent,
               <label className={'checkbox'}>
                 <input type="checkbox" />
                 <span
-                  className={`${'checkbox_mark'} ${(filter['languages'] === language.id.toString() || filter['languages']?.includes(language.id.toString())) ? 'active' : ""
+                  className={`${'checkbox_mark'} ${languages.includes(language.id) ? 'active' : ""
                     }`}
                   aria-hidden="true"
                   onClick={() => {
 
-                    handleSearch('languages', language.id.toString())
+                    if (languages.includes(language.id)) {
+                      return setLanguages(languages.filter((item) => item !== language.id));
+                    }
+                    setLanguages([...languages, language.id]);
+
                   }}
                 >
-                  {(filter['languages'] === language.id.toString() || filter['languages']?.includes(language.id.toString())) ? (
+                  {languages.includes(language.id) ? (
                     <Check fill="#98042D" />
                   ) : null}
                 </span>

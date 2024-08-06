@@ -6,7 +6,15 @@ import { ZodError } from "zod";
 import { adminAuthSchema } from "@/lib/validation/validation";
 import { revalidatePath } from "next/cache";
 import { setAuthAction } from "@/lib/auth/authAction";
+import { verify } from "jsonwebtoken";
+import { RolesUsersToTokenRoles } from "@/lib/auth/authType";
 
+
+type Admin = {
+    _id: string
+    roles: keyof typeof RolesUsersToTokenRoles
+
+}
 
 export async function adminAuthAction(prevState: IAdminAuthForm, data: FormData): Promise<IAdminAuthForm> {
     const t = await getTranslations();
@@ -69,8 +77,8 @@ const authAdmin = async (login: string, password: string) => {
     if (!data.token) {
         throw new Error('Invalid token');
     }
-
-    setAuthAction('AdminToken', data.token)
+    const verif = verify(data.token, process.env.JWT_TOKEN_SECRET!) as Admin
+    setAuthAction(RolesUsersToTokenRoles[verif.roles], data.token)
 
     return data
 

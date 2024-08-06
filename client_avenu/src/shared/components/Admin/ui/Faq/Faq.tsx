@@ -223,7 +223,7 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                             <div className={styles.part_title}>Ответ</div>
                             <div className={styles.part}>
                                 <ReactQuill
-                                    ref={quillRefAnswer}
+                                    // ref={quillRefAnswer}
                                     className={`${styles.quill} ${answer.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
                                         ? styles.wrong
                                         : ""
@@ -232,7 +232,7 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                                     value={answer}
                                     onChange={setAnswer}
                                     modules={{ toolbar: toolbarOptions }}
-                                    onKeyUp={() => setAnswer(`${quillRefAnswer.current?.getEditorContents()}`)}
+                                    // onKeyUp={() => setAnswer(`${quillRefAnswer.current?.getEditorContents()}`)}
                                 />
                                 <div
                                     className={`${styles.close} ${answer !== undefined &&
@@ -251,7 +251,7 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                             </div>
                             <div className={styles.part}>
                                 <ReactQuill
-                                    ref={quillRefAnswerEng}
+                                    // ref={quillRefAnswerEng}
                                     className={`${styles.quill} ${answerEng.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
                                         ? styles.wrong
                                         : ""
@@ -260,7 +260,7 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                                     value={answerEng}
                                     onChange={setAnswerEng}
                                     modules={{ toolbar: toolbarOptions }}
-                                    onKeyUp={() => setAnswerEng(`${quillRefAnswerEng.current?.getEditorContents()}`)}
+                                    // onKeyUp={() => setAnswerEng(`${quillRefAnswerEng.current?.getEditorContents()}`)}
                                 />
                                 <div
                                     className={`${styles.close} ${answerEng !== undefined &&

@@ -27,7 +27,6 @@ export default async function AdminModeratorPage({ params: { locale } }: { param
     const auth = await getAuthAction('AdminToken')
     const listAll = LinksList[auth.type]
     const list = Array.isArray(listAll) && listAll.filter(item => item.id === 0)[0] || LinksList[0][0]
-    console.log("🚀 ~ AdminModeratorPage ~ list:", list)
     const photos = await getPhotos()
     const model: IModel[] = await getModelsAdmin({ profile_id: Number(auth._id) })
     let photoTmp: IPhoto[] = [], modelPhoto: IPhoto[][] = []

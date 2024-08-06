@@ -15,6 +15,7 @@ const jwt = require("jsonwebtoken");
 
 const login = (request, response) => {
   try {
+
     const sql = "SELECT * FROM profiles WHERE is_confirmed = 1 AND login = ?";
     const query = mysql.format(sql, [request.body.params.login]);
     connectionPool.query(query, async (error, data) => {
@@ -26,6 +27,7 @@ const login = (request, response) => {
         });
       } else {
         const auth = data as IProfile[];
+     
         if (auth.length === 0) {
           return response.status(200).json({
             success: false,
@@ -66,12 +68,13 @@ const login = (request, response) => {
                       }
                     });
                   }) as IModel[];
-
+                  const now = Math.floor(Date.now() / 1000);
                   const token = jwt.sign(
                     {
                       _id: auth[0].id,
                       models: models.map(m => m.id),
-                      roles: auth[0].type === 0 ? Roles.Agency : Roles.Customer
+                      roles: auth[0].type === 0 ? Roles.Agency : Roles.Customer,
+                      iat: now
                     },
                     process.env.JWT_TOKEN_SECRET,
                     {
@@ -137,7 +140,7 @@ const register = (request, response) => {
                 return response.status(200).json({
                   success: false,
                   message: "global.user_already_registered",
-                  error: "Пользователь с таким именем уже зарегистрирован",
+                  error: "global.user_already_registered",
                 });
               } else {
                 const mailOptions = {

@@ -13,21 +13,20 @@ import { IGeneral } from "@/types/core/generalFilters";
 import { useSearchParams } from "next/navigation";
 import queryString from "query-string";
 import { IOrientation } from "@/types/core/orientation";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IOrientationsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
   filters: Partial<IGeneral>;
-  handleSearch: (search: string, value: string) => void;
 }
 
-const OrientationsSelector: React.FC<IOrientationsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const OrientationsSelector: React.FC<IOrientationsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { orientations, setOrientations } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
- 
-  
+
+
   return (
     <div
       className={`${styles.filters_group} ${activeComponent === ComponentType.OrientationsSelector ? styles.active : ""}`}
@@ -42,7 +41,7 @@ const OrientationsSelector: React.FC<IOrientationsSelectorProps> = ({ activeComp
       >
         {t("model.orientation")}
         {activeComponent === ComponentType.OrientationsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {filter['orientations'] && filter['orientations'].length > 0 ? <div className={styles.group_count}>{filter['orientations'].length}</div> : null}
+        {orientations.length > 0 ? <div className={styles.group_count}>{orientations.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
         {activeComponent === ComponentType.OrientationsSelector &&
@@ -51,17 +50,19 @@ const OrientationsSelector: React.FC<IOrientationsSelectorProps> = ({ activeComp
               <label className={'checkbox'}>
                 <input type="checkbox" />
                 <span
-                  className={`${'checkbox_mark'} ${(filter['orientations'] === orientation.id.toString() || filter['orientations']?.includes(orientation.id.toString()))
+                  className={`${'checkbox_mark'} ${orientations.includes(orientation.id)
                     ? 'active'
                     : ""
                     }`}
                   aria-hidden="true"
                   onClick={() => {
-
-                    handleSearch('orientations', orientation.id.toString())
+                    if (orientations.includes(orientation.id)) {
+                      return setOrientations(orientations.filter((id) => id !== orientation.id))
+                    }
+                    setOrientations([...orientations, orientation.id])
                   }}
                 >
-                  {(filter['orientations'] === orientation.id.toString() || filter['orientations']?.includes(orientation.id.toString())) ? (
+                  {orientations.includes(orientation.id) ? (
                     <Check fill="#98042D" />
                   ) : null}
                 </span>

@@ -13,21 +13,18 @@ import { Search } from "@/shared/assets/Search";
 import { useLocale, useTranslations } from "next-intl";
 import { IDistrict } from "@/types/core/district";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IDistrictsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const DistrictsSelector: React.FC<IDistrictsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const DistrictsSelector: React.FC<IDistrictsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { districts, setDistricts } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
 
   const [filteredDistricts, setFilteredDistricts] = useState([] as IDistrict[]);
   const [searchedDistrict, setSearchedDistrict] = useState("");
@@ -38,9 +35,9 @@ const DistrictsSelector: React.FC<IDistrictsSelectorProps> = ({ activeComponent,
     setFilteredDistricts(
       districtsSorted.filter(
         (district: IDistrict) =>
-          (searchedDistrict.trim() === ""
-            ? true
-            : district[usedName].toLowerCase().startsWith(searchedDistrict.trim().toLowerCase()))
+        (searchedDistrict.trim() === ""
+          ? true
+          : district[usedName].toLowerCase().startsWith(searchedDistrict.trim().toLowerCase()))
       )
 
     );
@@ -58,7 +55,7 @@ const DistrictsSelector: React.FC<IDistrictsSelectorProps> = ({ activeComponent,
       >
         {t("global.district")}
         {activeComponent === ComponentType.DistrictsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {filter['districts'] && filter['districts'].length > 0 ? <div className={styles.group_count}>{filter['districts'].length}</div> : null}
+        {districts.length > 0 ? <div className={styles.group_count}>{districts.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
         <div className={styles.search_input}>
@@ -76,15 +73,18 @@ const DistrictsSelector: React.FC<IDistrictsSelectorProps> = ({ activeComponent,
               <label className={'checkbox'}>
                 <input type="checkbox" />
                 <span
-                  className={`${'checkbox_mark'} ${(filter['districts'] === district.id.toString() || filter['districts']?.includes(district.id.toString())) ? 'active' : ""
+                  className={`${'checkbox_mark'} ${districts.includes(district.id) ? 'active' : ""
                     }`}
                   aria-hidden="true"
                   onClick={() => {
-                    handleSearch('districts', district.id.toString())
+                    if (districts.includes(district.id)) {
+                      return setDistricts(districts.filter((item) => item !== district.id))
+                    }
+                    setDistricts([...districts, district.id])
 
                   }}
                 >
-                  {(filter['districts'] === district.id.toString() || filter['districts']?.includes(district.id.toString())) ? (
+                  {districts.includes(district.id) ? (
                     <Check fill="#98042D" />
                   ) : null}
                 </span>

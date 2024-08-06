@@ -12,27 +12,21 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { Search } from "@/shared/assets/Search";
 import { useLocale, useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { IGeneral } from "@/types/core/generalFilters";
 import { IUnderground } from "@/types/core/underground";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IUndergroundsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const UndergroundsSelector: React.FC<IUndergroundsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
-  // console.log("🚀 ~ filters:", filters.undergrounds)
+const UndergroundsSelector: React.FC<IUndergroundsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { undergrounds, setUndergrounds } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
-  // console.log("🚀 ~ searchParams:", searchParams)
   const locale = useLocale();
-  let filter = queryString.parse(searchParams.toString());
 
-  filter = typeof filter['undergrounds'] === 'string' ? { undergrounds: [filter['undergrounds']] } : filter
 
 
 
@@ -69,7 +63,7 @@ const UndergroundsSelector: React.FC<IUndergroundsSelectorProps> = ({ activeComp
       >
         {t("global.underground")}
         {activeComponent === ComponentType.UndergroundsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {filter['undergrounds'] && filter['undergrounds'].length > 0 ? <div className={styles.group_count}>{filter['undergrounds'].length}</div> : null}
+        {undergrounds.length > 0 ? <div className={styles.group_count}>{undergrounds.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
         <div className={styles.search_input}>
@@ -90,18 +84,20 @@ const UndergroundsSelector: React.FC<IUndergroundsSelectorProps> = ({ activeComp
                 <span
 
                   className={`${'checkbox_mark'}
-                   ${((typeof filter['undergrounds'] === 'string' && filter['undergrounds'] === underground.id.toString())
-                      ||
-                      (typeof filter['undergrounds'] === 'object' && filter['undergrounds'] && filter['undergrounds']?.filter((item) => item === underground.id.toString()).length > 0))
+                   ${undergrounds.includes(underground.id)
                       ? 'active'
                       : ""
                     }`}
                   aria-hidden="true"
                   onClick={() => {
-                    handleSearch('undergrounds', underground.id.toString())
+                    if (undergrounds.includes(underground.id)) {
+                      return setUndergrounds(undergrounds.filter((id) => id !== underground.id))
+                    }
+
+                    setUndergrounds([...undergrounds, underground.id])
                   }}
                 >
-                  {(filter['undergrounds'] === underground.id.toString() || filter['undergrounds']?.includes(underground.id.toString())) ? (
+                  {undergrounds.includes(underground.id) ? (
                     <Check fill="#98042D" />
                   ) : null}
                 </span>

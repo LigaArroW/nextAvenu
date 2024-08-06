@@ -10,22 +10,19 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { ITrip } from "@/types/core/trip";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface ITripsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { trips, setTrips } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -40,7 +37,7 @@ const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActi
       >
         {t("model.trips")}
         {activeComponent === ComponentType.TripsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {filter.trips && filter.trips.length > 0 ? <div className={styles.group_count}>{filter.trips.length}</div> : null}
+        {trips.length > 0 ? <div className={styles.group_count}>{trips.length}</div> : null}
       </div>
       <div className={styles.filters_list}>
         {activeComponent === ComponentType.TripsSelector &&
@@ -49,16 +46,19 @@ const TripsSelector: React.FC<ITripsSelectorProps> = ({ activeComponent, setActi
               <label className={'checkbox'}>
                 <input type="checkbox" />
                 <span
-                  className={`${'checkbox_mark'} ${(filter['trips'] === trip.id.toString() || filter['trips']?.includes(trip.id.toString()))
+                  className={`${'checkbox_mark'} ${trips.includes(trip.id)
                     ? 'active' : ""
                     }`}
                   aria-hidden="true"
                   onClick={() => {
+                    if (trips.includes(trip.id)) {
+                      return setTrips(trips.filter((item) => item !== trip.id))
+                    }
+                    setTrips(prev => [...prev, trip.id])
 
-                    handleSearch('trips', trip.id.toString())
                   }}
                 >
-                  {(filter['trips'] === trip.id.toString() || filter['trips']?.includes(trip.id.toString())) ? <Check fill="#98042D" /> : null}
+                  {trips.includes(trip.id) ? <Check fill="#98042D" /> : null}
                 </span>
                 <div className={'text'}>{locale === "ru" ? trip.trip : trip.trip_eng}</div>
               </label>

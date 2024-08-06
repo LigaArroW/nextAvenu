@@ -4,7 +4,7 @@ import { useMedia } from 'react-use';
 import { LinksList } from '../../linksList';
 import { INavigationLink } from '@/types/main/navigationLink';
 import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale, useTranslations} from 'next-intl';
 import { usePathName } from '@/shared/hooks/usePathName';
 import LogoRedIcon from '@/shared/assets/logo.png';
 import LogoIcon from '@/shared/assets/logo_white.png';
@@ -43,7 +43,7 @@ const HeaderNav = () => {
                 <Image src={LogoIcon} alt="logo" priority />
             </div>
             <ul
-                className={`${!isMobile ? styles.navigation : styles.navigation_mobile} ${true ? styles.active : ""
+                className={`${!isMobile ? styles.navigation : styles.navigation_mobile} ${isNavigationMobileActive ? styles.active : ""
                     }`}
             >
                 {LinksList.map((link: INavigationLink) =>
@@ -61,6 +61,7 @@ const HeaderNav = () => {
                             className={`${pathName === link.link_url ? styles.active : ""}`}
                             href={`/${locale}${link.link_url === "/" ? "" : link.link_url}`}
                             scroll={false}
+                            onClick={() => setIsNavigationMobileActive(false)}
                         // onClick={() => handleMobileLinkOnClick(link.id)}
                         >
                             {t(`${link.link}`)}
@@ -71,11 +72,6 @@ const HeaderNav = () => {
                 {isMobile && <Image src={LogoRedIcon} alt="logo" width={158} height={70} />}
             </ul>
         
-            {/* {modalShow && (
-                <Portal>
-                    <LoginModal onClose={() => setModalShow(false)} />
-                </Portal>
-            )} */}
         </>
 
 

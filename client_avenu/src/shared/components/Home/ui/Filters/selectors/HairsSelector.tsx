@@ -15,20 +15,20 @@ import { IGeneral } from "@/types/core/generalFilters";
 import { IHairColor } from "@/types/core/hairColor";
 import { IHairSize } from "@/types/core/hairSize";
 import { IPubisHair } from "@/types/core/pubisHair";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IHairsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
-
+const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { hairSizes, hairColors, pubisHairs, setHairColors, setHairSizes, setPubisHairs } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
+  // const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -43,9 +43,9 @@ const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActi
       >
         {t("model.hairs")}
         {activeComponent === ComponentType.HairsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {(filter.hairSizes ? filter.hairSizes.length : 0) + (filter.hairColors ? filter.hairColors.length : 0) + (filter.pubisHairs ? filter.pubisHairs.length : 0) > 0 ? (
+        {(hairSizes.length + hairColors.length + pubisHairs.length) > 0 ? (
           <div className={styles.group_count}>
-            {(filter.hairSizes ? filter.hairSizes.length : 0) + (filter.hairColors ? filter.hairColors.length : 0) + (filter.pubisHairs ? filter.pubisHairs.length : 0)}
+            {(hairSizes.length + hairColors.length + pubisHairs.length)}
           </div>
         ) : null}
       </div>
@@ -59,16 +59,20 @@ const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActi
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['hairColors'] === hairColor.id.toString() || filter['hairColors']?.includes(hairColor.id.toString()))
+                      className={`${'checkbox_mark'} ${hairColors.includes(hairColor.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        handleSearch('hairColors', hairColor.id.toString())
+                        if (hairColors.includes(hairColor.id)) {
+                          return setHairColors(hairColors.filter((item) => item !== hairColor.id))
+                        }
+
+                        setHairColors([...hairColors, hairColor.id])
                       }}
                     >
-                      {(filter['hairColors'] === hairColor.id.toString() || filter['hairColors']?.includes(hairColor.id.toString())) ? (
+                      {hairColors.includes(hairColor.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -89,14 +93,18 @@ const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActi
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['hairSizes'] === hairSize.id.toString() || filter['hairSizes']?.includes(hairSize.id.toString())) ? 'active' : ""
+                      className={`${'checkbox_mark'} ${hairSizes.includes(hairSize.id) ? 'active' : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        handleSearch('hairSizes', hairSize.id.toString())
+                        if (hairSizes.includes(hairSize.id)) {
+                          return setHairSizes(hairSizes.filter((item) => item !== hairSize.id))
+                        }
+
+                        setHairSizes([...hairSizes, hairSize.id])
                       }}
                     >
-                      {(filter['hairSizes'] === hairSize.id.toString() || filter['hairSizes']?.includes(hairSize.id.toString())) ? (
+                      {hairSizes.includes(hairSize.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -117,16 +125,20 @@ const HairsSelector: React.FC<IHairsSelectorProps> = ({ activeComponent, setActi
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['pubisHairs'] === pubisHair.id.toString() || filter['pubisHairs']?.includes(pubisHair.id.toString()))
+                      className={`${'checkbox_mark'} ${pubisHairs.includes(pubisHair.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        handleSearch('pubisHairs', pubisHair.id.toString())
+                        if (pubisHairs.includes(pubisHair.id)) {
+                          return setPubisHairs(pubisHairs.filter((item) => item !== pubisHair.id))
+                        }
+
+                        setPubisHairs([...pubisHairs, pubisHair.id])
                       }}
                     >
-                      {(filter['pubisHairs'] === pubisHair.id.toString() || filter['pubisHairs']?.includes(pubisHair.id.toString())) ? (
+                      {pubisHairs.includes(pubisHair.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>

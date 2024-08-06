@@ -10,23 +10,20 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { IBreastSize } from "@/types/core/breastSize";
 import { IBreastType } from "@/types/core/breastType";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IBreastsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { breastSizes, breastTypes, setBreastSizes, setBreastTypes } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  const filter = queryString.parse(searchParams.toString());
 
 
   return (
@@ -42,8 +39,8 @@ const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, set
         {t("model.breast")}
         {activeComponent === ComponentType.BreastsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
 
-        {(filter.breastSizes ? filter.breastSizes.length : 0) + (filter.breastTypes ? filter.breastTypes.length : 0) > 0 && (
-          <div className={styles.group_count}>{(filter.breastSizes ? filter.breastSizes.length : 0) + (filter.breastTypes ? filter.breastTypes.length : 0)}</div>
+        {(breastSizes.length + breastTypes.length) > 0 && (
+          <div className={styles.group_count}>{(breastSizes.length + breastTypes.length)}</div>
         )}
       </div>
       <div className={styles.filters_list}>
@@ -56,16 +53,20 @@ const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, set
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['breastSizes'] === breastSize.id.toString() || filter['breastSizes']?.includes(breastSize.id.toString()))
+                      className={`${'checkbox_mark'} ${breastSizes.includes(breastSize.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        handleSearch("breastSizes", breastSize.id.toString());
+                        if (breastSizes.includes(breastSize.id)) {
+                          return setBreastSizes(breastSizes.filter((id) => id !== breastSize.id))
+                        }
+
+                        setBreastSizes([...breastSizes, breastSize.id])
                       }}
                     >
-                      {(filter['breastSizes'] === breastSize.id.toString() || filter['breastSizes']?.includes(breastSize.id.toString())) && (
+                      {breastSizes.includes(breastSize.id) && (
                         <Check fill="#98042D" />
                       )}
                     </span>
@@ -84,16 +85,20 @@ const BreastsSelector: React.FC<IBreastsSelectorProps> = ({ activeComponent, set
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['breastTypes'] === breastType.id.toString() || filter['breastTypes']?.includes(breastType.id.toString()))
-                          ? 'active'
-                          : ""
+                      className={`${'checkbox_mark'} ${breastTypes.includes(breastType.id)
+                        ? 'active'
+                        : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-                        handleSearch("breastTypes", breastType.id.toString());
+                        if (breastTypes.includes(breastType.id)) {
+                          return setBreastTypes(breastTypes.filter((id) => id !== breastType.id))
+                        }
+
+                        setBreastTypes([...breastTypes, breastType.id])
                       }}
                     >
-                      {(filter['breastTypes'] === breastType.id.toString() || filter['breastTypes']?.includes(breastType.id.toString())) ? (
+                      {breastTypes.includes(breastType.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>

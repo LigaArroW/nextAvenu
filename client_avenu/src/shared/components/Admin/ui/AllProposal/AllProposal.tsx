@@ -14,7 +14,7 @@ const AllProposal: React.FC<IAllProposalProps> = ({ id }) => {
             <div className={styles.sub_navigation}>
                 {/* <Search activeComponent={activeComponent} setActiveComponent={setActiveComponent} /> */}
             </div>
-            {/* <Home type={HomePageType.AllModels}  forModerator={true}/> */}
+            <Home type={HomePageType.AllModels}  forModerator={true}/>
         </div>
     );
 };

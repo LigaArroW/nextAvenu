@@ -6,7 +6,10 @@ import { IModel } from "@/types/model/model/model";
 import { IModelFeedback } from "@/types/model/modelFeedback/modelFeedback";
 import { IPhoto } from "@/types/model/photo/photo";
 import { IVideo } from "@/types/model/video/video";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+
+
+
 
 export async function updatePhotoStatus({ photo, status }: { photo: IPhoto; status: PhotoStatus }) {
 
@@ -94,7 +97,7 @@ export async function updateModelFeedbackStatus({ model_feedback, status }: { mo
 }
 export async function updateModel({ model }: { model: IModel }) {
 
-    const response = await fetch('http://localhost:8001/api/updateModelFeedbackStatus', {
+    const response = await fetch('http://localhost:8001/api/update_model', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -106,7 +109,32 @@ export async function updateModel({ model }: { model: IModel }) {
         }),
 
     })
-    revalidateTag('Models')
+    // revalidateTag('Models')
+    revalidatePath(`/model/${model.id}`, 'page')
     return await response.json()
 
 }
+
+// export default async function updateModel(tmpModel: IModel) {
+//     try {
+//         await fetch('http://localhost:8001/api/update_model', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json;charset=utf-8'
+//             },
+//             body: JSON.stringify({
+//                 params: {
+//                     model: tmpModel
+//                 }
+//             })
+//         }).then((res) => res.json())
+//         revalidateTag('models')
+//         // revalidateTag('modelsPage')
+//         revalidatePath('/model/[id]/page', 'page')
+//         return {
+//             success: true
+//         }
+//     } catch (error) {
+//         console.log('🚀 ~ updateAboutData ~ error:', error);
+//     }
+// }

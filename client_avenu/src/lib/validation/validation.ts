@@ -14,3 +14,14 @@ export const adminAuthSchema = z.object({
     login: z.string(),
     password: z.string().min(6, { message: "validation.password" }),
 })
+
+export const loginSchema = z.object({
+    login: z.string().email({ message: "validation.email" }),
+    password: z.string().min(6, { message: "validation.password" }),
+})
+
+export const registerSchema = z.object({
+    login: z.string().email({ message: "validation.email" }),
+    password: z.string().min(6, { message: "validation.password" }),
+    type: z.string().min(1, { message: "validation.type" }),
+})

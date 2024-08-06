@@ -10,6 +10,7 @@ import { ComponentType } from "../ComponentType";
 import { ArrowDown } from "@/shared/assets/ArrowDown";
 import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { useTranslations } from "next-intl";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IHeightSelectorProps {
   activeComponent: ComponentType;
@@ -17,7 +18,8 @@ interface IHeightSelectorProps {
 }
 
 const HeightSelector: React.FC<IHeightSelectorProps> = ({ activeComponent, setActiveComponent }) => {
-  const  t  = useTranslations();
+  const { minHeight, maxHeight, setMaxHeight, setMinHeight } = useHomeContext()
+  const t = useTranslations();
 
 
   return (
@@ -31,21 +33,27 @@ const HeightSelector: React.FC<IHeightSelectorProps> = ({ activeComponent, setAc
         }
       >
         {t("model.height")}
-        {activeComponent === ComponentType.HeightSelector ? <ArrowUp/> : <ArrowDown fill="#1B1B1B" />}
-        {/* {filter.minHeight > 150 || filter.maxHeight < 220 ? <div className={styles.group_count} /> : null} */}
+        {activeComponent === ComponentType.HeightSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
+        {minHeight > 150 || maxHeight < 220 ? <div className={styles.group_count} /> : null}
       </div>
       <div className={styles.filters_list}>
-        <div className={'range_slider'}>
+        <div className={styles.range_slider}>
           <Slider
-            className={'slider'}
-            // value={[filter.minHeight, filter.maxHeight]}
+            className={styles.slider}
+            markClassName={styles.mark}
+            thumbClassName={styles.thumb}
+            value={[minHeight, maxHeight]}
+            pearling
             min={150}
             max={220}
-            // onChange={(selectedRange) => setFilter({ ...filter, minHeight: selectedRange[0], maxHeight: selectedRange[1] })}
+            onChange={(selectedRange) => {
+              setMinHeight(selectedRange[0])
+              setMaxHeight(selectedRange[1])
+            }}
           />
         </div>
         <div className={styles.slider_value}>
-          {/* {`${t("global.from")} ${filter.minHeight} ${t("global.to")} ${filter.maxHeight} ${t("model.cm")}`} */}
+          {`${t("global.from")} ${minHeight} ${t("global.to")} ${maxHeight} ${t("model.cm")}`}
         </div>
       </div>
     </div>

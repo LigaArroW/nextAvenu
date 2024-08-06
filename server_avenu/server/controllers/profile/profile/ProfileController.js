@@ -95,7 +95,7 @@ var login = function (request, response) {
                             sqlCheck = "SELECT * FROM deleted_profiles WHERE agency_id = ?";
                             queryCheck = mysql.format(sqlCheck, auth_1[0].id);
                             connectionPool_1.connectionPool.query(queryCheck, function (error, checkData) { return __awaiter(void 0, void 0, void 0, function () {
-                                var deleterProfiles, models, token;
+                                var deleterProfiles, models, now, token;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
@@ -128,10 +128,12 @@ var login = function (request, response) {
                                             })];
                                         case 3:
                                             models = _a.sent();
+                                            now = Math.floor(Date.now() / 1000);
                                             token = jwt.sign({
                                                 _id: auth_1[0].id,
                                                 models: models.map(function (m) { return m.id; }),
-                                                roles: auth_1[0].type === 0 ? rbac_1.Roles.Agency : rbac_1.Roles.Customer
+                                                roles: auth_1[0].type === 0 ? rbac_1.Roles.Agency : rbac_1.Roles.Customer,
+                                                iat: now
                                             }, process.env.JWT_TOKEN_SECRET, {
                                                 expiresIn: "3d",
                                             });
@@ -194,7 +196,7 @@ var register = function (request, response) {
                                 return response.status(200).json({
                                     success: false,
                                     message: "global.user_already_registered",
-                                    error: "Пользователь с таким именем уже зарегистрирован",
+                                    error: "global.user_already_registered",
                                 });
                             }
                             else {

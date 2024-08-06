@@ -28,6 +28,11 @@ import { ISearchFilter } from "@/types/model/filter/filter";
 import { IModel } from "@/types/model/model/model";
 import { IGeneral } from "@/types/core/generalFilters";
 import HomeModel from "@/shared/components/HomeModel/HomeModel";
+import { useHomeContext } from "../Context/HomeProvider";
+import { calcIsNew } from "@/shared/constant/calcIsNew";
+import { IMeetingPlace } from "@/types/core/meetingPlace";
+import { ITarif } from "@/types/model/tarif/tarif";
+import { useMainContext } from "@/widgets/Contex/MainProvider";
 
 interface IModelsProps {
   // isFiltersActive: boolean;
@@ -38,31 +43,53 @@ interface IModelsProps {
 }
 
 const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields }) => {
-  const [viewType, setViewType] = useState(ViewType.ListView);
+  // const [viewType, setViewType] = useState(ViewType.ListView);
   const t = useTranslations()
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const isMobile = useMedia("(max-width: 1200px)");
   const [viewModelList, setViewModelList] = useState<IModel[]>([]);
-  const [isFiltersActive, setIsFiltersActive] = useState(false);
-  const SeachFilter: Partial<ISearchFilter> = useSearchFilter();
+  // const SeachFilter: Partial<ISearchFilter> = useSearchFilter();
   const countModelsOnPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
+  const {
+    viewType,
+    setViewType,
+    isFiltersActive,
+    setIsFiltersActive,
+    minAge,
+    maxAge,
+    minWeight,
+    maxWeight,
+    minHeight,
+    maxHeight,
+    districts,
+    meetingPlaces,
+    undergrounds,
+    modelTypes,
+    orientations,
+    hairColors,
+    hairSizes,
+    pubisHairs,
+    breastSizes,
+    breastTypes,
+    nationalities,
+    trips,
+    languages,
+    tatoos,
+    smookers,
+    eyesColors,
+    piercings,
+    ethnicGroups,
+    services,
+    tarifs
 
-  useEffect(() => {
-    const newViewType = searchParams.get("viewType");
-    if (newViewType) {
-      const existingSearchParams = new URLSearchParams(window.location.search);
-      existingSearchParams.set("viewType", viewType.toString());
-      const updatedSearchQuery = existingSearchParams.toString();
-      const updatedPathname = `${pathname}?${updatedSearchQuery}`;
-      router.replace(updatedPathname);
-    } else {
-      router.replace(pathname + '?viewType=' + viewType.toString());
-    }
+  } = useHomeContext()
 
-  }, [pathname, router, searchParams, viewType])
+  const { searchedModel } = useMainContext()
+
+
 
   useEffect(() => {
 
@@ -71,55 +98,68 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
         (forModerator ? true : model.is_enable_by_moderator) &&
         (forModerator ? true : model.photos.length && model.photos.length > 0) &&
         (forModerator ? true : model.is_enable_by_moderator) &&
-        model.name.toLowerCase().startsWith(SeachFilter.searchedModel?.toLowerCase() || "") &&
-        model.age >= (SeachFilter.minAge ? Number(SeachFilter?.minAge) : 18) &&
-        model.age <= (SeachFilter.maxAge ? Number(SeachFilter?.maxAge) : 60) &&
-        model.weight >= (SeachFilter.minWeight ? Number(SeachFilter.minWeight) : 40) &&
-        model.weight <= (SeachFilter.maxWeight ? Number(SeachFilter.maxWeight) : 125) &&
-        model.height >= (SeachFilter.minHeight ? Number(SeachFilter.minHeight) : 150) &&
-        model.height <= (SeachFilter.maxHeight ? Number(SeachFilter.maxHeight) : 220) &&
-        (SeachFilter.districts && SeachFilter.districts.length > 0 ? SeachFilter.districts?.includes(model.district_id.toString()) : true) &&
-        (SeachFilter.undergrounds && SeachFilter.undergrounds.length > 0 ? SeachFilter.undergrounds?.includes(model.underground_id.toString()) : true) &&
-        (SeachFilter.modelTypes && SeachFilter.modelTypes.length > 0 ? SeachFilter.modelTypes?.includes(model.type_id.toString()) : true) &&
-        (SeachFilter.hairColors && SeachFilter.hairColors.length > 0 ? SeachFilter.hairColors?.includes(model.hair_color_id.toString()) : true) &&
-        (SeachFilter.hairSizes && SeachFilter.hairSizes.length > 0 ? SeachFilter.hairSizes?.includes(model.hair_size_id.toString()) : true) &&
-        (SeachFilter.pubisHairs && SeachFilter.pubisHairs.length > 0 ? SeachFilter.pubisHairs?.includes(model.pubis_hair_id.toString()) : true) &&
-        (SeachFilter.breastSizes && SeachFilter.breastSizes.length > 0 ? SeachFilter.breastSizes?.includes(model.breast_size_id.toString()) : true) &&
-        (SeachFilter.breastTypes && SeachFilter.breastTypes.length > 0 ? SeachFilter.breastTypes?.includes(model.breast_type_id.toString()) : true) &&
-        (SeachFilter.trips && SeachFilter.trips.length > 0 ? SeachFilter.trips?.includes(model.trip_id.toString()) : true) &&
-        (SeachFilter.ethnicGroups && SeachFilter.ethnicGroups.length > 0 ? SeachFilter.ethnicGroups?.includes(model.ethnic_group_id.toString()) : true) &&
-        (SeachFilter.nationalities && SeachFilter.nationalities.length > 0 ? SeachFilter.nationalities?.includes(model.nationality_id.toString()) : true) &&
-        (SeachFilter.smookers && SeachFilter.smookers.length > 0 ? SeachFilter.smookers?.includes(model.smooker_id.toString()) : true) &&
-        (SeachFilter.tatoos && SeachFilter.tatoos.length > 0 ? SeachFilter.tatoos?.includes(model.tatoo_id.toString()) : true) &&
-        (SeachFilter.eyesColors && SeachFilter.eyesColors.length > 0 ? SeachFilter.eyesColors?.includes(model.eyes_color_id.toString()) : true) &&
-        (SeachFilter.orientations && SeachFilter.orientations.length > 0 ? SeachFilter.orientations?.includes(model.orientation_id.toString()) : true) &&
-        (SeachFilter.services && SeachFilter.services.length > 0 && Array.isArray(SeachFilter.services) ? SeachFilter.services.every((service) =>
-          model.model_services.map(model_service => model_service.service_id.toString()).includes(service)) : true) &&
-        (SeachFilter.piercings && SeachFilter.piercings.length > 0 && Array.isArray(SeachFilter.piercings) ? SeachFilter.piercings.every((piercing) =>
-          model.model_piercings.map(model_piercing => model_piercing.piercing_id.toString()).includes(piercing)) : true) &&
-        (SeachFilter.languages && SeachFilter.languages.length > 0 && Array.isArray(SeachFilter.languages) ? SeachFilter.languages.every((language) =>
-          model.model_languages.map(model_language => model_language.language_id.toString()).includes(language)) : true) &&
-        (SeachFilter.meetingPlaces === undefined || SeachFilter.orientations?.length === 0 ||
-          (generalfields.meeting_places && generalfields.meeting_places.find((meetingPlace) => meetingPlace.id === model.meeting_place_id))!
-            .meeting_place === 'Аппартаменты + Выезд'
+        model.name.toLowerCase().startsWith(searchedModel.toLowerCase() || "") &&
+        model.age >= minAge &&
+        model.age <= maxAge &&
+        model.weight >= minWeight &&
+        model.weight <= maxWeight &&
+        model.height >= minHeight &&
+        model.height <= maxHeight &&
+        (districts.length > 0 ? districts?.includes(model.district_id) : true) &&
+        (undergrounds.length > 0 ? undergrounds?.includes(model.underground_id) : true) &&
+        (modelTypes.length > 0 ? modelTypes?.includes(model.type_id) : true) &&
+        (hairColors.length > 0 ? hairColors?.includes(model.hair_color_id) : true) &&
+        (hairSizes.length > 0 ? hairSizes?.includes(model.hair_size_id) : true) &&
+        (pubisHairs.length > 0 ? pubisHairs?.includes(model.pubis_hair_id) : true) &&
+        (breastSizes.length > 0 ? breastSizes?.includes(model.breast_size_id) : true) &&
+        (breastTypes.length > 0 ? breastTypes?.includes(model.breast_type_id) : true) &&
+        (trips.length > 0 ? trips?.includes(model.trip_id) : true) &&
+        (ethnicGroups.length > 0 ? ethnicGroups?.includes(model.ethnic_group_id) : true) &&
+        (nationalities.length > 0 ? nationalities?.includes(model.nationality_id) : true) &&
+        (smookers.length > 0 ? smookers?.includes(model.smooker_id) : true) &&
+        (tatoos.length > 0 ? tatoos?.includes(model.tatoo_id) : true) &&
+        (eyesColors.length > 0 ? eyesColors?.includes(model.eyes_color_id) : true) &&
+        (orientations.length > 0 ? orientations?.includes(model.orientation_id) : true) &&
+        (services.length > 0 && Array.isArray(services) ? services.every((service) =>
+          model.model_services.map(model_service => model_service.service_id).includes(service)) : true) &&
+        (piercings.length > 0 && Array.isArray(piercings) ? piercings.every((piercing) =>
+          model.model_piercings.map(model_piercing => model_piercing.piercing_id).includes(piercing)) : true) &&
+        (languages.length > 0 && Array.isArray(languages) ? languages.every((language) =>
+          model.model_languages.map(model_language => model_language.language_id).includes(language)) : true) &&
+        (meetingPlaces === undefined ||
+          orientations.length === 0 ||
+          generalfields.meeting_places && generalfields.meeting_places.find((meetingPlace: IMeetingPlace) => meetingPlace.id === model.meeting_place_id)!
+            .meeting_place === "Аппартаменты + Выезд"
           ? true
-          : SeachFilter.meetingPlaces.includes(model.meeting_place_id.toString())) &&
-        (SeachFilter.modelTypes !== undefined && SeachFilter.modelTypes.length > 0 && SeachFilter.modelTypes.includes(model.type_id.toString()) ? calcIsNew(model.create_date) : true)
+          : meetingPlaces.includes(model.meeting_place_id)) &&
+        (tarifs !== undefined && tarifs.length > 0
+          ? tarifs.filter(
+            (tarif: number[]) =>
+              model.tarifs.map((modelTarif: ITarif) => modelTarif.work_duration_id).includes(tarif[0]) &&
+              model.tarifs.find((modelTarif: ITarif) => modelTarif.work_duration_id === tarif[0])!.price >= tarif[1] &&
+              model.tarifs.find((modelTarif: ITarif) => modelTarif.work_duration_id === tarif[0])!.price <= tarif[2]
+          ).length === tarifs.length
+          : true) &&
+        (modelTypes !== undefined &&
+          modelTypes.length > 0 &&
+          modelTypes.includes(modelTypes.length + 1)
+          ? calcIsNew(model.create_date)
+          : true) &&
+        (modelTypes !== undefined &&
+          modelTypes.length > 0 &&
+          modelTypes.includes(modelTypes.length + 2)
+          ? model.is_verified
+          : true)
 
 
       )
     )
 
-  }, [searchParams])
+  }, [breastSizes, breastTypes, districts, ethnicGroups, eyesColors, forModerator, generalfields.meeting_places, hairColors, hairSizes, languages, maxAge, maxHeight, maxWeight, meetingPlaces, minAge, minHeight, minWeight, modelTypes, models, nationalities, orientations, piercings, pubisHairs, searchedModel, services, smookers, tarifs, tatoos, trips, undergrounds])
 
-  const calcIsNew = (create_date: Date) => {
-    var now = new Date();
-    var createDate = new Date(create_date);
-    var difference = Math.abs(now.getTime() - createDate.getTime()) / (1000 * 60 * 60 * 24);
-    return difference <= 7;
-  };
-  
-  
+
+
+
 
   return (
     <div className={styles.models_wrapper}>

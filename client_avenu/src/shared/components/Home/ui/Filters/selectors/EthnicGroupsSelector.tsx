@@ -10,27 +10,21 @@ import { ArrowUp } from "@/shared/assets/ArrowUp";
 import { Check } from "@/shared/assets/Check";
 import { useLocale, useTranslations } from "next-intl";
 import { IGeneral } from "@/types/core/generalFilters";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { IEthnicGroup } from "@/types/core/ethnicGroup";
 import { INationality } from "@/types/core/nationality";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IEthnicGroupsSelectorProps {
   activeComponent: ComponentType;
   setActiveComponent: React.Dispatch<React.SetStateAction<ComponentType>>;
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
-const EthnicGroupsSelector: React.FC<IEthnicGroupsSelectorProps> = ({ activeComponent, setActiveComponent, filters, handleSearch }) => {
+const EthnicGroupsSelector: React.FC<IEthnicGroupsSelectorProps> = ({ activeComponent, setActiveComponent, filters }) => {
+  const { ethnicGroups, nationalities, setEthnicGroups, setNationalities } = useHomeContext()
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const locale = useLocale();
-  let filter = queryString.parse(searchParams.toString(), {
-  });
 
-  filter = typeof filter['ethnicGroups'] === 'string' ? { ethnicGroups: [filter['ethnicGroups']] } : filter
-  filter = typeof filter['nationalities'] === 'string' ? { nationalities: [filter['nationalities']] } : filter
 
   return (
     <div
@@ -46,8 +40,8 @@ const EthnicGroupsSelector: React.FC<IEthnicGroupsSelectorProps> = ({ activeComp
       >
         {`${t("model.ethnic_group")}/${t("model.nationality")}`}
         {activeComponent === ComponentType.EthnicGroupsSelector ? <ArrowUp /> : <ArrowDown fill="#1B1B1B" />}
-        {(filter.ethnicGroups ? filter.ethnicGroups.length : 0) + (filter.nationalities ? filter.nationalities.length : 0) > 0 ? (
-          <div className={styles.group_count}>{(filter.ethnicGroups ? filter.ethnicGroups.length : 0) + (filter.nationalities ? filter.nationalities.length : 0)}</div>
+        {(ethnicGroups.length + nationalities.length) > 0 ? (
+          <div className={styles.group_count}>{ethnicGroups.length + nationalities.length}</div>
         ) : null}
       </div>
       <div className={styles.filters_list}>
@@ -60,17 +54,21 @@ const EthnicGroupsSelector: React.FC<IEthnicGroupsSelectorProps> = ({ activeComp
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['ethnicGroups'] === ethnicGroup.id.toString() || filter['ethnicGroups']?.includes(ethnicGroup.id.toString()))
+                      className={`${'checkbox_mark'} ${ethnicGroups.includes(ethnicGroup.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
+                        if (ethnicGroups.includes(ethnicGroup.id)) {
+                          return setEthnicGroups(ethnicGroups.filter((item) => item !== ethnicGroup.id))
+                        }
+                        setEthnicGroups([...ethnicGroups, ethnicGroup.id])
 
-                        handleSearch('ethnicGroups', ethnicGroup.id.toString())
+
                       }}
                     >
-                      {(filter['ethnicGroups'] === ethnicGroup.id.toString() || filter['ethnicGroups']?.includes(ethnicGroup.id.toString())) ? (
+                      {ethnicGroups.includes(ethnicGroup.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>
@@ -91,17 +89,19 @@ const EthnicGroupsSelector: React.FC<IEthnicGroupsSelectorProps> = ({ activeComp
                   <label className={'checkbox'}>
                     <input type="checkbox" />
                     <span
-                      className={`${'checkbox_mark'} ${(filter['nationalities'] === nationality.id.toString() || filter['nationalities']?.includes(nationality.id.toString()))
+                      className={`${'checkbox_mark'} ${nationalities.includes(nationality.id)
                         ? 'active'
                         : ""
                         }`}
                       aria-hidden="true"
                       onClick={() => {
-
-                        handleSearch('nationalities', nationality.id.toString())
+                        if (nationalities.includes(nationality.id)) {
+                          return setNationalities(nationalities.filter((item) => item !== nationality.id))
+                        }
+                        setNationalities([...nationalities, nationality.id])
                       }}
                     >
-                      {(filter['nationalities'] === nationality.id.toString() || filter['nationalities']?.includes(nationality.id.toString())) ? (
+                      {nationalities.includes(nationality.id) ? (
                         <Check fill="#98042D" />
                       ) : null}
                     </span>

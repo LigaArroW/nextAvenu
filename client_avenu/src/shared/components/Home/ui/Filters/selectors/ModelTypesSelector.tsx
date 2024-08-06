@@ -10,17 +10,19 @@ import { useSearchParams } from "next/navigation";
 import queryString from "query-string";
 import { IGeneral } from "@/types/core/generalFilters";
 import { IModelType } from "@/types/core/modelType";
+import { useHomeContext } from "../../Context/HomeProvider";
 
 interface IModelTypesSelectorProps {
-  handleSearch: (search: string, value: string) => void;
   filters: Partial<IGeneral>
 }
 
 
-const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, filters }) => {
+const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ filters }) => {
   const t = useTranslations();
   const searchParams = useSearchParams();
   const locale = useLocale();
+  const { modelTypes, setModelTypes } = useHomeContext()
+
   const filter = queryString.parse(searchParams.toString());
 
 
@@ -32,18 +34,21 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
             'checkbox'}>
             <input type="checkbox" />
             <span
-              className={`${'checkbox_mark'} ${(filter['modelTypes'] === '7' || filter['modelTypes']?.includes('7'))
+              className={`${'checkbox_mark'} ${(modelTypes.includes(7))
                 ? 'active'
                 : ""
                 }`}
               aria-hidden="true"
               onClick={() => {
-
-                handleSearch('modelTypes', '7')
+                if (modelTypes.includes(7)) {
+                  return setModelTypes(prev => prev.filter(el => el !== 7))
+                }
+                setModelTypes(prev => [...prev, 7])
+                // handleSearch('modelTypes', '7')
               }}
             >
 
-              {(filter['modelTypes'] === '7' || filter['modelTypes']?.includes('7')) ? <Check fill="#98042D" /> : null}
+              {(modelTypes.includes(7)) ? <Check fill="#98042D" /> : null}
             </span>
             <div className={
               'text'}>{t("navigation.new")}</div>
@@ -55,21 +60,20 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
             'checkbox'}>
             <input type="checkbox" />
             <span
-              className={`${'checkbox_mark'} ${(filter['modelTypes'] === '8' || filter['modelTypes']?.includes('8'))
+              className={`${'checkbox_mark'} ${(modelTypes.includes(8))
                 ? 'active'
                 : ""
                 }`}
               aria-hidden="true"
               onClick={() => {
 
-                // if (filter === '8') {
-                //   return handleSearch('modelTypes', '', 'delete')
-                // }
-                // SetSearchParametrs('modelTypes', '1')
-                handleSearch('modelTypes', '8')
+                if (modelTypes.includes(8)) {
+                  return setModelTypes(prev => prev.filter(el => el !== 8))
+                }
+                setModelTypes(prev => [...prev, 8])
               }}
             >
-              {(filter['modelTypes'] === '8' || filter['modelTypes']?.includes('8')) ? <Check fill="#98042D" /> : null}
+              {(modelTypes.includes(8)) ? <Check fill="#98042D" /> : null}
             </span>
             <div className={
               'text'}>{t("navigation.verified")}</div>
@@ -82,17 +86,19 @@ const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ handleSearch, 
               <input type="checkbox" />
               <span
                 className={`${'checkbox_mark'}
-                 ${(filter['modelTypes'] === modelType.id.toString() || filter['modelTypes']?.includes(modelType.id.toString()))
+                 ${(modelTypes.includes(modelType.id))
                     ?
                     'active' : ""
                   }`}
                 aria-hidden="true"
                 onClick={() => {
-
-                  handleSearch('modelTypes', modelType.id.toString())
+                  if (modelTypes.includes(modelType.id)) {
+                    return setModelTypes(prev => prev.filter(el => el !== modelType.id))
+                  }
+                  setModelTypes(prev => [...prev, modelType.id])
                 }}
               >
-                {(filter['modelTypes'] === modelType.id.toString() || filter['modelTypes']?.includes(modelType.id.toString())) ? (
+                {(modelTypes.includes(modelType.id)) ? (
                   <Check fill="#98042D" />
                 ) : null}
               </span>

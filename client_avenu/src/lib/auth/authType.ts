@@ -9,7 +9,14 @@ export enum RolesUsers {
     Agency = "Agency",
     Admin = "Admin",
     SuperAdmin = "SuperAdmin",
-    None= "None",
+    None = "None",
+}
+
+export enum RolesUsersToTokenRoles {
+    Customer = "CustomerToken",
+    Agency = "AgencyToken",
+    Admin = "AdminToken",
+    SuperAdmin = "SuperAdminToken",
 }
 
 // export { Roles };
