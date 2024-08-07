@@ -17,6 +17,7 @@ export enum RolesUsersToTokenRoles {
     Agency = "AgencyToken",
     Admin = "AdminToken",
     SuperAdmin = "SuperAdminToken",
+    None = "None",
 }
 
 // export { Roles };

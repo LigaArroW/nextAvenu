@@ -6,11 +6,13 @@
     "send": "Send",
     "authorization": "Authorization",
     "link_unavailable": "Link unavailable",
+    "link_verify": "Verify your link",
     "login": "Login",
     "password": "Password",
     "current_password": "Current password",
     "new_password": "New password",
     "forgot_your_password": "Forgot your password",
+    "passwords_dont_match": "Passwords don't match",
     "enter": "Enter",
     "enter_to_email": "Enter to email",
     "auth_to_email": "Authorize to email",
@@ -73,6 +75,7 @@
     "change_password": "Change password",
     "password_change": "Password change",
     "password_was_changed": "The password has been successfully changed<br/>You can log in to the site using your username and password",
+    "password_was_changed1": "The password has been successfully changed",
     "logout": "Log out",
     "cancel": "Cancel",
     "delete": "Delete",
@@ -293,6 +296,7 @@
     "name": "The name must be at least 3 characters long",
     "password": "The password must be at least 6 characters long",
     "email": "Enter a valid email address",
-    "message": "The message must be at least 10 characters long"
+    "message": "The message must be at least 10 characters long",
+     "repeat_password": "The password must be the same as the password above"
   }
 }

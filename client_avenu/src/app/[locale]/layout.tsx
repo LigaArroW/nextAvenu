@@ -37,8 +37,8 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <MainProvider>
             <Header />
-            <main>
-              <div id='root' >
+            <main style={{ flexGrow: 1, display: 'flex' }}>
+              <div id='root' style={{ flexGrow: 1, display: 'flex' }}>
                 {modal}
                 <div id="modal-portal"></div>
                 {children}

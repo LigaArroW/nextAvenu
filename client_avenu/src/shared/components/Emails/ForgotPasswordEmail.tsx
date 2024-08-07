@@ -1,8 +1,7 @@
 import { Body, Container, Head, Html, Section, Text, Heading, Row, Column, Button, Font } from "@react-email/components";
 
-export default function RegisterEmail(props: any) {
-  const { login, password, token, emailTitle, emailDescription, emailLogin, emailPassword, emailComplete, emailButtonText, locale } =
-    props;
+export default function ForgotPasswordEmail(props: any) {
+  const { login, token, title, description, loginText, buttonText, locale } = props;
 
   return (
     <Html>
@@ -32,36 +31,29 @@ export default function RegisterEmail(props: any) {
               margin: "20px 0",
             }}
           >
-            {emailTitle}
+            {title}
           </Heading>
           <Section style={paragraphContent}>
-            <Text style={paragraph}>{emailDescription}</Text>
+            <Text style={paragraph}>{description}</Text>
             <Row>
               <Column width={"100px"}>
                 <Text style={{ margin: "5px 0px", fontSize: "15px", color: "#1B1B1B", fontWeight: "400" }}>
-                  {emailLogin}:
+                  {loginText}:
                 </Text>
               </Column>
               <Column>
                 <Text style={{ margin: "5px 0px", fontSize: "15px", color: "#98042D", fontWeight: "500" }}>{login}</Text>
               </Column>
             </Row>
-            <Row>
-              <Column width={"100px"}>
-                <Text style={{ margin: "5px 0px", fontSize: "15px", color: "#1B1B1B", fontWeight: "400" }}>
-                  {emailPassword}:
-                </Text>
-              </Column>
-              <Column>
-                <Text style={{ margin: "5px 0px", fontSize: "15px", color: "#98042D", fontWeight: "500" }}>{password}</Text>
-              </Column>
-            </Row>
-            <Text style={paragraph}>{emailComplete}</Text>
             <Section style={buttonContainer}>
-              <Button style={button} href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/confirm/${token}/${login}`} target="_blank">
-              {/* <Button style={button} href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/confirm/${token}/${login}`} target="_blank"> */}
+              <Button
+                style={button}
+                href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/change_password/${token}/${login}`}
+                // href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/change_password/${token}/${login}`}
+                target="_blank"
+              >
                 <Text style={{ marginTop: "10px", fontSize: "15px", color: "#FFFFFF", fontWeight: "500" }}>
-                  {emailButtonText}
+                  {buttonText}
                 </Text>
               </Button>
             </Section>

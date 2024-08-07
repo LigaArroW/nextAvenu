@@ -27,7 +27,7 @@ const login = (request, response) => {
         });
       } else {
         const auth = data as IProfile[];
-     
+
         if (auth.length === 0) {
           return response.status(200).json({
             success: false,
@@ -35,9 +35,22 @@ const login = (request, response) => {
           });
         } else {
           const match = await bcrypt.compare(request.body.params.password, auth[0].password);
-          const decode = (request.body.params.email === true && match === false) ? await jwt.verify(request.body.params.password, process.env.JWT_TOKEN_SECRET) : false;
+          let decode
+          try {
+            decode = (request.body.params.email === true && match === false) ? await jwt.verify(request.body.params.password, process.env.JWT_TOKEN_SECRET) : false;
+
+          } catch (error) {
+            return response.status(200).json({
+              success: false,
+              message: "global.invalid_username",
+              error: error
+            })
+          }
+
+
 
           if (match || decode) {
+
             const sqlCheck = "SELECT * FROM deleted_profiles WHERE agency_id = ?";
             const queryCheck = mysql.format(sqlCheck, auth[0].id);
             connectionPool.query(queryCheck, async (error, checkData) => {
@@ -71,7 +84,11 @@ const login = (request, response) => {
                   const now = Math.floor(Date.now() / 1000);
                   const token = jwt.sign(
                     {
+                     
+                      balance: auth[0].balance,
+                      is_confirmed: auth[0].is_confirmed,
                       _id: auth[0].id,
+                      login: auth[0].login,
                       models: models.map(m => m.id),
                       roles: auth[0].type === 0 ? Roles.Agency : Roles.Customer,
                       iat: now

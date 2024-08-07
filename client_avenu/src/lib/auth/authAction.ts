@@ -5,6 +5,7 @@ import { RolesUsers, RolesUsersToTokenRoles, TokensRoles } from "./authType"
 import { verify } from "jsonwebtoken"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+import { getLocale } from "next-intl/server"
 
 type Admin = {
     _id: string
@@ -12,10 +13,19 @@ type Admin = {
     type: number
 }
 
-type User = {
+export type User = {
     _id: string
     roles: keyof typeof RolesUsersToTokenRoles
     models: number[]
+}
+
+export type Person = {
+    _id: string
+    roles: keyof typeof RolesUsersToTokenRoles
+    models: number[]
+    balance: number
+    is_confirmed: boolean
+    login: string
 }
 
 export async function getAuthAction(tokenName: keyof typeof TokensRoles): Promise<Admin> {
@@ -46,8 +56,39 @@ export async function getAuthAction(tokenName: keyof typeof TokensRoles): Promis
 
 }
 
+export async function getAuthDataUserAction(): Promise<Person> {
 
-export async function getAuthUserAction(tokenName: keyof typeof TokensRoles) {
+    try {
+        const cookieStore = cookies()
+        const person = cookieStore.getAll().filter(cookie => cookie.name.includes('Token'))[0]
+
+        const decode = verify(person.value, process.env.JWT_TOKEN_SECRET!) as Person
+        return {
+            _id: decode._id,
+            roles: decode.roles,
+            models: decode.models,
+            balance: decode.balance,
+            is_confirmed: decode.is_confirmed,
+            login: decode.login
+
+        }
+    } catch (error) {
+        return {
+            _id: '',
+            roles: RolesUsersToTokenRoles.None,
+            models: [],
+            balance: 0,
+            is_confirmed: false,
+            login: ''
+        }
+    }
+
+
+
+}
+
+
+export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Promise<Person> {
 
     try {
         const cookie = cookies().get(tokenName)?.value
@@ -55,18 +96,24 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles) {
             throw new Error('Token not found in cookie');
         }
 
-        const decode = verify(cookie!, process.env.JWT_TOKEN_SECRET!) as User
+        const decode = verify(cookie!, process.env.JWT_TOKEN_SECRET!) as Person
 
         return {
             _id: decode._id,
             roles: decode.roles,
-            models: decode.models
+            models: decode.models,
+            balance: decode.balance,
+            is_confirmed: decode.is_confirmed,
+            login: decode.login
         }
     } catch (error) {
         return {
             _id: '',
             roles: RolesUsers.None,
-            models: []
+            models: [],
+            balance: 0,
+            is_confirmed: false,
+            login: ''
         }
     }
 
@@ -91,7 +138,8 @@ export async function removeAuthAction(tokenName: keyof typeof TokensRoles) {
 
 
 export async function removeUserAuthAction(tokenName: keyof typeof TokensRoles) {
+    const locale = await getLocale()
     cookies().delete(tokenName)
-    revalidatePath('/')
-    redirect('/')
+    revalidatePath(`/${locale}`)
+    redirect(`/${locale}`)
 }

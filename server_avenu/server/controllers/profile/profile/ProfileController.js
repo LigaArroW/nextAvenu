@@ -61,7 +61,7 @@ var login = function (request, response) {
         var sql = "SELECT * FROM profiles WHERE is_confirmed = 1 AND login = ?";
         var query = mysql.format(sql, [request.body.params.login]);
         connectionPool_1.connectionPool.query(query, function (error, data) { return __awaiter(void 0, void 0, void 0, function () {
-            var auth_1, match, decode, _a, sqlCheck, queryCheck;
+            var auth_1, match, decode, _a, error_1, sqlCheck, queryCheck;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -81,16 +81,29 @@ var login = function (request, response) {
                     case 2: return [4 /*yield*/, bcrypt.compare(request.body.params.password, auth_1[0].password)];
                     case 3:
                         match = _b.sent();
-                        if (!(request.body.params.email === true && match === false)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, jwt.verify(request.body.params.password, process.env.JWT_TOKEN_SECRET)];
+                        decode = void 0;
+                        _b.label = 4;
                     case 4:
-                        _a = _b.sent();
-                        return [3 /*break*/, 6];
+                        _b.trys.push([4, 8, , 9]);
+                        if (!(request.body.params.email === true && match === false)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, jwt.verify(request.body.params.password, process.env.JWT_TOKEN_SECRET)];
                     case 5:
-                        _a = false;
-                        _b.label = 6;
+                        _a = _b.sent();
+                        return [3 /*break*/, 7];
                     case 6:
+                        _a = false;
+                        _b.label = 7;
+                    case 7:
                         decode = _a;
+                        return [3 /*break*/, 9];
+                    case 8:
+                        error_1 = _b.sent();
+                        return [2 /*return*/, response.status(200).json({
+                                success: false,
+                                message: "global.invalid_username",
+                                error: error_1
+                            })];
+                    case 9:
                         if (match || decode) {
                             sqlCheck = "SELECT * FROM deleted_profiles WHERE agency_id = ?";
                             queryCheck = mysql.format(sqlCheck, auth_1[0].id);
@@ -130,7 +143,10 @@ var login = function (request, response) {
                                             models = _a.sent();
                                             now = Math.floor(Date.now() / 1000);
                                             token = jwt.sign({
+                                                balance: auth_1[0].balance,
+                                                is_confirmed: auth_1[0].is_confirmed,
                                                 _id: auth_1[0].id,
+                                                login: auth_1[0].login,
                                                 models: models.map(function (m) { return m.id; }),
                                                 roles: auth_1[0].type === 0 ? rbac_1.Roles.Agency : rbac_1.Roles.Customer,
                                                 iat: now
@@ -150,8 +166,8 @@ var login = function (request, response) {
                                     message: "global.invalid_username",
                                 })];
                         }
-                        _b.label = 7;
-                    case 7: return [2 /*return*/];
+                        _b.label = 10;
+                    case 10: return [2 /*return*/];
                 }
             });
         }); });
@@ -476,7 +492,7 @@ var authme = function (request, response) {
 };
 exports.authme = authme;
 var updateProfile = function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    var sql, hash, query, error_1;
+    var sql, hash, query, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -500,11 +516,11 @@ var updateProfile = function (request, response) { return __awaiter(void 0, void
                 });
                 return [3 /*break*/, 3];
             case 2:
-                error_1 = _a.sent();
+                error_2 = _a.sent();
                 response.status(500).json({
                     success: false,
                     message: "server.mistake_try_again",
-                    error: error_1,
+                    error: error_2,
                 });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -513,7 +529,7 @@ var updateProfile = function (request, response) { return __awaiter(void 0, void
 }); };
 exports.updateProfile = updateProfile;
 var changePassword = function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    var decoded, sql, hash, query, error_2;
+    var decoded, sql, hash, query, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -546,11 +562,11 @@ var changePassword = function (request, response) { return __awaiter(void 0, voi
                 })];
             case 3: return [3 /*break*/, 5];
             case 4:
-                error_2 = _a.sent();
+                error_3 = _a.sent();
                 response.status(500).json({
                     success: false,
                     message: "server.mistake_try_again",
-                    error: error_2,
+                    error: error_3,
                 });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];

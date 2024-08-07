@@ -15,6 +15,8 @@ type User = {
     _id: string
     roles: keyof typeof RolesUsersToTokenRoles
     models: number[]
+    balance: number
+    is_confirmed: boolean
 }
 
 interface IResponse {
@@ -68,35 +70,50 @@ export async function loginAction(prevState: IContactUsForm, data: FormData): Pr
 }
 
 export async function Login({ login, password, email = false }: { login: string; password: string, email?: boolean }) {
-    const res = await fetch('http://localhost:8001/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-            {
-                params: {
-                    login: login,
-                    password: password,
-                    email: email,
+
+    try {
+        const res = await fetch('http://localhost:8001/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    params: {
+                        login: login,
+                        password: password,
+                        email: email,
+                    }
                 }
-            }
-        )
-    })
-    // console.log("🚀 ~ Login ~ res:", res);
+            )
+        })
+        // console.log("🚀 ~ Login ~ res:", res);
 
-    // console.log("🚀 ~ Login ~ login:", login)
+        // console.log("🚀 ~ Login ~ login:", login)
 
-    const data: IResponse = await res.json();
-    // console.log("🚀 ~ Login ~ data:", data)
-    if (!data.token) {
-        throw new Error('Invalid token');
+        const data: IResponse = await res.json();
+    
+       
+        // console.log("🚀 ~ Login ~ data:", data)
+        if (!data.token) {
+            throw new Error('Invalid token');
+        }
+        
+        const verif = verify(data.token, process.env.JWT_TOKEN_SECRET!) as User
+        await setAuthAction(RolesUsersToTokenRoles[verif.roles], data.token)
+
+        return data
+    } catch (error) {
+
+        console.log("🚀 ~ Login ~ error:", error)
+        return {
+            success: false,
+            message: 'Invalid token'
+        }
     }
-    const verif = verify(data.token, process.env.JWT_TOKEN_SECRET!) as User
-    // console.log("🚀 ~ login ~ verif:", verif)
-    setAuthAction(RolesUsersToTokenRoles[verif.roles], data.token)
 
-    return data
+
+
 
 }
 
@@ -122,6 +139,8 @@ const postFormData = async ({ login, password, email = false }: { login: string;
     if (!data.token) {
         throw new Error(t('global.invalid_username'));
     }
+
+
     const verif = verify(data.token, process.env.JWT_TOKEN_SECRET!) as User
 
 

@@ -70,6 +70,16 @@ export async function getModelsAdmin({ profile_id }: { profile_id: number }) {
     return await response.json()
 
 }
+export async function getModelsAgency({ profile_id }: { profile_id: number }) {
+    const response = await fetch(`http://localhost:8001/api/models?profile_id=${profile_id}`,
+        {
+            // body: JSON.stringify({ profile_id: profile_id }),
+            next: { tags: ['ModelsAdmin', 'Models'] }
+        }
+    )
+    return await response.json()
+
+}
 
 
 
