@@ -17,12 +17,12 @@ const MainProfile: React.FC<IMainProfile> = async ({ person }) => {
 
     return (
         <div className={styles.content}>
-            <Link className={styles.addvertise_button}
+            {person.roles === RolesUsers.Agency && <Link className={styles.addvertise_button}
                 href={`/${locale}/model_settings/new`}
             //  onClick={() => navigate("/model_settings/new")}
             >
                 {t("profile.add_advertisement")}
-            </Link>
+            </Link>}
             <div className={styles.title}>{t("profile.basic_information")}</div>
             <div className={styles.main_info}>
                 <div className={styles.item}>

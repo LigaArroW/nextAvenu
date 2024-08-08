@@ -53,3 +53,21 @@ export async function updateProfile({ profile }: { profile: IProfile }) {
     return await response.json()
 
 }
+export async function deleteProfile({ agency_id }: { agency_id: number }) {
+
+    const response = await fetch('http://localhost:8001/api/delete_profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            params: {
+                id: agency_id,
+            }
+        }),
+
+    })
+    revalidateTag('users')
+    return await response.json()
+
+}

@@ -84,7 +84,7 @@ const login = (request, response) => {
                   const now = Math.floor(Date.now() / 1000);
                   const token = jwt.sign(
                     {
-                     
+
                       balance: auth[0].balance,
                       is_confirmed: auth[0].is_confirmed,
                       _id: auth[0].id,
@@ -425,7 +425,7 @@ const updateProfile = async (request, response) => {
   try {
     const sql = "UPDATE profiles SET login = ?, password = ? WHERE id = ?;";
     const hash = await bcrypt.hash(request.body.params.password, saltRounds);
-    const query = mysql.format(sql, [request.body.params.login, hash, request.id, 0]);
+    const query = mysql.format(sql, [request.body.params.login, hash, request.body.params.id, 0]);
     connectionPool.query(query, (error) => {
       if (error) {
         return response.status(404).json({
@@ -483,8 +483,9 @@ const changePassword = async (request, response) => {
 
 const deleteProfile = (request, response) => {
   try {
+
     const sql = "INSERT INTO deleted_profiles (??, ??) VALUES (?, ?);";
-    const query = mysql.format(sql, ["agency_id", "delete_date", request.id, new Date()]);
+    const query = mysql.format(sql, ["agency_id", "delete_date", request.body.params.id, new Date()]);
     connectionPool.query(query, (error) => {
       if (error) {
         return response.status(404).json({

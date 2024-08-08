@@ -131,9 +131,10 @@ export async function setAuthAction(tokenName: RolesUsersToTokenRoles = RolesUse
 
 
 export async function removeAuthAction(tokenName: keyof typeof TokensRoles) {
+    const locale = await getLocale()
     cookies().delete(tokenName)
     revalidatePath('admin-moderator')
-    redirect('/')
+    redirect(`/${locale}`)
 }
 
 

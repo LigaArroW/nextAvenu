@@ -5,7 +5,7 @@ import AdminLogin from "@/shared/components/Admin/AdminLogin";
 import { LinksList } from "@/shared/components/Admin/linkList";
 import styles from '@/shared/styles/Profile.module.sass'
 import { Metadata } from "next";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ProfileNavigation from "@/shared/components/Profile/ui/ProfileNavigation/ProfileNavigation";
@@ -13,9 +13,13 @@ import { getModels } from "@/lib/models/getDataModel";
 
 
 
-// export const metadata: Metadata = {
-//     title: "Панель Управления",
-// };
+export async function generateMetadata() {
+    const t = await getTranslations();
+
+    return {
+        title: ` ${t("profile.profile")} | ${t("profile.basic_information")}`,
+    };
+}
 
 
 export default async function RootLayout({
@@ -40,33 +44,13 @@ export default async function RootLayout({
     if (!user) {
         redirect(`/${locale}`)
     }
-    
+
     return (
         <div className={styles.wrapper_content}>
             <ProfileNavigation person={user} models={models} />
             {children}
         </div>
     )
-
-
-
-    // switch (auth.roles) {
-    //     case RolesUsers.Admin:
-    //         return (
-    //             <div className={styles.wrapper_content}>
-    //                 <AdminHeader list={list} tokenName="AdminToken" />
-    //                 {/* <AdminContent adminType={auth.type} /> */}
-    //                 {children}
-    //             </div>
-
-
-    //         )
-    //     case RolesUsers.None:
-    //         return (
-    //             <AdminLogin />
-    //         )
-
-    // }
 
 
 }

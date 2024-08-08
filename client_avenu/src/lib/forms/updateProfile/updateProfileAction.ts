@@ -35,7 +35,7 @@ export async function updateProfileAction(prevState: IContactUsForm, data: FormD
         })
 
 
-        const login = await Login({ login: messages.email, password: messages.password })
+        const login = await PostLogin({ login: messages.email, password: messages.password })
 
         if (!login.success) {
             return {
@@ -91,6 +91,28 @@ export async function updateProfileAction(prevState: IContactUsForm, data: FormD
 
 }
 
+
+
+async function PostLogin({ login, password, email = false }: { login: string; password: string, email?: boolean }) {
+    const res = await fetch('http://localhost:8001/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            {
+                params: {
+                    login: login,
+                    password: password,
+                    email: email,
+                }
+            }
+        )
+    })
+
+    return res.json()
+
+}
 
 
 

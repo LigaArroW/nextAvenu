@@ -501,7 +501,7 @@ var updateProfile = function (request, response) { return __awaiter(void 0, void
                 return [4 /*yield*/, bcrypt.hash(request.body.params.password, saltRounds)];
             case 1:
                 hash = _a.sent();
-                query = mysql.format(sql, [request.body.params.login, hash, request.id, 0]);
+                query = mysql.format(sql, [request.body.params.login, hash, request.body.params.id, 0]);
                 connectionPool_1.connectionPool.query(query, function (error) {
                     if (error) {
                         return response.status(404).json({
@@ -576,8 +576,9 @@ var changePassword = function (request, response) { return __awaiter(void 0, voi
 exports.changePassword = changePassword;
 var deleteProfile = function (request, response) {
     try {
+        console.log(request.body.params.id);
         var sql = "INSERT INTO deleted_profiles (??, ??) VALUES (?, ?);";
-        var query = mysql.format(sql, ["agency_id", "delete_date", request.id, new Date()]);
+        var query = mysql.format(sql, ["agency_id", "delete_date", request.body.params.id, new Date()]);
         connectionPool_1.connectionPool.query(query, function (error) {
             if (error) {
                 return response.status(404).json({

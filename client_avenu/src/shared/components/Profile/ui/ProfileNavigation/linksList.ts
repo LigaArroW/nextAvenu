@@ -17,7 +17,7 @@ const LinksList = [
         link: "profile.deleting_a_profile",
         content: "",
         is_only_for_agency: false,
-        link_url: "/profile/deleting-a-profile",
+        link_url: "/profile/delete-profile",
       } as IProfileLink,
     ] as IProfileLink[],
   } as IProfileLinkGroup,
@@ -40,7 +40,7 @@ const LinksList = [
         is_only_for_agency: true,
         link_url: "/profile/blacklist",
       } as IProfileLink,
-      { id: 6, link: "profile.access_to_the_blacklist", is_only_for_agency: true, link_url: "/profile/access-to-the-blacklist" } as IProfileLink,
+      { id: 6, link: "profile.access_to_the_blacklist", is_only_for_agency: true, link_url: "/profile/access-to-blacklist" } as IProfileLink,
     ] as IProfileLink[],
   } as IProfileLinkGroup,
 ] as IProfileLinkGroup[];
