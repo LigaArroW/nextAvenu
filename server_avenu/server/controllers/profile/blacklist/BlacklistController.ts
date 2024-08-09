@@ -71,7 +71,7 @@ const addBlacklist = (request, response) => {
 const deleteBlacklist = (request, response) => {
   try {
     const sql = "DELETE FROM blacklist WHERE ?? = ? AND agency_id = ?;";
-    const query = mysql.format(sql, ["id", request.body.params.id, request.id]);
+    const query = mysql.format(sql, ["id", request.body.params.id, request.body.params.agency_id]);
     connectionPool.query(query, (error) => {
       if (error) {
         return response.status(404).json({
@@ -95,7 +95,7 @@ const deleteBlacklist = (request, response) => {
 const getBlacklistAccess = (request, response) => {
   try {
     const sql = "SELECT * FROM blacklist_access WHERE agency_id = ? OR access_to = ?";
-    const query = mysql.format(sql, [request.id, request.id]);
+    const query = mysql.format(sql, [request.query.agency_id, request.query.agency_id]);
     connectionPool.query(query, (error, data) => {
       if (error) {
         return response.status(404).json({

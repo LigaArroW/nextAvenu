@@ -2,7 +2,7 @@
 
 import { IBlacklist } from "@/types/profile/blacklist/blacklist"
 import { IBlacklistAccess } from "@/types/profile/blacklist/blacklistAccess"
-import { revalidateTag } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 
 
 export async function getBlacklist({ agency_id }: { agency_id: number }) {
@@ -38,7 +38,7 @@ export async function addBlacklist({ blacklist }: { blacklist: IBlacklist }) {
     return await response.json()
 
 }
-export async function deleteBlacklist({ id }: { id: number }) {
+export async function deleteBlacklist({ id, agency_id }: { id: number, agency_id: number }) {
 
     const response = await fetch('http://localhost:8001/api/delete_blacklist', {
         method: 'POST',
@@ -48,10 +48,13 @@ export async function deleteBlacklist({ id }: { id: number }) {
         body: JSON.stringify({
             params: {
                 id: id,
+                agency_id: agency_id
             }
         }),
 
     })
+
+
     revalidateTag('blacklist')
     return await response.json()
 
@@ -59,7 +62,7 @@ export async function deleteBlacklist({ id }: { id: number }) {
 export async function getBlacklistAccess({ agency_id }: { agency_id: number }) {
 
     const response = await fetch(`http://localhost:8001/api/blacklist_access?agency_id=${agency_id}`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },

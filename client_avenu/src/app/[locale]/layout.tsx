@@ -5,6 +5,7 @@ import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import Header from "@/shared/components/Header/Header";
 import Footer from "@/shared/components/Footer/Footer";
 import { MainProvider } from "@/widgets/Contex/MainProvider";
+import '../globals.css'
 
 const locales = ['en', 'ru'];
 
