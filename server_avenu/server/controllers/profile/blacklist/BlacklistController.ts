@@ -6,9 +6,10 @@ import { IBlacklistAccess } from "../../../../types/profile/blacklist/blacklistA
 const mysql = require("mysql");
 
 const getBlacklist = (_request, response) => {
+
   try {
     const sql = "SELECT * FROM blacklist WHERE agency_id = ?";
-    const query = mysql.format(sql, [_request.id]);
+    const query = mysql.format(sql, [_request.query.agency_id]);
     connectionPool.query(query, (error, data) => {
       if (error) {
         return response.status(404).json({
@@ -42,10 +43,13 @@ const addBlacklist = (request, response) => {
       request.body.params.city_id,
       request.body.params.phone_number,
       request.body.params.description,
-      request.id
+      request.body.params.agency_id
     ]);
+    console.log(query);
+
     connectionPool.query(query, (error) => {
       if (error) {
+        console.log("🚀 ~ connectionPool.query ~ error:", error)
         return response.status(404).json({
           success: false,
           message: "server.mistake_try_again",

@@ -51,3 +51,13 @@ export const updateProfileSchema = z.object({
     path: ["newPassword"],
 })
 
+export const addToBlackListSchema = z.object({
+    id: z.number(),
+    city: z.number().min(1, { message: "validation.city" }),
+    country: z.number().min(1, { message: "validation.country" }),
+    description: z.string().min(1, { message: "validation.description" }),
+    phone: z.string().length(18, { message: "validation.phone" }),
+    agency_id: z.number().min(1, { message: "validation.agency_id" }),
+})
+
+

@@ -175,10 +175,137 @@ $card-color: #FFFFFF
     font-weight: 700
     font-size: 24px
 
+.dropdown
+    position: relative
+    font-size: 15px
+    width: 100%
+
+    .main
+        width: 100%
+        display: flex
+        justify-content: space-between
+        align-items: center
+        position: relative
+        gap: 10px
+
+        &.column
+            flex-direction: column
+            gap: 0px
+            align-items: start
+
+            .label
+                width: 100%
+                margin-bottom: 15px
+
+            .description
+                margin-top: 5px
+                font-size: 12px
+
+        .label
+            width: 160px
+            word-wrap: break-word
+
+        .dropdown_button
+            border-radius: 5px
+            background-color: var(--card-color)
+            box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
+            flex-grow: 1
+            height: 15px
+            display: flex
+            align-items: center
+            padding: 15px
+            font-weight: 500
+            flex-shrink: 0
+
+            &.full_width
+                width: calc(100% - 30px)
+
+            &.wrong
+                border: 1px var(--action-color) solid
+
+            svg
+                position: absolute
+                right: 10px
+                height: 20px
+                width: 20px
+
+            .required
+                position: absolute
+                top: 3px
+                right: 5px
+                color: var(--action-color)
+                font-weight: 700
+                font-size: 24px
+
+    .dropdown_container
+        position: absolute
+        z-index: 5
+        top: 50px
+        right: 0
+        width: calc(100% - 180px)
+        display: flex
+        flex-direction: column
+        border-radius: 5px
+        background-color: var(--card-color)
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
+        font-weight: 500
+        transition: all 0.25s ease-out
+        max-height: 0px
+        padding: 0px 5px
+        overflow: hidden
+
+        &.column
+            top: 75px
+
+        &.full_width
+            width: calc(100% - 10px)
+
+        &.active
+            max-height: 335px
+            padding: 5px
+
+        .search_input
+            position: relative
+            display: flex
+            padding: 5px
+            width: calc(100% - 10px)
+
+            .search_value
+                display: flex
+                box-shadow: none
+                background-color: #e1e2e7
+                width: calc(100% - 30px)
+
+            & svg
+                position: absolute
+                width: 25px
+                height: 25px
+                top: 15px
+                right: 15px
+
+    .dropdown_list
+        width: 100%
+        max-height: 315px
+        height: max-content
+        display: flex
+        flex-direction: column
+        overflow-y: scroll
+        transform: translateY(0)
+
+        .checkbox
+            padding: 9px 10px
+
+        .dropdown_item
+            padding: 10px
+            border-radius: 5px
+
 @media (min-width: 1201px)
     .addvertise_button:hover
-        &:hover
+        :hover
             background-color: #98042DD9
+    .dropdown_item
+        :hover
+            background-color: var(--background-color)
 
 @media (max-width: 1450px)
     .wrapper_content
@@ -193,6 +320,43 @@ $card-color: #FFFFFF
         flex-direction: column
         gap: 0px
         padding-bottom: 25px
+
+    .search_value
+        font-size: 12px
+        width: calc(100% - 20px)
+        svg
+            position: absolute
+            width: 20px
+            height: 20px
+            top: 12px
+
+    .dropdown
+        font-size: 14px
+
+        .main
+            .label
+                font-weight: 500
+
+            .dropdown_button
+                padding: 10px
+
+            &.full_width
+                width: calc(100% - 20px)
+
+            svg
+                position: absolute
+                right: 5px
+                height: 15px
+                width: 15px
+
+            .required
+                top: 2px
+                right: 3px
+                font-size: 16px
+
+        .dropdown_container
+            top: 40px
+            width: calc(100% - 180px)
 
         .content
             width: auto
@@ -319,3 +483,18 @@ $card-color: #FFFFFF
                         svg
                             height: 15px
                             width: 15px
+
+    .dropdown
+        font-size: 12px
+
+        // .main
+        // &.column .description
+        //     font-size: 9px
+
+        // .label
+        //     font-weight: 500
+        //     flex-shrink: 0
+        //     width: 25%
+
+        // .dropdown_container
+        //     width: calc(75% - 20px)

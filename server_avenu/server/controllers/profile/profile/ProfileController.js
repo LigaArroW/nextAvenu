@@ -576,7 +576,6 @@ var changePassword = function (request, response) { return __awaiter(void 0, voi
 exports.changePassword = changePassword;
 var deleteProfile = function (request, response) {
     try {
-        console.log(request.body.params.id);
         var sql = "INSERT INTO deleted_profiles (??, ??) VALUES (?, ?);";
         var query = mysql.format(sql, ["agency_id", "delete_date", request.body.params.id, new Date()]);
         connectionPool_1.connectionPool.query(query, function (error) {

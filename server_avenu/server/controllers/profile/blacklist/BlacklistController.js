@@ -6,7 +6,7 @@ var mysql = require("mysql");
 var getBlacklist = function (_request, response) {
     try {
         var sql = "SELECT * FROM blacklist WHERE agency_id = ?";
-        var query = mysql.format(sql, [_request.id]);
+        var query = mysql.format(sql, [_request.query.agency_id]);
         connectionPool_1.connectionPool.query(query, function (error, data) {
             if (error) {
                 return response.status(404).json({
@@ -42,10 +42,12 @@ var addBlacklist = function (request, response) {
             request.body.params.city_id,
             request.body.params.phone_number,
             request.body.params.description,
-            request.id
+            request.body.params.agency_id
         ]);
+        console.log(query);
         connectionPool_1.connectionPool.query(query, function (error) {
             if (error) {
+                console.log("🚀 ~ connectionPool.query ~ error:", error);
                 return response.status(404).json({
                     success: false,
                     message: "server.mistake_try_again",

@@ -5,9 +5,10 @@ import { IBlacklistAccess } from "@/types/profile/blacklist/blacklistAccess"
 import { revalidateTag } from "next/cache"
 
 
-export async function getBlacklist() {
-    const response = await fetch('http://localhost:8001/api/blacklist',
+export async function getBlacklist({ agency_id }: { agency_id: number }) {
+    const response = await fetch(`http://localhost:8001/api/blacklist?agency_id=${agency_id}`,
         {
+            method: 'GET',
             next: { tags: ['blacklist'] }
         }
     )
