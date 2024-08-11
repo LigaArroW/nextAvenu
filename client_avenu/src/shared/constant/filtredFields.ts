@@ -1,3 +1,5 @@
+
+
 export const filtredFields = [
     'site_languages',
     'countries',
@@ -5,6 +7,7 @@ export const filtredFields = [
     'districts',
     'undergrounds',
     'model_types',
+    'model_views',
     'orientations',
     'meetings',
     'meeting_places',
@@ -26,5 +29,6 @@ export const filtredFields = [
     'service_categories',
     'piercings',
     'proposal_places',
+    'days_of_week',
 
 ]

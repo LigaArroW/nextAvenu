@@ -158,7 +158,7 @@ app.get("/api/proposal_places", CoreController.getProposalPlaces);
 /* ------------------- */
 
 app.get("/api/models", ModelController.getModelsForAdmin);
-app.get("/api/models", ModelController.getModelsForAgency);
+app.get("/api/models_agency", ModelController.getModelsForAgency);
 // app.get("/api/models", checkPermissions([R.Agency, R.Admin]), ModelController.getModelsForAgency);
 app.get("/api/models", ModelController.getModelsForAdmin);
 // app.get("/api/models", checkPermissions([R.Admin]), ModelController.getModelsForAdmin);
@@ -264,6 +264,34 @@ app.get('/api/photos/:photo', (req, res) => {
     // console.log('Photo found:', photo);
 
     res.sendFile(path.join(folderPath, photo));
+  }
+})
+
+app.get('/api/photos/tmp/:photo', (req, res) => {
+  const name = req.params.photo;
+  const folderPath = path.join(__dirname, '/uploads/media/photos/tmp');
+  const files = fs.readdirSync(folderPath);
+  const photo = files.find(file => file === name);
+  if (!photo) {
+    res.status(404).send('Photo not found');
+  } else {
+    // console.log('Photo found:', photo);
+
+    res.sendFile(path.join(folderPath, photo));
+  }
+})
+
+app.get('/api/videos/:video', (req, res) => {
+  const name = req.params.video;
+  const folderPath = path.join(__dirname, '/uploads/media/videos');
+  const files = fs.readdirSync(folderPath);
+  const video = files.find(file => file === name);
+  if (!video) {
+    res.status(404).send('Video not found');
+  } else {
+    // console.log('Video found:', video);
+
+    res.sendFile(path.join(folderPath, video));
   }
 })
 

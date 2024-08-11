@@ -14,6 +14,17 @@ export async function getModels() {
     return await response.json()
 
 }
+export async function getModel({ profile_id }: { profile_id: number }) {
+    const response = await fetch(`http://localhost:8001/api/models_agency?profile_id=${profile_id}`,
+        {
+            // body: JSON.stringify({ profile_id: profile_id }),
+            next: { tags: ['Models'] }
+        }
+    )
+    return await response.json()
+
+}
+
 
 
 export const getModelOne = async (id: string) => {
@@ -22,13 +33,18 @@ export const getModelOne = async (id: string) => {
     //     // next: { revalidate: 5 }
     //     // cache: 'no-store'
     // })
-    const models: IModel[] = await getModels()
+    try {
+        const models: IModel[] = await getModels()
 
-    const model: IModel | undefined = models.find((model: IModel) => model.id === Number(id));
-    if (!model) {
-        throw new Error(`Model with id ${id} not found`);
+        const model: IModel | undefined = models.find((model: IModel) => model.id === Number(id));
+        if (!model) {
+            throw new Error(`Model with id ${id} not found`);
+        }
+        return model;
+    } catch (error) {
+        console.error(error);
     }
-    return model;
+
 }
 
 

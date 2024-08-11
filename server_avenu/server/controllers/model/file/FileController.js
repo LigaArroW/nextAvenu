@@ -140,13 +140,13 @@ var uploadTmpPublicPhoto = function (request, response) {
 exports.uploadTmpPublicPhoto = uploadTmpPublicPhoto;
 var uploadPublicPhoto = function (request, response) {
     try {
-        var modelId = request.body.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         if (request.files) {
             var file = request.files.publicPhoto;
             var directory = path.join(serverConfig_1.default.directory, "uploads", "media", "photos");
@@ -292,13 +292,13 @@ var uploadPublicPhoto = function (request, response) {
 exports.uploadPublicPhoto = uploadPublicPhoto;
 var uploadPublicVideo = function (request, response) {
     try {
-        var modelId = request.body.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         if (request.files) {
             var file = request.files.publicVideo;
             var directory = path.join(serverConfig_1.default.directory, "uploads", "media", "videos");

@@ -4,13 +4,13 @@ const mysql = require("mysql");
 
 const addWorkTimes = (request, response) => {
   try {
-    const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     let sql = "DELETE FROM work_times WHERE ?? = ?; ";
     const values = ["model_id", request.body.params.model_id] as string[];

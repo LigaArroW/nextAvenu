@@ -60,4 +60,8 @@ export const addToBlackListSchema = z.object({
     agency_id: z.number().min(1, { message: "validation.agency_id" }),
 })
 
+export const addAccessBlackListSchema = z.object({
+    access_to: z.number().min(1, { message: "validation.access_to" }),
+    id: z.number(),
+})
 

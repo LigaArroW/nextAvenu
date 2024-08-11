@@ -12,13 +12,13 @@ const path = require("path");
 
 const deleteVideo = (request, response) => {
   try {
-    const modelId = request.body.params.video.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.video.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "DELETE FROM videos WHERE id = ?;";
     const query = mysql.format(sql, [request.body.params.video.id]);
@@ -72,13 +72,13 @@ const getVideos = (_request, response) => {
 
 const updateVideoStatus = (request, response) => {
   try {
-    const modelId = request.body.params.video.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.video.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "UPDATE videos SET status = ? WHERE id = ?;";
     const query = mysql.format(sql, [request.body.params.status, request.body.params.video.id]);

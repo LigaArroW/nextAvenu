@@ -1,3 +1,4 @@
+import { getAuthDataUserAction } from "@/lib/auth/authAction";
 import { getModelOne } from "@/lib/models/getDataModel";
 import { getFiltredFields } from "@/lib/models/getModelsFilter";
 import Model from "@/shared/components/Model/Model";
@@ -6,6 +7,8 @@ import { IGeneral } from "@/types/core/generalFilters";
 import { IModel } from "@/types/model/model/model";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
+
 import { NextRequest } from "next/server";
 
 
@@ -32,8 +35,9 @@ export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
     const model = await getModelOne(id)
+
     return {
-        title: `${model.name} (${model.age})` || "Модель не найдена",
+        title: model ? `${model.name} (${model.age})` : "Модель не найдена",
         // title: `${t("navigation.home")} | ${t("navigation.all_models")}`,
     };
 }
@@ -44,15 +48,19 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 export default async function ModelPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
     unstable_setRequestLocale(locale);
 
+    const person = await getAuthDataUserAction()
+
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 
     const model = await getModelOne(id)
 
     // console.log(filtredFields.service_categories);
-
+    if (!model) {
+        redirect('/404')
+    }
 
     return (
-        <Model filtredFields={filtredFields} model={model} forModerator={true} />
+        <Model filtredFields={filtredFields} model={model} forModerator={true} person={person}/>
 
     )
 }

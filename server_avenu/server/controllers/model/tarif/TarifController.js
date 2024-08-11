@@ -5,13 +5,13 @@ var connectionPool_1 = require("../../../connectionPool");
 var mysql = require("mysql");
 var addTarifs = function (request, response) {
     try {
-        var modelId = request.body.params.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql_1 = "DELETE FROM tarifs WHERE ?? = ?; ";
         var values_1 = ["model_id", request.body.params.model_id];
         request.body.params.tarifs.forEach(function (tarif) {

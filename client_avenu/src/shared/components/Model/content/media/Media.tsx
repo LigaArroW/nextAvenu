@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import styles from '@/shared/styles/Model.module.sass'
 import Slider from "react-slick";
 import { ArrowLeft } from "@/shared/assets/ArrowLeft";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IVideo } from "@/types/model/video/video";
 import { IPhoto } from "@/types/model/photo/photo";
 import { PhotoType } from "@/enums/photoType";
@@ -35,6 +35,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
   const slider = useRef<Slider | null>(null);
 
   const [isModalShow, setIsModalShow] = useState(false);
+  const [isVideoModalShow, setIsVideoModalShow] = useState(false);
 
   const settings = {
     className: "center",
@@ -47,11 +48,23 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
     arrows: false,
   };
 
+  useEffect(() => {
+    setVideosLength(model.videos.filter((video: IVideo) => video.status === VideoStatus.Applyed).length);
+  }, [model.videos])
+
   const handlerViewPhotoOnClick = (index: number) => {
     // setModalType(ModalType.PhotosViewer);
     setActivePhoto(index);
     setIsModalShow(true);
   };
+
+  const handlerViewVideoOnClick = (video: IVideo) => {
+    // setModalType(ModalType.VideoViewer);
+    setIsVideoModalShow(true);
+    setActiveVideo(video);
+
+  };
+
 
 
   return (
@@ -165,16 +178,13 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
         {photos && photos.length < 5 && (
           <div className={styles.content}>
             {photos && photos
-              // .filter((photo: IPhoto) => photo.type === PhotoType.PublicPhoto && photo.status === PhotoStatus.Applyed)
               .map((photo: string, index: number) => (
 
                 <Image
                   key={index}
                   src={photo}
-                  // src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
                   alt=""
-                  // fill
-                  // objectFit="contain"
+              
                   className={styles.content_item}
                   width={110}
                   height={150}
@@ -183,13 +193,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
 
                 />
 
-                // <div key={photo.id}>123</div>
-                // <img
-                //   className={styles.content_item}
-                //   src={`/uploads${getThumbUrl(photo.photo_url)}`}
-                //   alt=""
-                //   onClick={() => handlerViewPhotoOnClick(index)}
-                // />
+       
               ))}
           </div>
         )}
@@ -204,9 +208,10 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                 <video
                   key={video.id}
                   className={`${styles.content_item} ${styles.video}`}
-                  src={`/uploads${video.video_url}`}
+                  // src={`/uploads${video.video_url}`}
+                  src={`http://localhost:8001/api/videos/${video.video_url.replace('/media/videos/', "")}`}
                   autoPlay={false}
-                // onClick={() => handlerViewVideoOnClick(video)}
+                  onClick={() => handlerViewVideoOnClick(video)}
                 />
               ))}
           </div>
@@ -223,7 +228,12 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
         </Portal>
       )}
 
-      {/* {videosLenght > 0 && <VideoViewerModal video={activeVideo} setVideo={setActiveVideo} />} */}
+      {videosLenght > 0 && isVideoModalShow &&
+        <VideoViewerModal
+          video={activeVideo}
+          setVideo={setActiveVideo}
+          onClose={() => setIsVideoModalShow(false)}
+        />}
     </div>
   );
 };

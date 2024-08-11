@@ -125,7 +125,7 @@ var addBlacklistAccess = function (request, response) {
         var query = mysql.format(sql, [
             "agency_id",
             "access_to",
-            request.id,
+            request.body.params.agency_id,
             request.body.params.access_to,
         ]);
         connectionPool_1.connectionPool.query(query, function (error) {
@@ -153,7 +153,7 @@ exports.addBlacklistAccess = addBlacklistAccess;
 var deleteBlacklistAccess = function (request, response) {
     try {
         var sql = "DELETE FROM blacklist_access WHERE ?? = ? AND agency_id = ?;";
-        var query = mysql.format(sql, ["id", request.body.params.id, request.id]);
+        var query = mysql.format(sql, ["id", request.body.params.id, request.body.params.agency_id]);
         connectionPool_1.connectionPool.query(query, function (error) {
             if (error) {
                 return response.status(404).json({

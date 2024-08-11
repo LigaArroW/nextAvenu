@@ -1,3 +1,4 @@
+import { getAuthDataUserAction } from "@/lib/auth/authAction";
 import Model from "@/shared/components/Model/Model";
 import { filtredFields } from "@/shared/constant/filtredFields";
 import { IGeneral } from "@/types/core/generalFilters";
@@ -42,6 +43,11 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 export default async function ModelPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
     unstable_setRequestLocale(locale);
 
+
+    const person = await getAuthDataUserAction()
+
+    // const user = person.roles === RolesUsers.Customer ? person : person.roles === RolesUsers.Agency ? person : undefined
+
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 
     const model = await getModel(id)
@@ -50,7 +56,7 @@ export default async function ModelPage({ params: { id, locale } }: { params: { 
 
 
     return (
-        <Model filtredFields={filtredFields} model={model} forModerator={false} />
+        <Model filtredFields={filtredFields} model={model} forModerator={false} person={person} />
 
     )
 }

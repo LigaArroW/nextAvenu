@@ -74,7 +74,7 @@ export async function getBlacklistAccess({ agency_id }: { agency_id: number }) {
 
 }
 
-export async function addBlacklistAccess({ blacklistAccess }: { blacklistAccess: IBlacklistAccess }) {
+export async function addBlacklistAccess({ agency_id, access_to }: { agency_id: number, access_to: number }) {
 
     const response = await fetch('http://localhost:8001/api/add_blacklist_access', {
         method: 'POST',
@@ -83,8 +83,8 @@ export async function addBlacklistAccess({ blacklistAccess }: { blacklistAccess:
         },
         body: JSON.stringify({
             params: {
-                agency_id: blacklistAccess.agency_id,
-                access_to: blacklistAccess.access_to,
+                agency_id,
+                access_to,
             }
         }),
 
@@ -93,7 +93,7 @@ export async function addBlacklistAccess({ blacklistAccess }: { blacklistAccess:
     return await response.json()
 
 }
-export async function deleteBlacklistAccess({ id }: { id: number }) {
+export async function deleteBlacklistAccess({ id, agency_id }: { id: number, agency_id: number }) {
 
     const response = await fetch('http://localhost:8001/api/add_blacklist_access', {
         method: 'POST',
@@ -103,6 +103,7 @@ export async function deleteBlacklistAccess({ id }: { id: number }) {
         body: JSON.stringify({
             params: {
                 id: id,
+                agency_id: agency_id
             }
         }),
 

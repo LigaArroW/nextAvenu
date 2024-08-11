@@ -206,6 +206,7 @@ const addModel = (request, response) => {
           error: error,
         });
       } else {
+        
         const model_id = data["insertId"];
         let sqlSecond = "DELETE FROM contacts WHERE ?? = ?; ";
         const values = ["model_id", model_id] as string[];
@@ -411,13 +412,13 @@ const updateModel = (request, response) => {
 
 const updateModelEnable = (request, response) => {
   try {
-    const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "UPDATE models SET ?? = ? WHERE id = ?;";
     const query = mysql.format(sql, ["is_enable", request.body.params.is_enable, request.body.params.model_id]);
@@ -469,13 +470,13 @@ const updateModelEnableByModerator = (request, response) => {
 
 const updateModelCurrencyTimezone = (request, response) => {
   try {
-    const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "UPDATE models SET ?? = ?, ?? = ? WHERE id = ?;";
     const query = mysql.format(sql, [
@@ -508,13 +509,13 @@ const updateModelCurrencyTimezone = (request, response) => {
 
 const deleteModel = (request, response) => {
   try {
-    const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql =
       "DELETE FROM models WHERE id = ?; DELETE FROM photos WHERE model_id = ?; DELETE FROM contacts WHERE model_id = ?; DELETE FROM videos WHERE model_id = ?; DELETE FROM model_piercings WHERE model_id = ?; DELETE FROM blocked_countries WHERE model_id = ?; DELETE FROM tarifs WHERE model_id = ?; DELETE FROM model_services WHERE model_id = ?; DELETE FROM work_times WHERE model_id = ?; DELETE FROM model_languages WHERE model_id = ?; ";

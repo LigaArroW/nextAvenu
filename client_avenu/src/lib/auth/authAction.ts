@@ -26,6 +26,7 @@ export type Person = {
     balance: number
     is_confirmed: boolean
     login: string
+    token: string
 }
 
 export async function getAuthAction(tokenName: keyof typeof TokensRoles): Promise<Admin> {
@@ -69,7 +70,9 @@ export async function getAuthDataUserAction(): Promise<Person> {
             models: decode.models,
             balance: decode.balance,
             is_confirmed: decode.is_confirmed,
-            login: decode.login
+            login: decode.login,
+            token: person.value
+
 
         }
     } catch (error) {
@@ -79,7 +82,8 @@ export async function getAuthDataUserAction(): Promise<Person> {
             models: [],
             balance: 0,
             is_confirmed: false,
-            login: ''
+            login: '',
+            token: ''
         }
     }
 
@@ -104,7 +108,8 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Pr
             models: decode.models,
             balance: decode.balance,
             is_confirmed: decode.is_confirmed,
-            login: decode.login
+            login: decode.login,
+            token: cookie
         }
     } catch (error) {
         return {
@@ -113,7 +118,8 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Pr
             models: [],
             balance: 0,
             is_confirmed: false,
-            login: ''
+            login: '',
+            token: ''
         }
     }
 

@@ -24,12 +24,9 @@ export default async function ProfilePage({ params: { locale } }: { params: { lo
     if (!user) {
         redirect(`/${locale}`)
     }
-    const blacklist = await getBlacklist({ agency_id: Number(user._id) })
-    console.log("🚀 ~ ProfilePage ~ blacklist:", blacklist.length)
-    const blackListAccess = await getBlacklistAccess({ agency_id: Number(user._id) })
+
 
     return (
-        // <div>asdasd</div>
-        <BlackList person={user} blacklist={blacklist} blacklistAccess={blackListAccess} />
+        <BlackList person={user} />
     )
 }

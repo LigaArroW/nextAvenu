@@ -62,6 +62,11 @@ input {
     height: 45px;
 }
 
+svg {
+    width: 35px;
+    height: 35px;
+}
+
 textarea {
     height: 250px;
     padding: 15px;
@@ -85,21 +90,21 @@ input[type="file"] {
     display: none;
 }
 
-.seach_input {
+.search_input {
     position: relative;
     display: flex;
     padding: 5px;
     width: calc(100% - 10px);
 }
 
-.seach_input input {
+.search_input input {
     display: flex;
     box-shadow: none;
     background-color: var(--background-color);
     width: calc(100% - 30px);
 }
 
-.seach_input svg {
+.search_input svg {
     position: absolute;
     width: 25px;
     height: 25px;

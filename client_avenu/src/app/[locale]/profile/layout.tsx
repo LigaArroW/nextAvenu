@@ -1,10 +1,8 @@
-import { getAuthAction, getAuthDataUserAction } from "@/lib/auth/authAction";
+import {  getAuthDataUserAction } from "@/lib/auth/authAction";
 import { RolesUsers } from "@/lib/auth/authType";
-import AdminHeader from "@/shared/components/Admin/ui/AdminHeader/AdminHeader";
-import AdminLogin from "@/shared/components/Admin/AdminLogin";
-import { LinksList } from "@/shared/components/Admin/linkList";
 import styles from '@/shared/styles/Profile.module.sass'
-import { Metadata } from "next";
+
+
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

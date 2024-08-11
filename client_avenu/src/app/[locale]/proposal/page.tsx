@@ -1,19 +1,28 @@
 
-import { getAuthDataUserAction } from "@/lib/auth/authAction";
-import Portal from "@/shared/components/ModalPortal/ModalPortal";
-import MessageModal from "@/shared/components/Modals/MessageModal";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { redirect } from "next/navigation";
+import { getAuthUserAction } from "@/lib/auth/authAction";
+import { getProposalPlaces } from "@/lib/proposal/proposalAction";
+import Proposal from "@/shared/components/Proposal/Proposal";
 
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+
+
+export async function generateMetadata() {
+    const t = await getTranslations();
+
+    return {
+        title: `${t("global.make_an_order")}`,
+    };
+}
 
 export default async function ProposalPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
     const t = await getTranslations();
 
-    const person = await getAuthDataUserAction()
-    // console.log("🚀 ~ ProposalPage ~ person:", person)
+    const person = await getAuthUserAction('CustomerToken')
+
+    const proposalPlaces = await getProposalPlaces()
 
     return (
-        <div>Страница предложения</div>
+        <Proposal person={person} proposalPlaces={proposalPlaces}/>
     )
 }

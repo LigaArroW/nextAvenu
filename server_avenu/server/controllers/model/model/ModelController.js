@@ -360,13 +360,13 @@ var updateModel = function (request, response) {
 exports.updateModel = updateModel;
 var updateModelEnable = function (request, response) {
     try {
-        var modelId = request.body.params.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql = "UPDATE models SET ?? = ? WHERE id = ?;";
         var query = mysql.format(sql, ["is_enable", request.body.params.is_enable, request.body.params.model_id]);
         connectionPool_1.connectionPool.query(query, function (error) {
@@ -421,13 +421,13 @@ var updateModelEnableByModerator = function (request, response) {
 exports.updateModelEnableByModerator = updateModelEnableByModerator;
 var updateModelCurrencyTimezone = function (request, response) {
     try {
-        var modelId = request.body.params.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql = "UPDATE models SET ?? = ?, ?? = ? WHERE id = ?;";
         var query = mysql.format(sql, [
             "currency_id",
@@ -461,13 +461,13 @@ var updateModelCurrencyTimezone = function (request, response) {
 exports.updateModelCurrencyTimezone = updateModelCurrencyTimezone;
 var deleteModel = function (request, response) {
     try {
-        var modelId = request.body.params.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql = "DELETE FROM models WHERE id = ?; DELETE FROM photos WHERE model_id = ?; DELETE FROM contacts WHERE model_id = ?; DELETE FROM videos WHERE model_id = ?; DELETE FROM model_piercings WHERE model_id = ?; DELETE FROM blocked_countries WHERE model_id = ?; DELETE FROM tarifs WHERE model_id = ?; DELETE FROM model_services WHERE model_id = ?; DELETE FROM work_times WHERE model_id = ?; DELETE FROM model_languages WHERE model_id = ?; ";
         var query = mysql.format(sql, [
             request.body.params.model_id,

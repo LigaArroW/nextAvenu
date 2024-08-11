@@ -32,14 +32,15 @@ async function encryptString(plainText, token) {
 const getCaptcha = async (request, response) => {
   try {
     const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
-    const token = request.headers.authorization.split('.')[2];
+    const token = request.body.params.token;
+    // const token = request.headers.authorization.split('.')[2];
     const numberOfKeys = getR(minNumOfKeys, maxNumOfKeys);
 
     const keysArray = [] as Array<any>
@@ -190,16 +191,17 @@ const getCaptcha = async (request, response) => {
 const verifyCaptcha = (request, response) => {
   try {
     const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(200).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(200).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sqlGet = "SELECT * FROM verification WHERE agency_id = ? and model_id = ?";
     const queryGet = mysql.format(sqlGet, [request.body.params.agency_id, modelId]);
     connectionPool.query(queryGet, (error, data) => {
+
       if (error) {
         return response.status(200).json({
           success: false,

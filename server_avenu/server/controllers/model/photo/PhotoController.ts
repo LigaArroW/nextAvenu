@@ -12,13 +12,13 @@ const path = require("path");
 
 const updateMainPhoto = (request, response) => {
   try {
-    const modelId = request.body.params.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "UPDATE photos SET is_main = 0 WHERE model_id = ?; UPDATE photos SET is_main = 1 WHERE id = ?;";
     const query = mysql.format(sql, [request.body.params.model_id, request.body.params.photo_id]);
@@ -45,18 +45,19 @@ const updateMainPhoto = (request, response) => {
 
 const deletePhoto = (request, response) => {
   try {
-    const modelId = request.body.params.photo.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.params.photo.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     const sql = "DELETE FROM photos WHERE id = ?;";
     const query = mysql.format(sql, [request.body.params.photo.id]);
     connectionPool.query(query, (error) => {
       if (error) {
+        
         return response.status(404).json({
           success: false,
           message: "server.mistake_try_again",

@@ -9,13 +9,13 @@ var fs = require("fs");
 var path = require("path");
 var deleteVideo = function (request, response) {
     try {
-        var modelId = request.body.params.video.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.video.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql = "DELETE FROM videos WHERE id = ?;";
         var query = mysql.format(sql, [request.body.params.video.id]);
         connectionPool_1.connectionPool.query(query, function (error) {
@@ -73,13 +73,13 @@ var getVideos = function (_request, response) {
 exports.getVideos = getVideos;
 var updateVideoStatus = function (request, response) {
     try {
-        var modelId = request.body.params.video.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.params.video.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sql = "UPDATE videos SET status = ? WHERE id = ?;";
         var query = mysql.format(sql, [request.body.params.status, request.body.params.video.id]);
         connectionPool_1.connectionPool.query(query, function (error) {

@@ -71,3 +71,13 @@ export async function deleteProfile({ agency_id }: { agency_id: number }) {
     return await response.json()
 
 }
+
+export async function getAgencies() {
+    const response = await fetch('http://localhost:8001/api/agencies',
+        {
+            next: { tags: ['users', 'agencies'] }
+        }
+    )
+    return await response.json()
+
+}

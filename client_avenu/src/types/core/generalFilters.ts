@@ -1,4 +1,5 @@
 import { ILanguage } from "../model/language/language";
+import { IModelView } from "../model/modelView/modelView";
 import { IPiercing } from "../model/piercing/piercing";
 import { IBreastSize } from "./breastSize";
 import { IBreastType } from "./breastType";
@@ -54,4 +55,5 @@ export interface IGeneral {
     service_categories: IServiceCategory[];
     piercings: IPiercing[];
     proposal_places: IProposalPlace[];
+    modelViews: IModelView[];
 }

@@ -103,13 +103,13 @@ const uploadTmpPublicPhoto = (request, response) => {
 
 const uploadPublicPhoto = (request, response) => {
   try {
-    const modelId = request.body.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     if (request.files) {
       const file = request.files.publicPhoto;
@@ -238,13 +238,13 @@ const uploadPublicPhoto = (request, response) => {
 
 const uploadPublicVideo = (request, response) => {
   try {
-    const modelId = request.body.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     if (request.files) {
       const file = request.files.publicVideo;

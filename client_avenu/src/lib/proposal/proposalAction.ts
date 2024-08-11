@@ -15,15 +15,28 @@ export async function getProposals() {
     return await response.json()
 
 }
+export async function getProposalPlaces() {
+    const response = await fetch('http://localhost:8001/api/proposal_places',
+        {
+            next: { tags: ['proposal_places'] }
+        }
+    )
+    return await response.json()
+
+}
+export async function getProposalViews() {
+    const response = await fetch('http://localhost:8001/api/proposal_views',
+        {
+            next: { tags: ['proposal_views'] }
+        }
+    )
+    return await response.json()
+
+}
 
 export async function addProposal({ proposal }: { proposal: IProposal }) {
 
     try {
-        const admin = await getAuthAction('AdminToken')
-
-        if (admin.roles === 'None') {
-            throw new Error('Не достаточно прав')
-        }
 
         const response = await fetch('http://localhost:8001/api/add_proposal', {
             method: 'POST',
@@ -69,7 +82,7 @@ export async function updateProposalViews({ model_id, proposal_views }: { model_
             }),
 
         })
-        revalidateTag('proposals')
+        revalidateTag('proposal_views')
         return await response.json()
     } catch (error) {
         if (error instanceof Error) {

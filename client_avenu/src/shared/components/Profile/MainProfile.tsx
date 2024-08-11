@@ -18,7 +18,7 @@ const MainProfile: React.FC<IMainProfile> = async ({ person }) => {
     return (
         <div className={styles.content}>
             {person.roles === RolesUsers.Agency && <Link className={styles.addvertise_button}
-                href={`/${locale}/model_settings/new`}
+                href={`/${locale}/profile/model_settings/parameters/new`}
             //  onClick={() => navigate("/model_settings/new")}
             >
                 {t("profile.add_advertisement")}
@@ -27,7 +27,7 @@ const MainProfile: React.FC<IMainProfile> = async ({ person }) => {
             <div className={styles.main_info}>
                 <div className={styles.item}>
                     <div className={styles.label}>{t("profile.agency_id")}</div>
-                    <div className={styles.value}>{String(person._id).padStart(8, "0")}</div>
+                    <div className={styles.value}>{String(person._id)}</div>
                 </div>
                 {person.roles === RolesUsers.Agency ? (
                     <div className={styles.item}>

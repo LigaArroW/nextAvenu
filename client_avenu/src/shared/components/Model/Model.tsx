@@ -53,7 +53,9 @@ import ModeratorControl from "./forModerator/ModeratorControl";
 import { IPhoto } from "@/types/model/photo/photo";
 import { PhotoType } from "@/enums/photoType";
 import { PhotoStatus } from "@/enums/photoStatus";
+import FeedbacksContent from "./content/feedback/Feedback";
 import Image from "next/image";
+import { Person } from "@/lib/auth/authAction";
 
 
 
@@ -63,7 +65,7 @@ interface IModelComponent {
   filtredFields: Partial<IGeneral>;
   model: IModel;
   forModerator: boolean
-  response?: any
+  person: Person
 }
 
 async function getPhotoArray(model: IModel) {
@@ -77,7 +79,7 @@ async function getPhotoArray(model: IModel) {
 
 
 
-const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredFields, model }) => {
+const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredFields, model, person }) => {
   const t = await getTranslations();
   const locale = await getLocale();
 
@@ -169,13 +171,8 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
   }
 
 
-
-
-
-
   return (
     <>
-      {/* {forModerator ? <div className={styles.previous_page_button} onClick={() => navigate(-1)}> {'  < Предыдущая страница'}</div > : null} */}
       {
         forModerator ? <RouterBack styles={styles.previous_page_button} text="< Предыдущая страница" /> : null
       }
@@ -185,9 +182,9 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
 
         <div className={styles.wrapper_content}>
           {/* {windowSize.innerWidth > 1450 && <Media model={model} />} */}
-          {/* <WindowsInner innerWidth="1450" maxMinWidth="min"> */}
-          <Media model={model} photos={photoArray} />
-          {/* </WindowsInner> */}
+          <WindowsInner innerWidth="1450" maxMinWidth="min">
+            <Media model={model} photos={photoArray} />
+          </WindowsInner>
 
           <div className={styles.info}>
             <div className={styles.name}>
@@ -222,7 +219,7 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
             </div>
             {/* {windowSize.innerWidth < 1451 && <Media model={model} />} */}
             <WindowsInner innerWidth="1450" maxMinWidth="max">
-              <Media model={model} photos={photoArray}/>
+              <Media model={model} photos={photoArray} />
             </WindowsInner>
             {model.about_self !== "" && (
               <div className={styles.about_self}>
@@ -649,7 +646,7 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                 ))}
               </div>
             </div>
-            {/* <FeedbacksContent model={model} /> */}
+            <FeedbacksContent model={model} person={person}/>
           </div>
           <ModeratorControl model={model} forModerator={forModerator} />
           {/* {forModerator ? <div className={styles.moderator_control}>

@@ -1,4 +1,3 @@
-'use client'
 
 import { Person } from "@/lib/auth/authAction";
 import { IBlacklist } from "@/types/profile/blacklist/blacklist";
@@ -6,60 +5,31 @@ import { IBlacklist } from "@/types/profile/blacklist/blacklist";
 // import globalStyles from '@/shared/styles/Global.module.sass'
 
 import styles from '@/shared/styles/Profile.module.sass'
-import { useState, useTransition } from "react";
-import { useTranslations } from "next-intl";
+
+
 import { Close } from "@/shared/assets/Close";
 import { IBlacklistAccess } from "@/types/profile/blacklist/blacklistAccess";
-import MessageModal from "@/shared/components/Modals/MessageModal";
-import ConfirmMessageModal from "@/shared/components/Modals/ConfirmMessageModal";
-import { deleteBlacklist } from "@/lib/blackList/blackList";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { getBlacklist, getBlacklistAccess } from "@/lib/blackList/blackList";
+import CloseAndConfirm from "../CloseAndConfirm/CloseAndConfirm";
 
 
 interface IBlackList {
     person: Person
-    blacklist: IBlacklist[]
-    blacklistAccess: IBlacklistAccess[]
 }
 
 
-const BlackList: React.FC<IBlackList> = ({ person, blacklist, blacklistAccess }) => {
-    const t = useTranslations();
-    const router = useRouter();
-    const [agencyBlacklist, setAgencyBlacklist] = useState(blacklist);
-    const [isConfirmModalShow, setIsConfirmModalShow] = useState(false);
-    const [deletedBlacklistItem, setDeletedBlacklistItem] = useState(0);
-    const [isMessageModalShow, setIsMessageModalShow] = useState(false);
-    const [infoMessage, setInfoMessage] = useState("");
-
-    const handleDeleteOnClick = (blacklistItemId: number) => {
-        setDeletedBlacklistItem(blacklistItemId);
-        setIsConfirmModalShow(true);
-    };
-
-
-    const handlerOkOnClick = async (id: number) => {
-        console.log(blacklist.length,'до удаления');
-        const deleted = await deleteBlacklist({ id, agency_id: Number(person._id) });
-        console.log("🚀 ~ handlerOkOnClick ~ deleted:", deleted)
-        
-        if (deleted.success) {
-            setIsConfirmModalShow(false);
-            console.log(blacklist.length,'после удаления');
-            router.refresh();
-        }
-        if (!deleted.success) {
-            setInfoMessage(deleted.error);
-            setIsMessageModalShow(true);
-        }
-    }
+const BlackList: React.FC<IBlackList> = async ({ person }) => {
+    const t = await getTranslations();
+    const blacklist = await getBlacklist({ agency_id: Number(person._id) })
+    const blackListAccess = await getBlacklistAccess({ agency_id: Number(person._id) })
 
     return (
         <div className={styles.content}>
             <div className={styles.title}>{t("profile.blacklist")}</div>
             <div className={`${styles.main_info} ${styles.full_width}`}>
-                {agencyBlacklist.length > 0 && <div className={styles.agency}>{t("profile.this_agency")}</div>}
-                {agencyBlacklist.length > 0 && (
+                {blacklist.length > 0 && <div className={styles.agency}>{t("profile.this_agency")}</div>}
+                {blacklist.length > 0 && (
                     <table className={'table'}>
                         <thead>
                             <tr className={'borderer'}>
@@ -73,25 +43,20 @@ const BlackList: React.FC<IBlackList> = ({ person, blacklist, blacklistAccess })
                             </tr>
                         </thead>
                         <tbody>
-                            {agencyBlacklist.map((blacklist_item: IBlacklist) => (
+                            {blacklist.map((blacklist_item: IBlacklist) => (
                                 <tr key={blacklist_item.id}>
                                     <td style={{ width: "35%" }}>{blacklist_item.phone_number}</td>
                                     <td className={'borderer'} style={{ width: "65%" }}>
                                         {blacklist_item.description}
                                     </td>
-                                    <td className={'borderer'}>
-                                        <div className={'close'}
-                                            onClick={() => handleDeleteOnClick(blacklist_item.id)}
-                                        >
-                                            <Close fill="#1B1B1B" />
-                                        </div>
-                                    </td>
+                                    <CloseAndConfirm personId={person._id} id={blacklist_item.id} />
+
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 )}
-                {blacklistAccess.map((access: IBlacklistAccess) => {
+                {blackListAccess.map((access: IBlacklistAccess) => {
                     if (
                         access.access_to === Number(person._id) &&
                         blacklist.filter((blacklist_item: IBlacklist) => blacklist_item.agency_id === access.access_to).length > 0
@@ -128,20 +93,6 @@ const BlackList: React.FC<IBlackList> = ({ person, blacklist, blacklistAccess })
                     }
                 })}
             </div>
-            {isMessageModalShow && <MessageModal
-                text={infoMessage}
-                buttonText={t("global.ok")}
-                handlerButtonClick={() => setIsMessageModalShow(false)}
-            // isShow={isMessageModalShow}
-            />}
-            <ConfirmMessageModal
-                text={t("global.delete_blacklist_question")}
-                okButtonText={t("global.delete")}
-                handlerOkOnClick={() => handlerOkOnClick(deletedBlacklistItem)}
-                cancelButtonText={t("global.cancel")}
-                isShow={isConfirmModalShow}
-                setIsShow={setIsConfirmModalShow}
-            />
         </div>
     );
 };

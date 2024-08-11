@@ -80,13 +80,7 @@ var getCaptcha = function (request, response) { return __awaiter(void 0, void 0,
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 modelId = request.body.params.model_id;
-                if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-                    return [2 /*return*/, response.status(500).json({
-                            success: false,
-                            message: "server.mistake_try_again",
-                        })];
-                }
-                token = request.headers.authorization.split('.')[2];
+                token = request.body.params.token;
                 numberOfKeys = getR(minNumOfKeys, maxNumOfKeys);
                 keysArray = [];
                 verificationKey_1 = '';
@@ -209,12 +203,12 @@ exports.getCaptcha = getCaptcha;
 var verifyCaptcha = function (request, response) {
     try {
         var modelId = request.body.params.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(200).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(200).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         var sqlGet = "SELECT * FROM verification WHERE agency_id = ? and model_id = ?";
         var queryGet = mysql.format(sqlGet, [request.body.params.agency_id, modelId]);
         connectionPool_1.connectionPool.query(queryGet, function (error, data) {
