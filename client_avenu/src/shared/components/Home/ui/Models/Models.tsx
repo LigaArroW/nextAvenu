@@ -1,18 +1,8 @@
 'use client'
 
-import styles from "./Models.module.sass";
-
-// import HomeModel from "../../../components/HomeModel/HomeModel";
 
 import { ViewType } from "../ViewType";
 
-// import { IModel } from "../../../types/model/model/model";
-// import { initFilter } from "../../../types/model/filter/initFilter";
-// import { IModelService } from "../../../types/model/modelService/modelService";
-// import { IModelPiercing } from "../../../types/model/piercing/modelPiercing";
-// import { IMeetingPlace } from "../../../types/core/meetingPlace";
-// import { ITarif } from "../../../types/model/tarif/tarif";
-// import { IModelLanguage } from "../../../types/model/language/modelLanguage";
 
 import { Filter } from "../../../../assets/Filter";
 import { Grid } from "../../../../assets/Grid";
@@ -33,6 +23,8 @@ import { calcIsNew } from "@/shared/constant/calcIsNew";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
 import { ITarif } from "@/types/model/tarif/tarif";
 import { useMainContext } from "@/widgets/Contex/MainProvider";
+
+import styles from "./Models.module.sass";
 
 interface IModelsProps {
   // isFiltersActive: boolean;

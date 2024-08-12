@@ -1,6 +1,5 @@
 'use client'
 import { useLocale, useTranslations } from 'next-intl';
-import styles from './ProfileNavigation.module.sass'
 import LinksList from './linksList';
 import { usePathName } from '@/shared/hooks/usePathName';
 import { IProfileLink } from '@/types/main/profileLink';
@@ -10,6 +9,7 @@ import { Person } from '@/lib/auth/authAction';
 import { RolesUsers } from '@/lib/auth/authType';
 import React from 'react';
 import Link from 'next/link';
+import styles from './ProfileNavigation.module.sass'
 
 interface IProfileNavigation {
     person: Person
@@ -48,6 +48,7 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
                                             ) : (
                                                 <>
                                                     <Link
+                                                        
                                                         className={styles.link}
                                                         style={{ textDecoration: 'none', color: '#1b1b1b' }}
                                                         href={`/${locale}` + group.links[0].link_url}

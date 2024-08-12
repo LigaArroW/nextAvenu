@@ -59,7 +59,7 @@ const HeaderNav = () => {
                         <Link
                             key={link.id}
                             className={`${pathName === link.link_url ? styles.active : ""}`}
-                            href={`/${locale}${link.link_url === "/" ? "" : link.link_url}`}
+                            href={`/${locale}${link.link_url === "/" ? "/" : link.link_url}`}
                             scroll={false}
                             onClick={() => setIsNavigationMobileActive(false)}
                         // onClick={() => handleMobileLinkOnClick(link.id)}

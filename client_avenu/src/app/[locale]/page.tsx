@@ -4,6 +4,8 @@ import { IModel } from "@/types/model/model/model";
 
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
+
+
 export async function generateMetadata() {
   const t = await getTranslations();
 

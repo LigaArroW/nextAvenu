@@ -288,6 +288,7 @@ var verifyCaptchaGoogle = function (request, res) { return __awaiter(void 0, voi
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 token = request.body.params.token;
+                console.log("🚀 ~ verifyCaptchaGoogle ~ token:", token);
                 return [4 /*yield*/, fetch('https://www.google.com/recaptcha/api/siteverify', {
                         method: 'POST',
                         headers: {
@@ -300,6 +301,7 @@ var verifyCaptchaGoogle = function (request, res) { return __awaiter(void 0, voi
                 return [4 /*yield*/, response.json()];
             case 2:
                 data = _a.sent();
+                console.log("🚀 ~ verifyCaptchaGoogle ~ data:", data);
                 if (data.success) {
                     return [2 /*return*/, res.status(200).json({ success: true })];
                 }

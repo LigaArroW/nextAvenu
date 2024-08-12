@@ -1,10 +1,6 @@
 'use client'
 
 import { useEffect, useState } from "react";
-
-
-import styles from "./Filters.module.sass";
-
 import ModelTypesSelector from "./selectors/ModelTypesSelector";
 import DistrictsSelector from "./selectors/DistrictsSelector";
 import UndergroundsSelector from "./selectors/UndergroundsSelector";
@@ -20,9 +16,7 @@ import PreferencesSelector from "./selectors/PreferencesSelector";
 import AgeSelector from "./selectors/AgeSelector";
 import TarifsSelector from "./selectors/TarifsSelector";
 import OrientationsSelector from "./selectors/OrientationSelector";
-
 import { ComponentType } from "./ComponentType";
-
 import { Filter } from "@/shared/assets/Filter";
 import { Close } from "@/shared/assets/Close";
 import { useTranslations } from "next-intl";
@@ -30,6 +24,9 @@ import { useMedia } from "react-use";
 import { IGeneral } from "@/types/core/generalFilters";
 import { useHomeContext } from "../Context/HomeProvider";
 import { useMainContext } from "@/widgets/Contex/MainProvider";
+
+
+import styles from "./Filters.module.sass";
 
 interface IFiltersProps {
   generalfields: Partial<IGeneral>

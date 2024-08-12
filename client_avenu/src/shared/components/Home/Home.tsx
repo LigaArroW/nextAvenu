@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import styles from '@/shared/styles/Home.module.sass'
 import { HomePageType } from "@/enums/homePageType";
 import { IModel } from "@/types/model/model/model";
 import Models from "./ui/Models/Models";
@@ -15,6 +14,8 @@ import { HomeProvider } from "./ui/Context/HomeProvider";
 import { getModels } from "@/lib/models/getDataModel";
 import { getFiltredFields } from "@/lib/models/getModelsFilter";
 import { calcIsNew } from "@/shared/constant/calcIsNew";
+
+import styles from '@/shared/styles/Home.module.sass'
 
 interface IHomeProps {
     type: HomePageType;
@@ -60,7 +61,7 @@ const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
 
     return (
         <div className={styles.wrapper_content}>
-            <HomeProvider>
+            <HomeProvider >
                 <Models forModerator={forModerator} models={filtredModel} generalfields={filtredFields} />
                 <Filters generalfields={filtredFields} />
             </HomeProvider>

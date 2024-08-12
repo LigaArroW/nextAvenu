@@ -4,7 +4,7 @@
 import { revalidatePath } from "next/cache";
 import { loginSchema } from "../../validation/validation";
 import { IContactUsForm } from "../formTypes";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ZodError } from "zod";
 import { setAuthAction } from "@/lib/auth/authAction";
 import { verify } from "jsonwebtoken";
@@ -27,6 +27,7 @@ interface IResponse {
 
 export async function loginAction(prevState: IContactUsForm, data: FormData): Promise<IContactUsForm> {
     const t = await getTranslations();
+    const locale = await getLocale();
     try {
         const login = data.get('login');
         const password = data.get('password');
@@ -38,13 +39,27 @@ export async function loginAction(prevState: IContactUsForm, data: FormData): Pr
 
         })
 
-        await postFormData(messages)
-        revalidatePath('login')
-        revalidatePath('/')
+        const resp = await postFormData(messages)
+
+        if (!resp.success || !resp.token) {
+            return {
+                success: false,
+                message: resp.message
+            }
+        }
+
+
+
+        revalidatePath(`/${locale}/profile`, 'page')
         return {
             success: true,
             message: t('global.success_message_send')
         }
+
+
+
+        // revalidatePath('/')
+
     } catch (error) {
         if (error instanceof ZodError) {
             return {
@@ -69,6 +84,23 @@ export async function loginAction(prevState: IContactUsForm, data: FormData): Pr
 
 }
 
+
+export async function VerifyGoogle(token: string) {
+
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `secret=${process.env.REACT_APP_SECRET_KEY!}&response=${token}`,
+    });
+    const data = await response.json();
+    return data
+
+}
+
+
+
 export async function Login({ login, password, email = false }: { login: string; password: string, email?: boolean }) {
 
     try {
@@ -92,13 +124,13 @@ export async function Login({ login, password, email = false }: { login: string;
         // console.log("🚀 ~ Login ~ login:", login)
 
         const data: IResponse = await res.json();
-    
-       
+
+
         // console.log("🚀 ~ Login ~ data:", data)
         if (!data.token) {
             throw new Error('Invalid token');
         }
-        
+
         const verif = verify(data.token, process.env.JWT_TOKEN_SECRET!) as User
         await setAuthAction(RolesUsersToTokenRoles[verif.roles], data.token)
 

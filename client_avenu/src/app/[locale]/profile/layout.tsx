@@ -1,14 +1,11 @@
-import {  getAuthDataUserAction } from "@/lib/auth/authAction";
+import { getAuthDataUserAction } from "@/lib/auth/authAction";
 import { RolesUsers } from "@/lib/auth/authType";
-import styles from '@/shared/styles/Profile.module.sass'
-
-
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ProfileNavigation from "@/shared/components/Profile/ui/ProfileNavigation/ProfileNavigation";
 import { getModels } from "@/lib/models/getDataModel";
-
+import styles from '@/shared/styles/Profile.module.sass'
 
 
 export async function generateMetadata() {

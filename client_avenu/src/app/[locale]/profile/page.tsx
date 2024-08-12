@@ -5,6 +5,10 @@ import MainProfile from "@/shared/components/Profile/MainProfile";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
+
+
+
+
 export async function generateMetadata() {
     const t = await getTranslations();
 
@@ -19,11 +23,11 @@ export default async function MainProfilePage({ params: { locale } }: { params: 
     const person = await getAuthDataUserAction()
 
     const user = person.roles === RolesUsers.Customer ? person : person.roles === RolesUsers.Agency ? person : undefined
-    if(!user) {
+    if (!user) {
         redirect(`/${locale}`)
     }
 
     return (
-        <MainProfile person={user}/>
+        <MainProfile person={user} />
     )
 }

@@ -7,8 +7,8 @@ import { useLocale, useTranslations } from "next-intl";
 import ReCAPTCHA from "react-google-recaptcha";
 import ButtonSubmitForm from "@/widgets/ButtonSubmitForm/ButtonSubmitForm";
 import { useFormState } from "react-dom";
-import { loginAction } from "@/lib/forms/login/loginAction";
-import { useRouter } from "next/navigation";
+import { loginAction, VerifyGoogle } from "@/lib/forms/login/loginAction";
+import { usePathname, useRouter } from "next/navigation";
 
 
 interface ILoginContainerProps {
@@ -20,8 +20,10 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
     const t = useTranslations();
     const router = useRouter();
     const locale = useLocale();
+    const pathname = usePathname();
     const [loginText, setLoginText] = useState('');
     const [passwordText, setPasswordText] = useState('');
+
     const [state, formAction] = useFormState(loginAction, {
         'success': false,
         'message': ''
@@ -29,11 +31,23 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
 
     const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
+    const recaptcha = async () => {
+        if (reCaptchaRef.current) {
+            const token = await reCaptchaRef.current.executeAsync();
+            if (token) {
+                await VerifyGoogle(token) as any;
+            }
+            reCaptchaRef.current.reset();
+        }
+        router.replace(`/${locale}/profile`)
+    }
+
+
     useEffect(() => {
         if (state.success) {
-            router.push(`/${locale}/profile`)
+            recaptcha()
         }
-    }, [locale, router, state.success])
+    }, [state.success])
 
 
     return (

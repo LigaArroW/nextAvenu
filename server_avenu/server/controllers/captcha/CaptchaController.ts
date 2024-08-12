@@ -271,6 +271,7 @@ const getVerificationsforAgency = (request, response) => {
 const verifyCaptchaGoogle = async (request, res) => {
   try {
     const token = request.body.params.token;
+    console.log("🚀 ~ verifyCaptchaGoogle ~ token:", token)
 
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
@@ -281,6 +282,7 @@ const verifyCaptchaGoogle = async (request, res) => {
     });
 
     const data = await response.json();
+    console.log("🚀 ~ verifyCaptchaGoogle ~ data:", data)
 
     if (data.success) {
       return res.status(200).json({ success: true });
