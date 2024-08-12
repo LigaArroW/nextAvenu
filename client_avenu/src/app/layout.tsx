@@ -1,5 +1,5 @@
-import './globals.css';
-export default function RootLayout({
+// import './globals.css';
+export default function RootMainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

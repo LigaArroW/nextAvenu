@@ -14,7 +14,7 @@ export async function generateMetadata() {
 
 
 
-export default async function StorePage({ params: { locale } }: { params: { locale: string } }) {
+export default async function WithVideoPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
 
     return (

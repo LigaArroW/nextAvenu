@@ -16,7 +16,7 @@ export async function generateMetadata() {
     };
 }
 
-export default async function ProfilePage({ params: { locale } }: { params: { locale: string } }) {
+export default async function ProfileAccessToBlackListPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
 
     const person = await getAuthDataUserAction()

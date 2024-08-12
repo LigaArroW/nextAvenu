@@ -16,7 +16,7 @@ import { IFaq } from "@/types/faq/faq";
 
 
 
-export default async function AdminModeratorPage({ params: { link} }: { params: { link: string } }) {
+export default async function AdminModeratorModelPage({ params: { link} }: { params: { link: string } }) {
     const district: IDistrict[] = await getDistricts()
     const underground: IUnderground[] = await getUndergrounds()
     const faqs: IFaq[] = await getFaqs()

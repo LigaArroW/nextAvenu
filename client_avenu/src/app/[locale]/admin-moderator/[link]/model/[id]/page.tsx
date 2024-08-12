@@ -45,7 +45,7 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 
 
 
-export default async function ModelPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
+export default async function AdminModelIdPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
     unstable_setRequestLocale(locale);
 
     const person = await getAuthDataUserAction()

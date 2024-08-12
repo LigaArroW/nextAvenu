@@ -33,7 +33,7 @@ const RegistrationContainer = () => {
     };
     return (
         <>
-            <form className={styles.form} action={formAction}>
+            {!state.success && <form className={styles.form} action={formAction}>
                 <div className={styles.radio_group_container}>
                     <div className={styles.label}>{t("profile.type")}</div>
                     <div className={styles.radio_group}>
@@ -120,7 +120,8 @@ const RegistrationContainer = () => {
                     text="global.complete_registration"
 
                 />
-            </form>
+            </form>}
+
             {state.success && (
                 <>
                     <div className={styles.success_content}>

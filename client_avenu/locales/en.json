@@ -96,7 +96,7 @@
     "home": "Home",
     "all_models": "All models",
     "new": "New",
-    "faq":"FAQ",
+    "faq": "FAQ",
     "verified": "Verified",
     "vip_escorts": "VIP-escorts",
     "pornstars": "Pornstars",
@@ -297,6 +297,7 @@
     "password": "The password must be at least 6 characters long",
     "email": "Enter a valid email address",
     "message": "The message must be at least 10 characters long",
-     "repeat_password": "The password must be the same as the password above"
+    "repeat_password": "The password must be the same as the password above",
+    "phone": "Некорректный номер телефона"
   }
 }

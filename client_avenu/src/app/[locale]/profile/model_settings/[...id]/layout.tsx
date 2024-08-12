@@ -21,7 +21,7 @@ export async function generateMetadata() {
 }
 
 
-export default async function RootLayout({
+export default async function ModelSettingIdLayout({
     children,
     params: { locale, id }
 }: {

@@ -40,7 +40,7 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 
 
 
-export default async function ModelPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
+export default async function ModelIdPage({ params: { id, locale } }: { params: { id: string, locale: string } }) {
     unstable_setRequestLocale(locale);
 
 

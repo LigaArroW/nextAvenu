@@ -82,7 +82,7 @@ const AuthParameters: React.FC<IAuthParameters> = ({ person }) => {
                         />
                         <div className={styles.required}>*</div>
                     </div>
-                    {!state.success && <div className={styles.info_message}>{t(state.message)}</div>}
+                    {!state.success && state.message && <div className={styles.info_message}>{t(state.message)}</div>}
                     <ButtonSubmitForm
                         text="global.save"
                         disabled={(email.length < 2 || password.length < 6 || newPassword.length < 6) ? true : false}

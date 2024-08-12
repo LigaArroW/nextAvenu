@@ -16,7 +16,7 @@ const Admin = () => {
     });
 
     return (
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden', width: '100%' }}>
             <div className={styles.wrapper_content}>
 
                 <div className={styles.content}>

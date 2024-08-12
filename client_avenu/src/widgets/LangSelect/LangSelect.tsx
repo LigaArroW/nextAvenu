@@ -13,19 +13,6 @@ import Select, { components } from 'react-select'
 import styles from './LangSelector.module.sass'
 
 
-// const DropdownIndicator = (props: any) => {
-//     return (
-//         <components.DropdownIndicator {...props}>
-
-//             <Image alt="arrow"
-//                 width={20}
-//                 height={20}
-//                 src={'../../shared/assets/flags/saudi_arabia.svg'}
-//                 className={`${props.selectProps.menuIsOpen ? 'arrowDown' : 'arrowUp'}`}
-//             />
-//         </components.DropdownIndicator>
-//     );
-// };
 
 
 const MenuList = (props: any) => {
@@ -96,6 +83,7 @@ const LangSelect = () => {
             fontSize: '14px',
             cursor: 'pointer',
             borderRadius: '5px',
+            paddingBottom: '5px',
         }),
         valueContainer: (defaultStyles: any, state: any) => ({
             ...defaultStyles,
@@ -103,6 +91,7 @@ const LangSelect = () => {
             display: 'flex',
             alignItems: 'center',
         }),
+
         indicators: (defaultStyles: any, state: any) => ({
             ...defaultStyles,
             padding: 8,

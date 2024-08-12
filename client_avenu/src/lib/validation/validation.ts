@@ -47,21 +47,21 @@ export const updateProfileSchema = z.object({
     email: z.string().min(1, { message: "validation.email" }),
     id: z.number().min(1, { message: "validation.id" }),
 }).refine(data => data.password !== data.newPassword, {
-    message: "global.passwords_dont_match",
+    message: "validation.repeat_password",
     path: ["newPassword"],
 })
 
 export const addToBlackListSchema = z.object({
     id: z.number(),
-    city: z.number().min(1, { message: "validation.city" }),
-    country: z.number().min(1, { message: "validation.country" }),
-    description: z.string().min(1, { message: "validation.description" }),
+    city: z.number().min(1, { message: "validation.message" }),
+    country: z.number().min(1, { message: "validation.message" }),
+    description: z.string().min(1, { message: "validation.message" }),
     phone: z.string().length(18, { message: "validation.phone" }),
-    agency_id: z.number().min(1, { message: "validation.agency_id" }),
+    agency_id: z.number().min(1, { message: "validation.message" }),
 })
 
 export const addAccessBlackListSchema = z.object({
-    access_to: z.number().min(1, { message: "validation.access_to" }),
+    access_to: z.number().min(1, { message: "validation.message" }),
     id: z.number(),
 })
 
