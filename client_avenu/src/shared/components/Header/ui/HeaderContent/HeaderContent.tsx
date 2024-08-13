@@ -8,6 +8,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import ButtonLogout from '@/widgets/ButtonLogout/ButtonLogout';
 import LangSelect from '@/widgets/LangSelect/LangSelect';
 import SearchModel from '@/widgets/SearchModel/SearchModel';
+import Authorization from './Authorization/Authorization';
 
 
 type token = {
@@ -35,7 +36,7 @@ const HeaderContent: React.FC<IHeaderContentProps> = async ({ agency, customer }
                         ?
                         <Link href={`/${locale}/profile`} className={styles.user_name} >{t("global.my_profile")}</Link>
                         :
-                        <Link href={`/${locale}/login`} className={styles.user_name} >{t("global.authorization")}</Link>
+                        <Authorization />
                     }
                     {customer?.name && <ButtonLogout tokenName='CustomerToken' style={styles.logout} modal />}
                     {agency?.name && <ButtonLogout tokenName='AgencyToken' style={styles.logout} modal />}
@@ -45,18 +46,7 @@ const HeaderContent: React.FC<IHeaderContentProps> = async ({ agency, customer }
             <div className={styles.sub_navigation}>
                 <SearchModel />
                 <LangSelect />
-                {/* {activeLink < 4 && activeLink !== -1 ? (
-    <Search activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-) : (
-    <div></div>
-)}
-{activeLink >= 4 && <div></div>}
-{windowSize.innerWidth > 1200 && (
-    <LanguageSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-)}
-{windowSize.innerWidth < 1201 && activeComponent !== ComponentType.Search && (
-    <LanguageSelector activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
-)} */}
+
             </div>
         </header>
     );

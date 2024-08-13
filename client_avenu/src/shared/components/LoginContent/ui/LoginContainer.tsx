@@ -23,11 +23,11 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
     const pathname = usePathname();
     const [loginText, setLoginText] = useState('');
     const [passwordText, setPasswordText] = useState('');
-
-    const [state, formAction] = useFormState(loginAction, {
-        'success': false,
-        'message': ''
-    });
+    const [errorForm, setErrorForm] = useState('');
+    // const [state, formAction] = useFormState(loginAction, {
+    //     'success': false,
+    //     'message': ''
+    // });
 
     const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -39,19 +39,44 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
             }
             reCaptchaRef.current.reset();
         }
-        router.replace(`/${locale}/profile`)
+        // router.push(`/${locale}/profile`)
     }
 
 
-    useEffect(() => {
-        if (state.success) {
-            recaptcha()
-        }
-    }, [state.success])
+    // useEffect(() => {
+    //     if (state.success) {
+    //         // recaptcha()
+    //         router.push(`/${locale}/profile`)
+    //         console.log("🚀 ~ LoginContainer ~ state.success:", state.success);
+    //         // closeModal()
 
+    //     }
+    // }, [state.success])
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        recaptcha()
+        const login = await loginAction({ login: loginText, password: passwordText })
+
+        if (login.success) {
+            router.push(`/${locale}/profile`)
+            closeModal()
+        }
+        if (!login.success) {
+            setErrorForm(login.message)
+        }
+
+    }
 
     return (
-        <form action={formAction}>
+        <form
+            // action={async (formData) => {
+            //     await formAction(formData)
+            //     recaptcha()
+
+            // }}
+            onSubmit={handleSubmit}
+        >
+
             <ReCAPTCHA
                 ref={reCaptchaRef}
                 size="invisible"
@@ -78,16 +103,15 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
                 // value={password}
                 minLength={6}
             />
-            {/* {errorForm !== "" ? <div className={styles.error}>{t(errorForm)}</div> : null} */}
-            {!state.success && state.message && <div className={styles.error}>{t(state.message)}</div>}
-            <div className={styles.forgot_password} onClick={() => { router.replace(`/${locale}/forgot_password`) }}>
+            {errorForm !== "" ? <div className={styles.error}>{errorForm}</div> : null}
+            <div className={styles.forgot_password} onClick={() => { router.push(`/${locale}/forgot_password`) }}>
                 {t("global.forgot_your_password")}?
             </div>
             <ButtonSubmitForm
                 disabled={(loginText !== '' && passwordText.length >= 6) ? false : true}
                 text="global.enter"
             />
-            <button type="button" onClick={() => { router.replace(`/${locale}/email_login`) }} >
+            <button type="button" onClick={() => { router.push(`/${locale}/email_login`) }} >
                 {t('global.enter_to_email')}
             </button>
         </form>

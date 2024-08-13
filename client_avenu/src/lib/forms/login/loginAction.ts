@@ -25,12 +25,13 @@ interface IResponse {
     token?: string
 }
 
-export async function loginAction(prevState: IContactUsForm, data: FormData): Promise<IContactUsForm> {
+// export async function loginAction(prevState: IContactUsForm, data: FormData): Promise<IContactUsForm> {
+export async function loginAction({ login, password }: { login: string, password: string }) {
     const t = await getTranslations();
     const locale = await getLocale();
     try {
-        const login = data.get('login');
-        const password = data.get('password');
+        // const login = data.get('login');
+        // const password = data.get('password');
 
 
         const messages = loginSchema.parse({
@@ -50,7 +51,7 @@ export async function loginAction(prevState: IContactUsForm, data: FormData): Pr
 
 
 
-        revalidatePath(`/${locale}/profile`, 'page')
+        revalidatePath(`/`, "layout")
         return {
             success: true,
             message: t('global.success_message_send')

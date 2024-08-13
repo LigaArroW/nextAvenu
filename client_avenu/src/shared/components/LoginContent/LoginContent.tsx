@@ -21,10 +21,10 @@ import RegistrationContainer from "./ui/RegistrationContainer";
 // import { initServerStatus } from "../../types/main/serverStatus";
 
 interface ILoginContentProps {
-  closeModal?: () => void
+  onClose?: () => void
 }
 
-const LoginContent: React.FC<ILoginContentProps> = ({ closeModal }) => {
+const LoginContent: React.FC<ILoginContentProps> = ({ onClose = () => { } }) => {
   const t = useTranslations();
   const [isLogin, setIsLogin] = useState(true);
 
@@ -34,7 +34,7 @@ const LoginContent: React.FC<ILoginContentProps> = ({ closeModal }) => {
 
     <div className={styles.content}>
       <div className={styles.title}>{isLogin ? t("global.authorization") : t("global.registration")}</div>
-      {isLogin ? <LoginContainer closeModal={closeModal} /> : <RegistrationContainer />}
+      {isLogin ? <LoginContainer closeModal={() => onClose()} /> : <RegistrationContainer />}
       <div className={styles.register} onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? t("global.registration") : t("global.authorization")}
       </div>

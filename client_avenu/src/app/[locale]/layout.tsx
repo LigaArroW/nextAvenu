@@ -6,10 +6,10 @@ import Header from "@/shared/components/Header/Header";
 import Footer from "@/shared/components/Footer/Footer";
 import { MainProvider } from "@/widgets/Contex/MainProvider";
 import '../globals.css'
-import "@/shared/styles/Home.module.sass"
-import "@/shared/components/Home/ui/Models/Models.module.sass"
-import "@/shared/components/Home/ui/Filters/Filters.module.sass"
-import "@/shared/styles/HomeModel.module.sass"
+// import "@/shared/styles/Home.module.sass"
+// import "@/shared/components/Home/ui/Models/Models.module.sass"
+// import "@/shared/components/Home/ui/Filters/Filters.module.sass"
+// import "@/shared/styles/HomeModel.module.sass"
 
 
 const locales = ['en', 'ru'];
