@@ -12,9 +12,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Menu } from '@/shared/assets/Menu';
 import { Close } from '@/shared/assets/Close';
-import Portal from '@/shared/components/ModalPortal/ModalPortal';
-import LoginModal from '@/shared/components/Modals/LoginModal';
-import { usePathname } from 'next/navigation';
+
 
 const HeaderNav = () => {
     const t = useTranslations();

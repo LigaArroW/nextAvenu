@@ -1,24 +1,44 @@
 import { getAuthDataUserAction } from "@/lib/auth/authAction";
+import { getModel, getModelOne, getModels } from "@/lib/models/getDataModel";
+import { getFiltredFields } from "@/lib/models/getModelsFilter";
 import Model from "@/shared/components/Model/Model";
 import { filtredFields } from "@/shared/constant/filtredFields";
 import { IGeneral } from "@/types/core/generalFilters";
 import { IModel } from "@/types/model/model/model";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
+
 import { NextRequest } from "next/server";
 
 
 
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
+
+
+export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
+    const model = await getModelOne(id)
+    return {
+        title: `${model?.name} (${model?.age})` || "Модель не найдена",
+        // title: `${t("navigation.home")} | ${t("navigation.all_models")}`,
+    };
+}
+
+
+
 
 export async function generateStaticParams() {
 
-    const models = await fetch('http://localhost:8001/api/models', {
-        method: 'GET',
-        next: { revalidate: 10 },
-    }).then((res) => res.json());
+    // const models = await fetch('http://localhost:8001/api/models', {
+    //     method: 'GET',
+    //     next: { revalidate: 10 },
+    // }).then((res) => res.json());
+
+    const models = await getModels();
+
 
     return models.map((model: IModel) => ({
+        key: model.id,
         id: String(model.id),
         // id: String(model.id).padStart(8, "0"),
     }))
@@ -29,13 +49,7 @@ export async function generateStaticParams() {
 
 
 
-export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
-    const model = await getModel(id)
-    return {
-        title: `${model.name} (${model.age})` || "Модель не найдена",
-        // title: `${t("navigation.home")} | ${t("navigation.all_models")}`,
-    };
-}
+
 
 
 
@@ -50,8 +64,11 @@ export default async function ModelIdPage({ params: { id, locale } }: { params: 
 
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 
-    const model = await getModel(id)
+    const model = await getModelOne(id)
 
+    if (!model) {
+        return redirect(`/${locale}`)
+    }
     // console.log(filtredFields.service_categories);
 
 
@@ -66,40 +83,40 @@ interface FiltredFields {
     [key: string]: [];
 }
 
-const getModel = async (id: string) => {
-    const response = await fetch(`http://localhost:8001/api/models`, {
-        // next: { tags: ['modelsPage'] },
-        // next: { revalidate: 5 }
-        cache: 'no-store'
-    })
-    if (!response.ok) {
-        throw new Error(`Failed to fetch models: ${response.status}`);
-    }
-    const models: IModel[] = await response.json();
+// const getModel = async (id: string) => {
+//     const response = await fetch(`http://localhost:8001/api/models`, {
+//         // next: { tags: ['modelsPage'] },
+//         // next: { revalidate: 5 }
+//         cache: 'no-store'
+//     })
+//     if (!response.ok) {
+//         throw new Error(`Failed to fetch models: ${response.status}`);
+//     }
+//     const models: IModel[] = await response.json();
 
-    const model: IModel | undefined = models.find((model: IModel) => model.id === Number(id));
-    if (!model) {
-        throw new Error(`Model with id ${id} not found`);
-    }
-    return model;
-}
+//     const model: IModel | undefined = models.find((model: IModel) => model.id === Number(id));
+//     if (!model) {
+//         throw new Error(`Model with id ${id} not found`);
+//     }
+//     return model;
+// }
 
 
-const getFiltredFields = async (): Promise<FiltredFields> => {
-    const responseJsons: FiltredFields = {};
+// const getFiltredFields = async (): Promise<FiltredFields> => {
+//     const responseJsons: FiltredFields = {};
 
-    await Promise.all(
-        filtredFields.map(async (field) => {
+//     await Promise.all(
+//         filtredFields.map(async (field) => {
 
-            const response = await fetch(`http://localhost:8001/api/${field}`, {
-                method: 'GET',
-                cache: 'force-cache',
-            });
-            const json = await response.json();
+//             const response = await fetch(`http://localhost:8001/api/${field}`, {
+//                 method: 'GET',
+//                 cache: 'force-cache',
+//             });
+//             const json = await response.json();
 
-            responseJsons[field] = json;
-        })
-    );
+//             responseJsons[field] = json;
+//         })
+//     );
 
-    return responseJsons;
-};
+//     return responseJsons;
+// };

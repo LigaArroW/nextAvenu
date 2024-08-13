@@ -182,18 +182,20 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
 
         <div className={styles.wrapper_content}>
           {/* {windowSize.innerWidth > 1450 && <Media model={model} />} */}
-          <WindowsInner innerWidth="1450" maxMinWidth="min">
+          {/* <WindowsInner innerWidth="1450" maxMinWidth="min"> */}
+          <div className={`${styles.media}  ${styles.NotMobile}`} >
             <Media model={model} photos={photoArray} />
-          </WindowsInner>
+          </div>
+          {/* </WindowsInner> */}
 
           <div className={styles.info}>
             <div className={styles.name}>
-              <WindowsInner innerWidth="1450" maxMinWidth='max'>
-                <div className={styles.statuses}>
-                  {model.is_vip ? <div className={styles.empty_vip} /> : null}
-                  <div className={styles.empty_online} />
-                </div>
-              </WindowsInner>
+              {/* <WindowsInner innerWidth="1450" maxMinWidth='max'> */}
+              <div className={`${styles.statuses} ${styles.Mobile}`}>
+                {model.is_vip ? <div className={styles.empty_vip} /> : null}
+                <div className={styles.empty_online} />
+              </div>
+              {/* </WindowsInner> */}
               {/* {windowSize.innerWidth < 1451 && (
                 <div className={styles.statuses}>
                   {model.is_vip ? <div className={styles.empty_vip} /> : null}
@@ -218,9 +220,12 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                   : filtredFields.districts && filtredFields.districts.find((district: IDistrict) => district.id === model.district_id)?.district_eng}
             </div>
             {/* {windowSize.innerWidth < 1451 && <Media model={model} />} */}
-            <WindowsInner innerWidth="1450" maxMinWidth="max">
+            {/* <WindowsInner innerWidth="1450" maxMinWidth="max">
               <Media model={model} photos={photoArray} />
-            </WindowsInner>
+            </WindowsInner> */}
+            <div className={`${styles.media} ${styles.Mobile}`} >
+              <Media model={model} photos={photoArray} />
+            </div>
             {model.about_self !== "" && (
               <div className={styles.about_self}>
                 <span>{t("model.about_me")}</span>
@@ -497,19 +502,19 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
             <div className={styles.parts}>
               <div className={styles.part}>
                 {t("model.working_hours")}
-                <table className={styles.table}>
-                  <thead className={styles.borderer}>
-                    <tr className={styles.borderer}>
+                <table className={'table'}>
+                  <thead className={'borderer'}>
+                    <tr className={'borderer'}>
                       <th style={{ width: "50%" }}>{t("model.day_of_the_week")}</th>
-                      <th style={{ width: "25%" }} className={styles.borderer}>
+                      <th style={{ width: "25%" }} className={'borderer'}>
                         {t("global.from")}
                       </th>
-                      <th style={{ width: "25%" }} className={styles.borderer}>
+                      <th style={{ width: "25%" }} className={'borderer'}>
                         {t("global.before")}
                       </th>
                     </tr>
                   </thead>
-                  <tbody className={styles.borderer}>
+                  <tbody className={'borderer'}>
                     {tmpWorkTimes.map((workTime: IWorkTime) => (
                       <tr key={workTime.id}>
                         <td style={{ width: "50%" }}>
@@ -522,7 +527,7 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                           <td
                             style={{ width: "calc(50% + 16.5px)", textAlign: "center" }}
                             colSpan={2}
-                            className={styles.borderer}
+                            className={'borderer'}
                           >
                             <Close fill="#98042D" />
                           </td>
@@ -531,18 +536,18 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                           <td
                             style={{ width: "calc(50% + 16.5px)", textAlign: "center" }}
                             colSpan={2}
-                            className={styles.borderer}
+                            className={'borderer'}
                           >
                             {t("model.all_day")}
                           </td>
                         ) : null}
                         {(workTime.time_end !== "" || workTime.time_start !== "") && (
-                          <td style={{ width: "25%", textAlign: "center" }} className={styles.borderer}>
+                          <td style={{ width: "25%", textAlign: "center" }} className={'borderer'}>
                             {workTime.time_start}
                           </td>
                         )}
                         {(workTime.time_end !== "" || workTime.time_start !== "") && (
-                          <td style={{ width: "25%", textAlign: "center" }} className={styles.borderer}>
+                          <td style={{ width: "25%", textAlign: "center" }} className={'borderer'}>
                             {workTime.time_end}
                           </td>
                         )}
@@ -553,9 +558,9 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
               </div>
               <div className={styles.part}>
                 {t("model.tariffs")}
-                <table className={styles.table}>
-                  <thead className={styles.borderer}>
-                    <tr className={styles.borderer}>
+                <table className={'table'}>
+                  <thead className={'borderer'}>
+                    <tr className={'borderer'}>
                       <th style={{ width: "30%" }} />
                       {filtredFields.meeting_places && filtredFields.meeting_places
                         .filter(
@@ -563,13 +568,13 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                             meetingPlace.meeting_place === "Аппартаменты" || meetingPlace.meeting_place === "Выезд"
                         )
                         .map((meetingPlace: IMeetingPlace) => (
-                          <th key={meetingPlace.id} style={{ width: "35%" }} className={styles.borderer}>
+                          <th key={meetingPlace.id} style={{ width: "35%" }} className={'borderer'}>
                             {locale === "ru" ? meetingPlace.meeting_place : meetingPlace.meeting_place_eng}
                           </th>
                         ))}
                     </tr>
                   </thead>
-                  <tbody className={styles.borderer}>
+                  <tbody className={'borderer'}>
                     {filtredFields.work_durations && filtredFields.work_durations.map((workDuration: IWorkDuration) => (
                       <tr key={workDuration.id}>
                         <td style={{ width: "30%" }}>
@@ -581,7 +586,7 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                               meetingPlace.meeting_place === "Аппартаменты" || meetingPlace.meeting_place === "Выезд"
                           )
                           .map((meetingPlace: IMeetingPlace) => (
-                            <td key={meetingPlace.id} style={{ width: "35%", textAlign: "center" }} className={styles.borderer}>
+                            <td key={meetingPlace.id} style={{ width: "35%", textAlign: "center" }} className={'borderer'}>
                               {tmpTarifs.find(
                                 (tarif: ITarif) =>
                                   tarif.work_duration_id === workDuration.id && tarif.meeting_place_id === meetingPlace.id
@@ -646,7 +651,7 @@ const Model: React.FC<IModelComponent> = async ({ forModerator = false, filtredF
                 ))}
               </div>
             </div>
-            <FeedbacksContent model={model} person={person}/>
+            <FeedbacksContent model={model} person={person} />
           </div>
           <ModeratorControl model={model} forModerator={forModerator} />
           {/* {forModerator ? <div className={styles.moderator_control}>

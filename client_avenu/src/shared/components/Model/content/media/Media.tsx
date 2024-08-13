@@ -68,7 +68,8 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
 
 
   return (
-    <div className={styles.media}>
+    // <div className={styles.media}>
+    <>
       <div className={styles.slider}>
         <div
           className={`${styles.action} ${styles.prev}`}
@@ -184,7 +185,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                   key={index}
                   src={photo}
                   alt=""
-              
+
                   className={styles.content_item}
                   width={110}
                   height={150}
@@ -193,7 +194,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
 
                 />
 
-       
+
               ))}
           </div>
         )}
@@ -234,7 +235,8 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
           setVideo={setActiveVideo}
           onClose={() => setIsVideoModalShow(false)}
         />}
-    </div>
+    </>
+    // </div>
   );
 };
 
