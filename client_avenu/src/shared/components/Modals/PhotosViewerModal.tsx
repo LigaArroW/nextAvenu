@@ -86,7 +86,7 @@ const PhotosViewerModal: React.FC<IPhotosViewerModalProps> = ({ photos, index, s
                       
                         /> */}
                     <img
-                      src={typeof photo === "string" ? photo : `http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                      src={typeof photo === "string" ? photo : `${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                       alt=""
                       style={{
                         height: window.innerWidth > window.innerHeight / 1.333 ? "calc(100vh - 30px)" : "auto",

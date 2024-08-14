@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getDistricts() {
-    const response = await fetch('http://localhost:8001/api/districts',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/districts',
         {
             next: { tags: ['districts'] }
         }
@@ -16,7 +16,7 @@ export async function getDistricts() {
 
 export async function addDistrict({ district, district_eng }: { district: string; district_eng: string }) {
 
-    const response = await fetch('http://localhost:8001/api/addDistrict', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/addDistrict', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function addDistrict({ district, district_eng }: { district: string
 
 export async function updateDistrict({ id, district, district_eng }: { id: number, district: string; district_eng: string }) {
 
-    const response = await fetch('http://localhost:8001/api/updateDistrict', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/updateDistrict', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export async function updateDistrict({ id, district, district_eng }: { id: numbe
 
 export async function deleteDistrict({ id }: { id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/deleteDistrict', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/deleteDistrict', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

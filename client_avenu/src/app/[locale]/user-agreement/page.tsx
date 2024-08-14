@@ -12,7 +12,7 @@ export async function generateMetadata() {
 }
 
 const getPage = async () => {
-    const responce = await fetch('http://localhost:8001/api/pages', { cache: 'force-cache' });
+    const responce = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/pages', { cache: 'force-cache' });
     return responce.json();
 }
 

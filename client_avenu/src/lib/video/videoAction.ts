@@ -8,7 +8,7 @@ import { revalidateTag } from "next/cache";
 
 
 export async function getVideos() {
-    const response = await fetch('http://localhost:8001/api/videos',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/videos',
         {
             next: { tags: ['videos'] }
         }
@@ -18,7 +18,7 @@ export async function getVideos() {
 
 }
 export async function deleteVideo({ video }: { video: IVideo }) {
-    const response = await fetch('http://localhost:8001/api/delete_video',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_video',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -55,7 +55,7 @@ const authAdmin = async (login: string, password: string) => {
 
 
 
-    const res = await fetch('http://localhost:8001/api/admin-4c458ba3adfa8005a9df1c8fa74e28e0', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/admin-4c458ba3adfa8005a9df1c8fa74e28e0', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

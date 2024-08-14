@@ -118,7 +118,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
             {/* {fileStatuses.uploadTmpPublicPhoto.status === ServerStatusType.Success ? ( */}
             <img
               className={styles.image_crop}
-              src={`http://localhost:8001/api/photos/tmp/${filename}`}
+              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/tmp/${filename}`}
               // src={`/uploads/media/photos/tmp/${filename}`}
               id="cropped-image"
               onLoad={handlerImageOnLoad}

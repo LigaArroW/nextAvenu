@@ -61,7 +61,7 @@ export async function addToBlackListAction(prevState: IContactUsForm, data: Form
 const postFormData = async ({ blacklist }: { blacklist: IBlacklist }) => {
     const t = await getTranslations();
 
-    const res = await fetch('http://localhost:8001/api/add_blacklist', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_blacklist', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

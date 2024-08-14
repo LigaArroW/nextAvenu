@@ -11,7 +11,7 @@ export const getFiltredFields = async (): Promise<FiltredFields> => {
     await Promise.all(
         filtredFields.map(async (field) => {
 
-            const response = await fetch(`http://localhost:8001/api/${field}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/${field}`, {
                 method: 'GET',
                 cache: 'force-cache',
             });

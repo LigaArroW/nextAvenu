@@ -4,7 +4,7 @@ import { IPhoto } from "@/types/model/photo/photo";
 import { revalidateTag } from "next/cache";
 
 export async function deletePhoto({ photo }: { photo: IPhoto }) {
-    const response = await fetch('http://localhost:8001/api/delete_photo',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_photo',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -22,7 +22,7 @@ export async function deletePhoto({ photo }: { photo: IPhoto }) {
 
 }
 export async function updateMainPhoto({ model_id, photo_id }: { model_id: number; photo_id: number }) {
-    const response = await fetch('http://localhost:8001/api/update_main_photo',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_main_photo',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -41,7 +41,7 @@ const VideoViewerModal: React.FC<IVideoViewerModalProps> = ({ setVideo, video, o
             <div className={styles.video_viewer_container}>
               <ReactPlayer
                 className={styles.video_player}
-                url={`http://localhost:8001/api/videos/${video.video_url.replace('/media/videos/', "")}`}
+                url={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/videos/${video.video_url.replace('/media/videos/', "")}`}
                 controls
                 playing={true}
                 width={window.innerHeight < window.innerWidth ? "75vw" : "90vw"}

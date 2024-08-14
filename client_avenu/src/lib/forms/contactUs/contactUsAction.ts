@@ -46,7 +46,7 @@ export async function contactUsAction(prevState: IContactUsForm, data: FormData)
 const postFormData = async (data: IMessage) => {
     const t = await getTranslations();
 
-    const res = await fetch('http://localhost:8001/api/add_message', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_message', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

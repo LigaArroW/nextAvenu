@@ -165,7 +165,7 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
                                     >
                                         {/* <img src={`/uploads${photo.photo_url}`} alt="" /> */}
                                         <Image
-                                            src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                                             alt=""
                                             width={300}
                                             height={500}
@@ -199,7 +199,7 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
                                 >
                                     {/* <img src={`/uploads${photo.photo_url}`} alt="" /> */}
                                     <Image
-                                        src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                                         alt=""
                                         width={300}
                                         height={500}

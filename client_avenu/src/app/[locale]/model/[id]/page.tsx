@@ -29,7 +29,7 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 
 export async function generateStaticParams() {
 
-    // const models = await fetch('http://localhost:8001/api/models', {
+    // const models = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/models', {
     //     method: 'GET',
     //     next: { revalidate: 10 },
     // }).then((res) => res.json());
@@ -84,7 +84,7 @@ interface FiltredFields {
 }
 
 // const getModel = async (id: string) => {
-//     const response = await fetch(`http://localhost:8001/api/models`, {
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models`, {
 //         // next: { tags: ['modelsPage'] },
 //         // next: { revalidate: 5 }
 //         cache: 'no-store'
@@ -108,7 +108,7 @@ interface FiltredFields {
 //     await Promise.all(
 //         filtredFields.map(async (field) => {
 
-//             const response = await fetch(`http://localhost:8001/api/${field}`, {
+//             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/${field}`, {
 //                 method: 'GET',
 //                 cache: 'force-cache',
 //             });

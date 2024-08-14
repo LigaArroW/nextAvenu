@@ -105,7 +105,7 @@ export async function VerifyGoogle(token: string) {
 export async function Login({ login, password, email = false }: { login: string; password: string, email?: boolean }) {
 
     try {
-        const res = await fetch('http://localhost:8001/api/login', {
+        const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,7 +153,7 @@ export async function Login({ login, password, email = false }: { login: string;
 const postFormData = async ({ login, password, email = false }: { login: string; password: string, email?: boolean }) => {
     const t = await getTranslations();
 
-    const res = await fetch('http://localhost:8001/api/login', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

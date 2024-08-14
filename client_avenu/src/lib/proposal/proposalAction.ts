@@ -7,7 +7,7 @@ import { IProposalView } from "@/types/proposal/proposalView"
 
 
 export async function getProposals() {
-    const response = await fetch('http://localhost:8001/api/proposals',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/proposals',
         {
             next: { tags: ['proposals'] }
         }
@@ -16,7 +16,7 @@ export async function getProposals() {
 
 }
 export async function getProposalPlaces() {
-    const response = await fetch('http://localhost:8001/api/proposal_places',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/proposal_places',
         {
             next: { tags: ['proposal_places'] }
         }
@@ -25,7 +25,7 @@ export async function getProposalPlaces() {
 
 }
 export async function getProposalViews() {
-    const response = await fetch('http://localhost:8001/api/proposal_views',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/proposal_views',
         {
             next: { tags: ['proposal_views'] }
         }
@@ -38,7 +38,7 @@ export async function addProposal({ proposal }: { proposal: IProposal }) {
 
     try {
 
-        const response = await fetch('http://localhost:8001/api/add_proposal', {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_proposal', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export async function updateProposalViews({ model_id, proposal_views }: { model_
             throw new Error('Не достаточно прав')
         }
 
-        const response = await fetch('http://localhost:8001/api/update_proposal_views', {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_proposal_views', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

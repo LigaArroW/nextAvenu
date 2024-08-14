@@ -72,7 +72,7 @@ async function getPhotoArray(model: IModel) {
   const photoModel = model.photos.filter((photo: IPhoto) => photo.type === PhotoType.PublicPhoto && photo.status === PhotoStatus.Applyed)
 
   const photoArray = await Promise.all(photoModel.map(async (photo: IPhoto) => {
-    return await fetch(`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`).then((res) => res.url)
+    return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`).then((res) => res.url)
   }));
   return photoArray
 }

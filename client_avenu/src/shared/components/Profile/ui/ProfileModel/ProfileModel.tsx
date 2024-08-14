@@ -141,7 +141,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                     alt=""
                 /> */}
                 <Image
-                    src={`http://localhost:8001/api/photos/${(model.photos.find((photo: IPhoto) => photo.is_main && photo.status === PhotoStatus.Applyed)?.photo_url)?.split('/')[3]}`}
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(model.photos.find((photo: IPhoto) => photo.is_main && photo.status === PhotoStatus.Applyed)?.photo_url)?.split('/')[3]}`}
                     alt=""
                     className={styles.model_photo}
                     width={500}

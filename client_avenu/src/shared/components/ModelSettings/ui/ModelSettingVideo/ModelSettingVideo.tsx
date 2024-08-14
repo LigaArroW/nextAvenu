@@ -115,7 +115,7 @@ const ModelSettingVideo: React.FC<IModelSettingVideo> = ({ person }) => {
                                 }`}
                         >
                             <video
-                                src={`http://localhost:8001/api/videos/${video.video_url.replace('/media/videos/', "")}`}
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/videos/${video.video_url.replace('/media/videos/', "")}`}
                                 //  src={`/uploads${video.video_url}`}
 
                                 autoPlay={false} />

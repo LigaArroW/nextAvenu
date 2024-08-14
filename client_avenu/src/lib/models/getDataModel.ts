@@ -5,7 +5,7 @@ import { IPhoto } from "@/types/model/photo/photo"
 
 
 export async function getModels() {
-    const response = await fetch(`http://localhost:8001/api/models`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
             next: { tags: ['Models'] }
@@ -15,7 +15,7 @@ export async function getModels() {
 
 }
 export async function getModel({ profile_id }: { profile_id: number }) {
-    const response = await fetch(`http://localhost:8001/api/models_agency?profile_id=${profile_id}`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models_agency?profile_id=${profile_id}`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
             next: { tags: ['Models'] }
@@ -28,7 +28,7 @@ export async function getModel({ profile_id }: { profile_id: number }) {
 
 
 export const getModelOne = async (id: string) => {
-    // const response = await fetch(`http://localhost:8001/api/models`, {
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models`, {
     //     next: { tags: ['modelsPage'] },
     //     // next: { revalidate: 5 }
     //     // cache: 'no-store'
@@ -49,7 +49,7 @@ export const getModelOne = async (id: string) => {
 
 
 export async function getPhotos(): Promise<IPhoto[]> {
-    const response = await fetch('http://localhost:8001/api/photos',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/photos',
         {
             next: { tags: ['ModelsPhotos'] }
         }
@@ -59,7 +59,7 @@ export async function getPhotos(): Promise<IPhoto[]> {
 }
 
 export async function getModelFeedbacks() {
-    const response = await fetch('http://localhost:8001/api/model_feedbacks',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/model_feedbacks',
         {
             next: { tags: ['ModelsFeedbacks'] }
         }
@@ -68,7 +68,7 @@ export async function getModelFeedbacks() {
 }
 
 export async function getVideos() {
-    const response = await fetch('http://localhost:8001/api/videos',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/videos',
         {
             next: { tags: ['ModelsVideos'] }
         }
@@ -77,7 +77,7 @@ export async function getVideos() {
 }
 
 export async function getModelsAdmin({ profile_id }: { profile_id: number }) {
-    const response = await fetch(`http://localhost:8001/api/models?profile_id=${profile_id}`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models?profile_id=${profile_id}`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
             next: { tags: ['ModelsAdmin', 'Models'] }
@@ -87,7 +87,7 @@ export async function getModelsAdmin({ profile_id }: { profile_id: number }) {
 
 }
 export async function getModelsAgency({ profile_id }: { profile_id: number }) {
-    const response = await fetch(`http://localhost:8001/api/models?profile_id=${profile_id}`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models?profile_id=${profile_id}`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
             next: { tags: ['ModelsAdmin', 'Models'] }

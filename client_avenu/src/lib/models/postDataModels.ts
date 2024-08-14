@@ -15,7 +15,7 @@ export async function updatePhotoStatus({ photo, status }: { photo: IPhoto; stat
 
 
 
-    const response = await fetch('http://localhost:8001/api/update_photo_status', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_photo_status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export async function updatePhotoStatus({ photo, status }: { photo: IPhoto; stat
 export async function updateVideoStatus({ video, status }: { video: IVideo; status: VideoStatus }) {
 
 
-    const response = await fetch('http://localhost:8001/api/update_video_status', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_video_status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export async function updateVideoStatus({ video, status }: { video: IVideo; stat
 
 export async function addModelFeedback({ model_feedback }: { model_feedback: IModelFeedback }) {
 
-    const response = await fetch('http://localhost:8001/api/add_model_feedback', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_model_feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export async function addModelFeedback({ model_feedback }: { model_feedback: IMo
 }
 export async function updateModelFeedbacksView({ model_id }: { model_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model_feedbacks_view', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model_feedbacks_view', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export async function updateModelFeedbacksView({ model_id }: { model_id: number 
 }
 export async function deleteModelFeedback({ feedback }: { feedback: IModelFeedback }) {
 
-    const response = await fetch('http://localhost:8001/api/delete_model_feedback', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_model_feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ export async function deleteModelFeedback({ feedback }: { feedback: IModelFeedba
 
 export async function updateModelFeedbackStatus({ model_feedback, status }: { model_feedback: IModelFeedback; status: ModelFeedbackStatus }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model_feedback_status', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model_feedback_status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export async function updateModelFeedbackStatus({ model_feedback, status }: { mo
 }
 export async function updateModel({ model }: { model: IModel }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ export async function updateModel({ model }: { model: IModel }) {
 }
 export async function addModel({ model }: { model: IModel }) {
 
-    const response = await fetch('http://localhost:8001/api/add_model', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_model', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -177,7 +177,7 @@ export async function addModel({ model }: { model: IModel }) {
 }
 export async function deleteModel({ model }: { model: IModel }) {
 
-    const response = await fetch('http://localhost:8001/api/delete_model', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_model', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export async function deleteModel({ model }: { model: IModel }) {
 }
 export async function updateModelEnable({ model_id, is_enable }: { model_id: number; is_enable: boolean }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model_enable', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model_enable', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -217,7 +217,7 @@ export async function updateModelEnable({ model_id, is_enable }: { model_id: num
 }
 export async function updateModelEnableByModerator({ model_id, is_enable_by_moderator }: { model_id: number; is_enable_by_moderator: boolean }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model_enable_by_moderator', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model_enable_by_moderator', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -236,7 +236,7 @@ export async function updateModelEnableByModerator({ model_id, is_enable_by_mode
 }
 export async function updateModelCurrencyTimezone({ model_id, currency_id, time_zone }: { model_id: number; currency_id: number; time_zone: number }) {
 
-    const response = await fetch('http://localhost:8001/api/update_model_currency_timezone', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_model_currency_timezone', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

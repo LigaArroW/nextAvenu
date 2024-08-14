@@ -88,7 +88,7 @@ interface IconfirmAction {
 
 export async function registerConfirmAction({ login, token }: { login: string; token: string }): Promise<IconfirmAction> {
 
-    const res = await fetch('http://localhost:8001/api/confirm_profile', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/confirm_profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ export async function registerConfirmAction({ login, token }: { login: string; t
 const postFormData = async ({ login, password, token, type }: { login: string; password: string, token: string, type: string, }) => {
     const t = await getTranslations();
     const locale = await getLocale();
-    const res = await fetch('http://localhost:8001/api/register', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

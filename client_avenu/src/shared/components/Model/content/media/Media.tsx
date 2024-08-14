@@ -85,11 +85,11 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
             // .filter((photo: IPhoto) => photo.type === PhotoType.PublicPhoto && photo.status === PhotoStatus.Applyed)
             .map((photo: string, index: number) => (
               <div key={index} className={styles.photo_container}>
-                {/* <img src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`} alt="" /> */}
+                {/* <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`} alt="" /> */}
 
                 <Image
                   src={photo}
-                  // src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                  // src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                   alt=""
                   // fill
                   // objectFit="contain"
@@ -141,7 +141,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                 <Image
                   key={index}
                   src={photo}
-                  // src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                  // src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                   alt=""
                   // fill
                   // objectFit="contain"
@@ -159,7 +159,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                 <Image
 
                   src={photos && photos[3]}
-                  // src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                  // src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                   alt=""
 
                   className={styles.content_item}
@@ -210,7 +210,7 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                   key={video.id}
                   className={`${styles.content_item} ${styles.video}`}
                   // src={`/uploads${video.video_url}`}
-                  src={`http://localhost:8001/api/videos/${video.video_url.replace('/media/videos/', "")}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/videos/${video.video_url.replace('/media/videos/', "")}`}
                   autoPlay={false}
                   onClick={() => handlerViewVideoOnClick(video)}
                 />

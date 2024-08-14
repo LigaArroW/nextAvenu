@@ -7,7 +7,7 @@ interface IResponse {
 }
 
 export async function generateToken({ login }: { login: string }) {
-    const response = await fetch(`http://localhost:8001/api/generate_token`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/generate_token`,
         {
             method: 'POST',
             headers: {
@@ -30,7 +30,7 @@ export async function generateToken({ login }: { login: string }) {
 
 
 export async function generateLoginMailToken({ login }: { login: string }): Promise<IResponse> {
-    const response = await fetch(`http://localhost:8001/api/generate_login_mail_token`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/generate_login_mail_token`,
         {
             method: 'POST',
             headers: {

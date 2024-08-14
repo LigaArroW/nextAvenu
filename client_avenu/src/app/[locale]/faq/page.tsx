@@ -13,7 +13,7 @@ export async function generateMetadata() {
 
 
 async function getFAQs() {
-    const responce = await fetch('http://localhost:8001/api/faqs', { cache: 'force-cache' });
+    const responce = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/faqs', { cache: 'force-cache' });
 
     return responce.json();
 }

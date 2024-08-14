@@ -8,7 +8,7 @@ import { revalidateTag } from "next/cache"
 
 export async function getCaptcha({ data }: { data: any }) {
 
-    const response = await fetch('http://localhost:8001/api/create_captcha', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/create_captcha', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function getCaptcha({ data }: { data: any }) {
 }
 export async function verifyCaptcha({ data }: { data: any }) {
 
-    const response = await fetch('http://localhost:8001/api/verify_captcha', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/verify_captcha', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function verifyCaptcha({ data }: { data: any }) {
 }
 export async function getPositionsUp({ agency_id }: { agency_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/get_positions_up', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/get_positions_up', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export async function getPositionsUp({ agency_id }: { agency_id: number }) {
 }
 export async function verifyCaptchaGoogle({ token }: { token: string }) {
 
-    const response = await fetch('http://localhost:8001/api/verify_captcha_google', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/verify_captcha_google', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

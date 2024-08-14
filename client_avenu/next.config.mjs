@@ -19,6 +19,11 @@ const nextConfig = withSvgr({
                 hostname: 'localhost',
                 pathname: '/**',
             },
+            {
+              protocol: 'http',
+              hostname: '78.155.194.209',
+              pathname: '/**',
+            },
             // {
             //     protocol: 'https',
             //     hostname: 'avatars.steamstatic.com',

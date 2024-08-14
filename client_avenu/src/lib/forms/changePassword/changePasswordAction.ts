@@ -90,7 +90,7 @@ export async function ChangePasswordAction(prevState: IContactUsForm, data: Form
 const postPassword = async ({ login, token, password }: { login: string, token: string, password: string }): Promise<IPostEmail> => {
     const t = await getTranslations();
     const locale = await getLocale();
-    const res = await fetch('http://localhost:8001/api/change_password', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/change_password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ import { IWorkTime } from "@/types/model/workTime/workTime";
 
 export async function addWorkTimes({ work_times, model_id }: { work_times: IWorkTime[]; model_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/add_work_times', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_work_times', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

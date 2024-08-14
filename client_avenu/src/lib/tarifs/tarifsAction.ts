@@ -11,7 +11,7 @@ export async function addTarifs({ tarifs, model_id }: { tarifs: ITarif[]; model_
 
 
 
-    const response = await fetch('http://localhost:8001/api/add_tarifs', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_tarifs', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

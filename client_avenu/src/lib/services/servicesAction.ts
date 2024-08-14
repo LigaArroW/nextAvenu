@@ -10,7 +10,7 @@ import { revalidateTag } from "next/cache";
 
 export async function addModelServices({ model_services, model_id }: { model_services: IModelService[]; model_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/add_model_services', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_model_services', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

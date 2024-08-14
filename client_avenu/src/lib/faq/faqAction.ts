@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getFaqs() {
-    const response = await fetch('http://localhost:8001/api/faqs',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/faqs',
         {
             next: { tags: ['Faqs'] }
         }
@@ -16,7 +16,7 @@ export async function getFaqs() {
 
 export async function addFaq({ faq }: { faq: IFaq }) {
 
-    const response = await fetch('http://localhost:8001/api/addFaq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/addFaq', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function addFaq({ faq }: { faq: IFaq }) {
 
 export async function updateFaq({ faq }: { faq: IFaq }) {
 
-    const response = await fetch('http://localhost:8001/api/update_faq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_faq', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export async function updateFaq({ faq }: { faq: IFaq }) {
 
 export async function deleteFaq({ faq }: { faq: IFaq }) {
 
-    const response = await fetch('http://localhost:8001/api/delete_faq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_faq', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

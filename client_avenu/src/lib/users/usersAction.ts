@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getProfilesUsers() {
-    const response = await fetch('http://localhost:8001/api/get_profiles',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/get_profiles',
         {
             next: { tags: ['users'] }
         }
@@ -16,7 +16,7 @@ export async function getProfilesUsers() {
 
 export async function changePasswordUsers({ login, password }: { login: string; password: string }) {
 
-    const response = await fetch('http://localhost:8001/api/update_password', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function changePasswordUsers({ login, password }: { login: string; 
 }
 export async function updateProfile({ profile }: { profile: IProfile }) {
 
-    const response = await fetch('http://localhost:8001/api/update_profile', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function updateProfile({ profile }: { profile: IProfile }) {
 }
 export async function deleteProfile({ agency_id }: { agency_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/delete_profile', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export async function deleteProfile({ agency_id }: { agency_id: number }) {
 }
 
 export async function getAgencies() {
-    const response = await fetch('http://localhost:8001/api/agencies',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/agencies',
         {
             next: { tags: ['users', 'agencies'] }
         }

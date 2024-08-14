@@ -6,7 +6,7 @@ import { revalidatePath, revalidateTag } from "next/cache"
 
 
 export async function getBlacklist({ agency_id }: { agency_id: number }) {
-    const response = await fetch(`http://localhost:8001/api/blacklist?agency_id=${agency_id}`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/blacklist?agency_id=${agency_id}`,
         {
             method: 'GET',
             next: { tags: ['blacklist'] }
@@ -18,7 +18,7 @@ export async function getBlacklist({ agency_id }: { agency_id: number }) {
 
 export async function addBlacklist({ blacklist }: { blacklist: IBlacklist }) {
 
-    const response = await fetch('http://localhost:8001/api/add_blacklist', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_blacklist', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export async function addBlacklist({ blacklist }: { blacklist: IBlacklist }) {
 }
 export async function deleteBlacklist({ id, agency_id }: { id: number, agency_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/delete_blacklist', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_blacklist', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export async function deleteBlacklist({ id, agency_id }: { id: number, agency_id
 }
 export async function getBlacklistAccess({ agency_id }: { agency_id: number }) {
 
-    const response = await fetch(`http://localhost:8001/api/blacklist_access?agency_id=${agency_id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/blacklist_access?agency_id=${agency_id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export async function getBlacklistAccess({ agency_id }: { agency_id: number }) {
 
 export async function addBlacklistAccess({ agency_id, access_to }: { agency_id: number, access_to: number }) {
 
-    const response = await fetch('http://localhost:8001/api/add_blacklist_access', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_blacklist_access', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export async function addBlacklistAccess({ agency_id, access_to }: { agency_id: 
 }
 export async function deleteBlacklistAccess({ id, agency_id }: { id: number, agency_id: number }) {
 
-    const response = await fetch('http://localhost:8001/api/add_blacklist_access', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_blacklist_access', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

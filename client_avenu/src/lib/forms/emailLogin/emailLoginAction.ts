@@ -93,7 +93,7 @@ export async function emailLoginAction(prevState: IContactUsForm, data: FormData
 const SendToEmail = async ({ login, token }: { login: string, token: string }): Promise<IPostEmail> => {
     const t = await getTranslations();
     const locale = await getLocale();
-    const res = await fetch('http://localhost:8001/api/login_email', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/login_email', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

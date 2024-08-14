@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getCities() {
-    const response = await fetch('http://localhost:8001/api/cities',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/cities',
         {
             next: { tags: ['cities'] }
         }

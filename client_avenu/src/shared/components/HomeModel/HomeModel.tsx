@@ -94,7 +94,7 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
       {model.photos.filter((photo: IPhoto) => photo.is_main).length > 0 && (
         <div className={styles.photo}>
 
-          <Image src={`http://localhost:8001/api/photos/${(model.photos[0]?.photo_url)?.split('/')[3]}`}
+          <Image src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(model.photos[0]?.photo_url)?.split('/')[3]}`}
             className={styles.photo}
             alt={model.name}
             width={180}

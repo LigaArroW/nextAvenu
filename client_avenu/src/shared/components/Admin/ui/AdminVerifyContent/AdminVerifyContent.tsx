@@ -30,7 +30,7 @@ const AdminVerifyContent: React.FC<IAdminVerifyContent> = ({ data, idx, model, m
                 <div className={styles.photo_container}>
                     {/* <img src={`/uploads${data.photo_url}`} alt="" /> */}
                     <Image
-                        src={`http://localhost:8001/api/photos/${(data.photo_url)?.split('/')[3]}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(data.photo_url)?.split('/')[3]}`}
                         alt=""
                         width={500}
                         height={500}
@@ -71,13 +71,13 @@ const AdminVerifyContent: React.FC<IAdminVerifyContent> = ({ data, idx, model, m
                         {modelPhoto[idx] && modelPhoto[idx].length > 0 && modelPhoto[idx].map((photo: IPhoto, index: number) => (
                             // <img
                             //     key={photo.id}
-                            //     src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                            //     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                             //     alt=""
                             //     // onClick={() => { handlerViewPhotoOnClick(index); setActiveModel(idx) }}
                             // />
                             <Image
                                 key={photo.id}
-                                src={`http://localhost:8001/api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
                                 alt=""
                                 width={100}
                                 height={160}

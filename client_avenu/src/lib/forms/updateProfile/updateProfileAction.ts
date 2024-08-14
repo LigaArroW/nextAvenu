@@ -94,7 +94,7 @@ export async function updateProfileAction(prevState: IContactUsForm, data: FormD
 
 
 async function PostLogin({ login, password, email = false }: { login: string; password: string, email?: boolean }) {
-    const res = await fetch('http://localhost:8001/api/login', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -6,7 +6,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getPages() {
-    const response = await fetch('http://localhost:8001/api/pages',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/pages',
         {
             next: { tags: ['pages'] }
         }
@@ -18,7 +18,7 @@ export async function getPages() {
 
 export async function updatePage({ page }: { page: IPage }) {
 
-    const response = await fetch('http://localhost:8001/api/update_faq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_faq', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

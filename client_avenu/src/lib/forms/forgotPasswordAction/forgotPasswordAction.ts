@@ -91,7 +91,7 @@ const SendToEmail = async ({ login, token }: { login: string, token: string }): 
     const t = await getTranslations();
     const locale = await getLocale();
    
-    const res = await fetch('http://localhost:8001/api/restore_password', {
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/restore_password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache"
 
 
 export async function getProfilesAdmins() {
-    const response = await fetch('http://localhost:8001/api/get_admins',
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/get_admins',
         {
             next: { tags: ['admins'] }
         }
@@ -15,7 +15,7 @@ export async function getProfilesAdmins() {
 
 export async function changePasswordAdmin({ login, password }: { login: string; password: string }) {
 
-    const response = await fetch('http://localhost:8001/api/update_admin_password', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_admin_password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
