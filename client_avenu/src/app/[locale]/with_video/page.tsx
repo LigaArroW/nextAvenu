@@ -4,11 +4,11 @@ import { IModel } from "@/types/model/model/model";
 
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
-export async function generateMetadata() {
-    const t = await getTranslations();
-
-    return {
-        title: `${t("navigation.home")} | ${t("navigation.with_video")}`,
+export async function generateMetadata({params: {locale}}) {
+  const t = await getTranslations({locale, namespace: 'navigation'});
+  
+  return {
+        title: `${t("home")} | ${t("with_video")}`,
     };
 }
 

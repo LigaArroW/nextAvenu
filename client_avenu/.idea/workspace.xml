@@ -5,53 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf6c81c7-f7d2-4213-8b0b-fdac0aee63f7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/[locale]/[filter]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/admin-moderator/[link]/model/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/admin-moderator/[link]/model/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/confidentiality/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/confidentiality/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/faq/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/faq/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/model/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/model/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/user-agreement/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/user-agreement/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/blackList/blackList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/blackList/blackList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/cities/citiesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/cities/citiesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/countries/countriesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/countries/countriesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/district/districkAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/district/districkAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/faq/faqAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/faq/faqAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/admin/adminAuthAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/admin/adminAuthAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/blacklist/addToBlackListAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/blacklist/addToBlackListAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/changePassword/changePasswordAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/changePassword/changePasswordAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/contactUs/contactUsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/contactUs/contactUsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/emailLogin/emailLoginAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/emailLogin/emailLoginAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/forgotPasswordAction/forgotPasswordAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/forgotPasswordAction/forgotPasswordAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/login/loginAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/login/loginAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/register/registerAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/register/registerAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/superAdmin/superAdminAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/superAdmin/superAdminAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/forms/updateProfile/updateProfileAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/forms/updateProfile/updateProfileAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/models/getDataModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/models/getDataModel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/models/getModelsFilter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/models/getModelsFilter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/models/postDataModels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/models/postDataModels.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/pages/pagesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/pages/pagesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/photo/photoAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/photo/photoAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/proposal/proposalAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/proposal/proposalAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/services/servicesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/services/servicesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/superAdmin/superAdmin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/superAdmin/superAdmin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/tarifs/tarifsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/tarifs/tarifsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/token/tokenAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/token/tokenAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/underground/undergroundAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/underground/undergroundAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/users/usersAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/users/usersAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/verification/verificationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/verification/verificationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/video/videoAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/video/videoAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/workTime/workTimeAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/workTime/workTimeAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Admin/ui/AdminVerifyContent/AdminVerifyContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Admin/ui/AdminVerifyContent/AdminVerifyContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/HomeModel/HomeModel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/HomeModel/HomeModel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Modals/PhotoCropModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Modals/PhotoCropModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Modals/PhotosViewerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Modals/PhotosViewerModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Modals/VideoViewerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Modals/VideoViewerModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Model/Model.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Model/Model.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Model/content/media/Media.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Model/content/media/Media.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/ModelSettings/ui/ModelSettingPhotos/ModelSettingPhotos.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/ModelSettings/ui/ModelSettingPhotos/ModelSettingPhotos.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/ModelSettings/ui/ModelSettingVideo/ModelSettingVideo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/ModelSettings/ui/ModelSettingVideo/ModelSettingVideo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Profile/ui/ProfileModel/ProfileModel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Profile/ui/ProfileModel/ProfileModel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[locale]/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[locale]/new/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/new/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[locale]/with_video/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/with_video/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/components/Header/ui/HeaderNav/HeaderNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Header/ui/HeaderNav/HeaderNav.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,26 +24,29 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2kAhvsKwRa47V5YkLL9hC8EExYJ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;stage-2V2&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "kvadder__2",
+    "last_opened_file_path": "/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "ts.external.directory.path": "/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />

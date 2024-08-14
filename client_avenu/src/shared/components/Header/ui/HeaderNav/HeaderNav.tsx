@@ -60,7 +60,6 @@ const HeaderNav = () => {
                             href={`/${locale}${link.link_url === "/" ? "/" : link.link_url}`}
                             scroll={false}
                             onClick={() => setIsNavigationMobileActive(false)}
-                        // onClick={() => handleMobileLinkOnClick(link.id)}
                         >
                             {t(`${link.link}`)}
                         </Link>
