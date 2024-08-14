@@ -15,7 +15,7 @@ export const getFiltredFields = async (): Promise<FiltredFields> => {
                 method: 'GET',
                 cache: 'force-cache',
             });
-            const json = await response.json();
+            const json = await response?.json();
 
             responseJsons[field] = json;
         })

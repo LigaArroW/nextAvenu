@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bf6c81c7-f7d2-4213-8b0b-fdac0aee63f7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2kAhvsKwRa47V5YkLL9hC8EExYJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "stage-2V2",
+    "last_opened_file_path": "/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "ts.external.directory.path": "/Users/bakytbek/Documents/Projects/nextAvenu/client_avenu/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf6c81c7-f7d2-4213-8b0b-fdac0aee63f7" name="Changes" comment="" />
+      <created>1722732521594</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722732521594</updated>
+      <workItem from="1722732522655" duration="4617000" />
+      <workItem from="1722737398269" duration="738000" />
+      <workItem from="1722738648191" duration="4904000" />
+      <workItem from="1722744772760" duration="211000" />
+      <workItem from="1722760116150" duration="259000" />
+      <workItem from="1722760420058" duration="1093000" />
+      <workItem from="1723537848598" duration="2146000" />
+      <workItem from="1723656921010" duration="2934000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/types/core/siteLanguage.js" />
+        <option value="$PROJECT_DIR$/src/types/model/blockedCountry/blockedCountry.js" />
+        <option value="$PROJECT_DIR$/src/types/core/service.js" />
+        <option value="$PROJECT_DIR$/src/types/core/country.js" />
+        <option value="$PROJECT_DIR$/src/types/page/page.js" />
+        <option value="$PROJECT_DIR$/src/types/model/modelProposalPlace/modelProposalPlace.js" />
+        <option value="$PROJECT_DIR$/src/types/model/modelFeedback/modelFeedback.js" />
+        <option value="$PROJECT_DIR$/src/types/core/breastSize.js" />
+        <option value="$PROJECT_DIR$/src/types/core/dayOfWeek.js" />
+        <option value="$PROJECT_DIR$/src/types/core/district.js" />
+        <option value="$PROJECT_DIR$/src/types/proposal/proposalView.js" />
+        <option value="$PROJECT_DIR$/src/types/superAdmin/superAdmin.js" />
+        <option value="$PROJECT_DIR$/src/types/proposal/proposal.js" />
+        <option value="$PROJECT_DIR$/src/types/core/trip.js" />
+        <option value="$PROJECT_DIR$/src/types/model/model/model.js" />
+        <option value="$PROJECT_DIR$/src/types/model/piercing/modelPiercing.js" />
+        <option value="$PROJECT_DIR$/src/types/core/proposalPlace.js" />
+        <option value="$PROJECT_DIR$/src/types/model/modelService/modelService.js" />
+        <option value="$PROJECT_DIR$/src/types/core/hairColor.js" />
+        <option value="$PROJECT_DIR$/src/types/core/hairSize.js" />
+        <option value="$PROJECT_DIR$/src/types/model/language/language.js" />
+        <option value="$PROJECT_DIR$/src/types/core/underground.js" />
+        <option value="$PROJECT_DIR$/src/types/core/eyesColor.js" />
+        <option value="$PROJECT_DIR$/src/types/core/ethnicGroup.js" />
+        <option value="$PROJECT_DIR$/src/types/model/modelView/modelView.js" />
+        <option value="$PROJECT_DIR$/src/types/core/pubisHair.js" />
+        <option value="$PROJECT_DIR$/src/types/core/currency.js" />
+        <option value="$PROJECT_DIR$/src/types/core/workDuration.js" />
+        <option value="$PROJECT_DIR$/src/types/core/nationality.js" />
+        <option value="$PROJECT_DIR$/src/types/profile/profile/deletedProfile.js" />
+        <option value="$PROJECT_DIR$/src/types/model/workTime/workTime.js" />
+        <option value="$PROJECT_DIR$/src/types/profile/blacklist/blacklistAccess.js" />
+        <option value="$PROJECT_DIR$/src/types/core/city.js" />
+        <option value="$PROJECT_DIR$/src/types/profile/blacklist/blacklist.js" />
+        <option value="$PROJECT_DIR$/src/types/core/meeting.js" />
+        <option value="$PROJECT_DIR$/src/types/profile/profile/profile.js" />
+        <option value="$PROJECT_DIR$/src/types/core/meetingPlace.js" />
+        <option value="$PROJECT_DIR$/src/types/core/serviceCategory.js" />
+        <option value="$PROJECT_DIR$/src/types/core/breastType.js" />
+        <option value="$PROJECT_DIR$/src/types/model/contact/contact.js" />
+        <option value="$PROJECT_DIR$/src/types/faq/faq.js" />
+        <option value="$PROJECT_DIR$/src/types/core/modelType.js" />
+        <option value="$PROJECT_DIR$/src/types/core/tatoo.js" />
+        <option value="$PROJECT_DIR$/src/types/user/user.js" />
+        <option value="$PROJECT_DIR$/src/types/core/smooker.js" />
+        <option value="$PROJECT_DIR$/src/types/model/language/modelLanguage.js" />
+        <option value="$PROJECT_DIR$/src/types/model/piercing/piercing.js" />
+        <option value="$PROJECT_DIR$/src/types/core/orientation.js" />
+        <option value="$PROJECT_DIR$/src/types/model/video/video.js" />
+        <option value="$PROJECT_DIR$/src/types/model/tarif/tarif.js" />
+        <option value="$PROJECT_DIR$/src/types/model/photo/photo.js" />
+      </list>
+    </option>
+  </component>
+</project>
