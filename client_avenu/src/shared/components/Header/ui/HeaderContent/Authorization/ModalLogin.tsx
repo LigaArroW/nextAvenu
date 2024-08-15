@@ -17,7 +17,7 @@ const ModalLogin: React.FC<IModalLogin> = ({ setShowModal }) => {
     return (
         <div className={`${styles.modal}  ${styles.active}`}>
             <div className={`${styles.overlay} ${styles.active}`} onClick={() => setShowModal()} />
-            <div className={styles.modal_content}>
+            <div className={styles.modal_content} >
                 <div className={styles.modal_close} onClick={() => setShowModal()}>
                     <Close fill="#1B1B1B" />
                 </div>

@@ -46,6 +46,7 @@ const AuthParameters: React.FC<IAuthParameters> = ({ person }) => {
                     <div className={styles.input_field}>
                         <div className={styles.label}>{t("global.email_address")}</div>
                         <input
+                            className={styles.input_value}
                             placeholder=""
                             type="email"
                             name="email"
@@ -53,11 +54,12 @@ const AuthParameters: React.FC<IAuthParameters> = ({ person }) => {
                             onChange={(event) => setEmail(event.target.value.trim())}
                             value={email}
                         />
-                        <div className={styles.required}>*</div>
+                        <div className={'required'}>*</div>
                     </div>
                     <div className={styles.input_field}>
                         <div className={styles.label}>{t("global.current_password")}</div>
                         <input
+                            className={styles.input_value}
                             placeholder=""
                             type="password"
                             name="password"
@@ -66,12 +68,13 @@ const AuthParameters: React.FC<IAuthParameters> = ({ person }) => {
                             value={password}
                             minLength={6}
                         />
-                        <div className={styles.required}>*</div>
+                        <div className={'required'}>*</div>
                     </div>
                     <input type="hidden" name="id" value={Number(person._id)} />
                     <div className={styles.input_field}>
                         <div className={styles.label}>{t("global.new_password")}</div>
                         <input
+                            className={styles.input_value}
                             placeholder=""
                             type="password"
                             name="newPassword"
@@ -80,7 +83,7 @@ const AuthParameters: React.FC<IAuthParameters> = ({ person }) => {
                             value={newPassword}
                             minLength={6}
                         />
-                        <div className={styles.required}>*</div>
+                        <div className={'required'}>*</div>
                     </div>
                     {!state.success && state.message && <div className={styles.info_message}>{t(state.message)}</div>}
                     <ButtonSubmitForm

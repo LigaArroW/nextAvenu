@@ -20,8 +20,10 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
     const t = useTranslations();
     const locale = useLocale();
     const pathName = usePathName();
+    console.log("🚀 ~ pathName:", pathName)
     const isMobile = useMedia('(max-width: 1201px)', false);
-
+    // console.log(LinksList.filter((group) => group.links.filter((link) => link.link_url === pathName)));
+    const group = LinksList.find((group) => group.links.some((link) => link.link_url === pathName));
 
     return (
         <div className={styles.page_navigation}>
@@ -48,7 +50,7 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
                                             ) : (
                                                 <>
                                                     <Link
-                                                        
+
                                                         className={styles.link}
                                                         style={{ textDecoration: 'none', color: '#1b1b1b' }}
                                                         href={`/${locale}` + group.links[0].link_url}
@@ -85,9 +87,8 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
                     </React.Fragment>
                 ))}
             </div>
-            {isMobile &&
-                LinksList.filter((group) => group.links.filter((link) => link.link_url === pathName).length > 0)[0].links.length >
-                1 && (
+            {group && group.links.length > 1
+                && (
                     <div className={styles.mobile_list}>
                         {LinksList.filter((group) => group.links.filter((link) => link.link_url === pathName).length > 0)[0].links.map(
                             (link, index) => (

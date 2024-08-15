@@ -392,13 +392,12 @@ $money-color: #D16161
     &.Mobile
         display: none
 
-
-
 @media (max-width: 1450px)
     .wrapper_content
         padding: 15px
         font-size: 16px
         flex-direction: column
+        width: -webkit-fill-available
 
         .media
             gap: 15px
@@ -552,6 +551,8 @@ $money-color: #D16161
                     .content_item,
                     .more_content_item
                         width: calc(25% - 8px)
+                        width: auto
+
 
                     .more_content_item
                         .content_item

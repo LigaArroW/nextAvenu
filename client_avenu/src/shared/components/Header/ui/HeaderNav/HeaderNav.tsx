@@ -48,8 +48,7 @@ const HeaderNav = () => {
                     link.is_for_modal ? (
                         <li
                             key={link.id}
-                        // className={`${pathName === link.link_url ? styles.active : ""}`}
-                        // onClick={() => handleContactUsOnClick(link.id)}
+
                         >
                             {t(`${link.link}`)}
                         </li>
@@ -60,7 +59,6 @@ const HeaderNav = () => {
                             href={`/${locale}${link.link_url === "/" ? "/" : link.link_url}`}
                             scroll={false}
                             onClick={() => setIsNavigationMobileActive(false)}
-                        // onClick={() => handleMobileLinkOnClick(link.id)}
                         >
                             {t(`${link.link}`)}
                         </Link>

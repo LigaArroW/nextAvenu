@@ -163,8 +163,8 @@ const Media: React.FC<IMediaProps> = ({ model, photos }) => {
                   alt=""
 
                   className={styles.content_item}
-                  width={500}
-                  height={200}
+                  width={110}
+                  height={150}
                   priority
                 // onClick={() => handlerViewPhotoOnClick(index)}
 

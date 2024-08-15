@@ -158,7 +158,7 @@ $card-color: #FFFFFF
                     width: 20px
 
 @media (min-width: 1201px)
-    header
+    .header
         .main_navigation
             .navigation
                 li,
@@ -174,13 +174,13 @@ $card-color: #FFFFFF
                         background-color: $background-hover-color
 
 @media (max-width: 1500px)
-    header
+    .header
         .main_navigation
             .navigation
                 gap: 30px
 
 @media (max-width: 1200px)
-    header
+    .header
         .main_navigation,
         .sub_navigation
             height: 45px
@@ -197,7 +197,7 @@ $card-color: #FFFFFF
                 justify-content: center
 
 @media (max-width: 600px)
-    header
+    .header
         .main_navigation,
         .sub_navigation
             font-size: 10px
@@ -224,6 +224,7 @@ $card-color: #FFFFFF
 
             .user
                 gap: 5px
+                
 
                 .logout
                     height: 30px
@@ -232,6 +233,9 @@ $card-color: #FFFFFF
                     svg
                         width: 20px
                         height: 20px
+
+            .user_name
+                font-size: 10px !important
 
         .location_navigation
             height: 35px

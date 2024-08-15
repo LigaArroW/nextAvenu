@@ -315,6 +315,10 @@ $card-color: #FFFFFF
                     width: 100%
 
 @media (max-width: 1200px)
+    .content
+        width: auto !important
+        align-self: center
+
     .wrapper_content
         overflow: auto
         flex-direction: column
@@ -436,6 +440,8 @@ $card-color: #FFFFFF
 @media (max-width: 600px)
     .wrapper_content
         .content
+            width: -webkit-fill-available
+
             .title
                 font-size: 15px
 
@@ -443,6 +449,7 @@ $card-color: #FFFFFF
                 width: 100%
                 font-size: 12px
                 min-width: 100px
+                gap: 15px
 
                 .agency
                     font-size: 12px
@@ -498,3 +505,7 @@ $card-color: #FFFFFF
 
         // .dropdown_container
         //     width: calc(75% - 20px)
+
+    .input_value
+        flex-grow: 1
+        width: auto

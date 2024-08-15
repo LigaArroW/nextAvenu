@@ -6,6 +6,10 @@
     cursor: pointer
     overflow: hidden
 
+    svg
+        width: 25px
+        height: 25px
+
     p
         color: white
 
@@ -15,7 +19,6 @@
     flex-direction: column
     align-items: start
     padding: 15px 15px 10px
-  
 
     .title
         color: #98042d
@@ -24,9 +27,49 @@
         text-align: center
         padding-bottom: 10px
 
- 
-
     &>div>div>p
         color: #1B1B1B
         font-weight: 500
         font-size: 15px
+
+.indicatorContainer
+    &>div
+        width: 25px
+        height: 25px
+        padding: 0
+
+        svg
+            width: 25px
+            height: 25px
+
+@media (max-width: 1200px)
+    .optionWithImg
+        svg
+            width: 20px
+            height: 20px
+
+    .indicatorContainer
+        &>div
+            width: 20px
+            height: 20px
+            padding: 0
+
+            svg
+                width: 20px
+                height: 20px
+
+    .control
+        & div:first-child
+            padding: 0
+            padding-left: 2px
+
+@media (max-width: 600px)
+    .optionWithImg
+        svg
+            width: 15px
+            height: 15px
+
+    .control
+        & div:first-child
+            // height: 18px
+ 
