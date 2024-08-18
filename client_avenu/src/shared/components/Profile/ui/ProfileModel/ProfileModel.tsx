@@ -307,7 +307,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                 handlerButtonClick={() => setIsMessageModalShow(false)}
 
             />}
-            {isModalShow && <UpdatePositionInfoModal handlerButtonClick={() => setIsModalShow(false)} agency_id={model.agency_id} model_id={model.id} person={person} />}
+            {isModalShow && window && window.crypto && window.crypto.subtle && <UpdatePositionInfoModal handlerButtonClick={() => setIsModalShow(false)} agency_id={model.agency_id} model_id={model.id} person={person} />}
         </div>
     );
 };

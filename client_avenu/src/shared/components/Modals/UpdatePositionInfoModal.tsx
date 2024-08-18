@@ -85,10 +85,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
   // Function to decrypt a string using a token
   async function decryptString(encryptedHex: any, token: string) {
     const encodedToken = new TextEncoder().encode(token);
-    console.log("🚀 ~ decryptString ~ encodedToken:", encodedToken)
     const encryptedData = new Uint8Array(encryptedHex.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
-    console.log("🚀 ~ decryptString ~ encryptedData:", encryptedData)
-
     // Derive a key from the token
     const key = await window.crypto.subtle.importKey(
       "raw",
