@@ -48,8 +48,8 @@ export default function ForgotPasswordEmail(props: any) {
             <Section style={buttonContainer}>
               <Button
                 style={button}
-                href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/change_password/${token}/${login}`}
-                // href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/change_password/${token}/${login}`}
+                // href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/change_password/${token}/${login}`}
+                href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/change_password/${token}/${login}`}
                 target="_blank"
               >
                 <Text style={{ marginTop: "10px", fontSize: "15px", color: "#FFFFFF", fontWeight: "500" }}>

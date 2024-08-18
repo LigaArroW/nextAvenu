@@ -58,8 +58,8 @@ export default function RegisterEmail(props: any) {
             </Row>
             <Text style={paragraph}>{emailComplete}</Text>
             <Section style={buttonContainer}>
-              <Button style={button} href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/confirm/${token}/${login}`} target="_blank">
-              {/* <Button style={button} href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/confirm/${token}/${login}`} target="_blank"> */}
+              {/* <Button style={button} href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/confirm/${token}/${login}`} target="_blank"> */}
+              <Button style={button} href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/confirm/${token}/${login}`} target="_blank">
                 <Text style={{ marginTop: "10px", fontSize: "15px", color: "#FFFFFF", fontWeight: "500" }}>
                   {emailButtonText}
                 </Text>
