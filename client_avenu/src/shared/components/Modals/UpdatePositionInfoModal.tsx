@@ -7,6 +7,7 @@ import { Person } from "@/lib/auth/authAction";
 import { Close } from "@/shared/assets/Close";
 import { getModelOne } from "@/lib/models/getDataModel";
 import axios from "axios";
+const { subtle } = require('crypto').webcrypto;
 
 
 interface IUpdatePositionInfoModalProps {
@@ -92,7 +93,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
     const encodedToken = new TextEncoder().encode(token);
     const encryptedData = new Uint8Array(encryptedHex.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
     // Derive a key from the token
-    const key = await window.crypto.subtle.importKey(
+    const key = await subtle.importKey(
       "raw",
       encodedToken,
       { name: "PBKDF2" },
@@ -101,7 +102,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
     );
 
     // Derive an encryption key using the derived key
-    const derivedKey = await window.crypto.subtle.deriveKey(
+    const derivedKey = await subtle.deriveKey(
       {
         name: "PBKDF2",
         salt: new Uint8Array(0), // Empty salt
@@ -118,7 +119,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
     const encryptedContent = encryptedData.slice(12);
 
     // Decrypt the encrypted data using the derived encryption key
-    const decryptedData = await window.crypto.subtle.decrypt(
+    const decryptedData = await subtle.decrypt(
       { name: "AES-GCM", iv: iv },
       derivedKey,
       new Uint8Array(encryptedContent.buffer) // Convert ArrayBuffer to Uint8Array
