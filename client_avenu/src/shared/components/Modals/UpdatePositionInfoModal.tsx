@@ -85,47 +85,45 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
   // Function to decrypt a string using a token
   async function decryptString(encryptedHex: any, token: string) {
     const encodedToken = new TextEncoder().encode(token);
+    console.log("🚀 ~ decryptString ~ encodedToken:", encodedToken)
     const encryptedData = new Uint8Array(encryptedHex.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
-    if (window.crypto && window.crypto.subtle) {
-      // Derive a key from the token
-      const key = await window.crypto.subtle.importKey(
-        "raw",
-        encodedToken,
-        { name: "PBKDF2" },
-        false,
-        ["deriveKey"]
-      );
+    console.log("🚀 ~ decryptString ~ encryptedData:", encryptedData)
 
-      // Derive an encryption key using the derived key
-      const derivedKey = await window.crypto.subtle.deriveKey(
-        {
-          name: "PBKDF2",
-          salt: new Uint8Array(0), // Empty salt
-          iterations: 100000,
-          hash: "SHA-256"
-        },
-        key,
-        { name: "AES-GCM", length: 256 },
-        false,
-        ["decrypt"]
-      );
+    // Derive a key from the token
+    const key = await window.crypto.subtle.importKey(
+      "raw",
+      encodedToken,
+      { name: "PBKDF2" },
+      false,
+      ["deriveKey"]
+    );
 
-      const iv = encryptedData.slice(0, 12);
-      const encryptedContent = encryptedData.slice(12);
+    // Derive an encryption key using the derived key
+    const derivedKey = await window.crypto.subtle.deriveKey(
+      {
+        name: "PBKDF2",
+        salt: new Uint8Array(0), // Empty salt
+        iterations: 100000,
+        hash: "SHA-256"
+      },
+      key,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["decrypt"]
+    );
 
-      // Decrypt the encrypted data using the derived encryption key
-      const decryptedData = await window.crypto.subtle.decrypt(
-        { name: "AES-GCM", iv: iv },
-        derivedKey,
-        new Uint8Array(encryptedContent.buffer) // Convert ArrayBuffer to Uint8Array
-      );
+    const iv = encryptedData.slice(0, 12);
+    const encryptedContent = encryptedData.slice(12);
 
-      // Decode the decrypted data to a string
-      return new TextDecoder().decode(decryptedData);
-    } else {
-      return ''
-      console.error("Web Crypto API не доступен в этом браузере.");
-    }
+    // Decrypt the encrypted data using the derived encryption key
+    const decryptedData = await window.crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: iv },
+      derivedKey,
+      new Uint8Array(encryptedContent.buffer) // Convert ArrayBuffer to Uint8Array
+    );
+
+    // Decode the decrypted data to a string
+    return new TextDecoder().decode(decryptedData);
   }
 
   function drawCanvas(fsSource: string) {
