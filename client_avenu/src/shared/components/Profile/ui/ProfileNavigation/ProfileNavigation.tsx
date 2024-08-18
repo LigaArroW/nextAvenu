@@ -20,9 +20,7 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
     const t = useTranslations();
     const locale = useLocale();
     const pathName = usePathName();
-    console.log("🚀 ~ pathName:", pathName)
     const isMobile = useMedia('(max-width: 1201px)', false);
-    // console.log(LinksList.filter((group) => group.links.filter((link) => link.link_url === pathName)));
     const group = LinksList.find((group) => group.links.some((link) => link.link_url === pathName));
 
     return (
