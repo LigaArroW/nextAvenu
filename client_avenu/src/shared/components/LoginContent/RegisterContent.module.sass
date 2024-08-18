@@ -228,11 +228,11 @@ $card-color: #FFFFFF
         .title
             font-size: 24px
 
-        form
-            .radio_group_container,
-            .input_field
-                font-weight: 500
-                font-size: 14px
+    .form
+        .radio_group_container,
+        .input_field
+            font-weight: 500
+            font-size: 14px
 
             .radio_group_container
                 .radio_group
@@ -286,15 +286,15 @@ $card-color: #FFFFFF
     .content
         width: 100%
 
-        form
-            width: 100%
+    .form
+        width: 100%
 
-            .radio_group_container,
-            .input_field
-                font-size: 12px
+        .radio_group_container,
+        .input_field
+            font-size: 12px
 
-                input
-                    width: calc(100% - 175px)
+            input
+                // width: calc(100% - 175px)
 
             .radio_group_container
                 .radio_group
@@ -311,10 +311,23 @@ $card-color: #FFFFFF
             font-size: 13px
 
         .bottom_content
-            font-size: 12px
+            font-size: 12px,
 
     .checkbox .text
         font-size: 10px
 
     .checkbox .count
         font-size: 7px
+
+    .radio_group_container,
+    .radio_group
+        .item
+            flex-direction: column
+
+            .item_text
+                text-align: center
+
+    .input_field
+        font-size: 11px !important
+        input
+            width: 55% !important
