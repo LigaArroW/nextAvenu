@@ -62,7 +62,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
 
 
   const startVerification = async () => {
-    const captcha = await axios.post("http://localhost:8001/api/create_captcha", {
+    const captcha = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/create_captcha", {
       params: {
         agency_id: agency_id,
         model_id: model_id,
@@ -236,7 +236,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
       setShader(decryptData[step + 1].value);
       setStep(step + 1);
     } else {
-      const verify = await axios.post("http://localhost:8001/api/verify_captcha", {
+      const verify = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/verify_captcha", {
         params: {
           agency_id: agency_id,
           model_id: model_id,
