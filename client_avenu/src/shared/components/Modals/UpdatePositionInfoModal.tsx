@@ -123,6 +123,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
       // Decode the decrypted data to a string
       return new TextDecoder().decode(decryptedData);
     } else {
+      return ''
       console.error("Web Crypto API не доступен в этом браузере.");
     }
   }
