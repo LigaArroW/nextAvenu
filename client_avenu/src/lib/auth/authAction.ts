@@ -130,8 +130,8 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Pr
 export async function setAuthAction(tokenName: RolesUsersToTokenRoles = RolesUsersToTokenRoles.Customer, token: string) {
     cookies().set(tokenName, token, {
         httpOnly: true,
-        // sameSite: 'none',
-        // secure: true,
+        sameSite: 'none',
+        secure: true,
         
     })
 }
