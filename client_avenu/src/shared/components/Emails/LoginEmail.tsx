@@ -49,7 +49,8 @@ export default function ForgotPasswordEmail(props: any) {
                             <Button
                                 style={button}
                                 // href={`https://${process.env.REACT_APP_SITE_NAME}.xyz/${locale}/email_login_once/${token}/${login}`}
-                                href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/email_login_once/${token}/${login}`}
+                                //href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/email_login_once/${token}/${login}`}
+                                href={`https://sexgirl.kz/${locale}/email_login_once/${token}/${login}`}
                                 target="_blank"
                             >
                                 <Text style={{ marginTop: "10px", fontSize: "15px", color: "#FFFFFF", fontWeight: "500" }}>

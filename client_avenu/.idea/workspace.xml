@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bf6c81c7-f7d2-4213-8b0b-fdac0aee63f7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/Modals/UpdatePositionInfoModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Modals/UpdatePositionInfoModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/components/Emails/ForgotPasswordEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Emails/ForgotPasswordEmail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/components/Emails/LoginEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Emails/LoginEmail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/components/Emails/RegisterEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/Emails/RegisterEmail.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +103,7 @@
       <workItem from="1722760420058" duration="1093000" />
       <workItem from="1723537848598" duration="2146000" />
       <workItem from="1723656921010" duration="2934000" />
-      <workItem from="1724024789505" duration="691000" />
+      <workItem from="1724024789505" duration="1991000" />
     </task>
     <servers />
   </component>
