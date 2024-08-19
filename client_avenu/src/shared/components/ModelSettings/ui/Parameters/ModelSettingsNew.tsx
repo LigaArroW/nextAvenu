@@ -128,7 +128,7 @@ const ModelSettingsNew: React.FC<IModelSettingsNew> = ({ person, filters, isNew 
                 } else {
                     const add = await addModel({ model: { ...model, agency_id: Number(person._id) } });
                     if (add.success) {
-                        router.push(`/${locale}/profile/advertisements`);
+                        router.push(`/${locale}/profile/model_settings/photos/${add.model_id}`);
                     }
                     if (!add.success) {
                         setInfoMessage(add.message)

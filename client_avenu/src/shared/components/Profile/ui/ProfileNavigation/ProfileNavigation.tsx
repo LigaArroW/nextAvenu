@@ -10,6 +10,8 @@ import { RolesUsers } from '@/lib/auth/authType';
 import React from 'react';
 import Link from 'next/link';
 import styles from './ProfileNavigation.module.sass'
+import { useMainContext } from '@/widgets/Contex/MainProvider';
+import { useRouter } from 'next/navigation';
 
 interface IProfileNavigation {
     person: Person
@@ -21,6 +23,8 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
     const locale = useLocale();
     const pathName = usePathName();
     const isMobile = useMedia('(max-width: 1201px)', false);
+    const { width } = useMainContext();
+    const router = useRouter();
     const group = LinksList.find((group) => group.links.some((link) => link.link_url === pathName));
 
     return (
@@ -37,11 +41,11 @@ const ProfileNavigation: React.FC<IProfileNavigation> = ({ person, models }) => 
                                         <div
                                             className={`${styles.link} ${group.links.filter((link) => link.link_url === pathName).length === 1 ? styles.active : ""
                                                 }`}
-                                        // onClick={() => {
-                                        //     if (!(!isMobile && group.links.length !== 1)) {
-                                        //         handleNavigateClick(group.links[0].id);
-                                        //     }
-                                        // }}
+                                            onClick={() => {
+                                                if (!(width > 1200 && group.links.length !== 1)) {
+                                                    router.push(`/${locale}` + group.links[0].link_url);
+                                                }
+                                            }}
                                         >
                                             {group.group !== "" ? (
                                                 t(`${group.group}`)
