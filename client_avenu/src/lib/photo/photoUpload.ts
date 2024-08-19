@@ -12,7 +12,7 @@ export async function uploadCheckPhoto({ file, model_id, onUploadProgress }: { f
 
 
     return await axios
-        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "upload_check_photo", formData, {
+        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/upload_check_photo", formData, {
             onUploadProgress: (data) => onUploadProgress(data),
         })
         .then((response) => response.data);
@@ -26,7 +26,7 @@ export async function uploadTmpPublicPhoto({ file, filename, onUploadProgress }:
 
 
     return await axios
-        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "upload_tmp_public_photo", formData, {
+        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/upload_tmp_public_photo", formData, {
             onUploadProgress: (data) => onUploadProgress(data),
         })
         .then((response) => response.data);
@@ -39,7 +39,7 @@ export async function uploadPublicPhoto({ files, filename, model_id }: { files: 
     formData.append("thumbnail", files[1]);
     formData.append("filename", filename);
     formData.append("model_id", String(model_id));
-    return await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "upload_public_photo", formData).then((response) => response.data);
+    return await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/upload_public_photo", formData).then((response) => response.data);
 
 }
 export async function uploadPublicVideo({
@@ -59,7 +59,7 @@ export async function uploadPublicVideo({
     formData.append("filename", filename);
     formData.append("model_id", String(model_id));
     return await axios
-        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "upload_public_video", formData, {
+        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/upload_public_video", formData, {
             onUploadProgress: (data) => onUploadProgress(data),
         })
         .then((response) => response.data);

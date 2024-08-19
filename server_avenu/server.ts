@@ -179,11 +179,11 @@ app.get("/api/model_views", ModelController.getModelViews);
 app.post("/api/update_model_enable_by_moderator", ModelController.updateModelEnableByModerator);
 // app.post("/api/update_model_enable_by_moderator", checkPermissions([R.Admin]), ModelController.updateModelEnableByModerator);
 
-app.post("/upload_check_photo", FileController.uploadCheckPhoto);
+app.post("/api/upload_check_photo", FileController.uploadCheckPhoto);
 // app.post("/upload_check_photo", checkPermissions([R.Agency]), FileController.uploadCheckPhoto);
-app.post("/upload_tmp_public_photo", FileController.uploadTmpPublicPhoto);
+app.post("/api/upload_tmp_public_photo", FileController.uploadTmpPublicPhoto);
 // app.post("/upload_tmp_public_photo", checkPermissions([R.Agency]), FileController.uploadTmpPublicPhoto);
-app.post("/upload_public_photo", FileController.uploadPublicPhoto);
+app.post("/api/upload_public_photo", FileController.uploadPublicPhoto);
 // app.post("/upload_public_photo", checkPermissions([R.Agency]), FileController.uploadPublicPhoto);
 app.post("/api/update_main_photo", PhotoController.updateMainPhoto);
 // app.post("/api/update_main_photo", checkPermissions([R.Agency, R.Admin]), PhotoController.updateMainPhoto);
@@ -200,7 +200,7 @@ app.get("/api/videos", VideoController.getVideos);
 // app.get("/api/videos", checkPermissions([R.Agency, R.Admin]), VideoController.getVideos);
 app.post("/api/update_video_status", VideoController.updateVideoStatus);
 // app.post("/api/update_video_status", checkPermissions([R.Agency, R.Admin]), VideoController.updateVideoStatus);
-app.post("/upload_public_video", FileController.uploadPublicVideo);
+app.post("/api/upload_public_video", FileController.uploadPublicVideo);
 // app.post("/upload_public_video", checkPermissions([R.Agency, R.Admin]), FileController.uploadPublicVideo);
 
 app.post("/api/add_tarifs", TarifController.addTarifs);
