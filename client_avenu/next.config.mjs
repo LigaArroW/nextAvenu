@@ -24,6 +24,11 @@ const nextConfig = withSvgr({
               hostname: '78.155.194.209',
               pathname: '/**',
             },
+          {
+            protocol: 'https',
+            hostname: 'sexgirl.kz',
+            pathname: '/**',
+          },
             // {
             //     protocol: 'https',
             //     hostname: 'avatars.steamstatic.com',
