@@ -75,11 +75,11 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
     piercings,
     ethnicGroups,
     services,
-    tarifs
-
+    tarifs,
+    resetContext
   } = useHomeContext()
 
-  const { searchedModel } = useMainContext()
+  const { searchedModel, resetContext: resetMainContext } = useMainContext()
 
 
 
@@ -169,9 +169,9 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
               <Filter />
               {t("global.filter")}
             </div>
-            <button type="button" className={styles.close} onClick={() => router.replace(pathname)}>
+            {isFiltersActive && <button type="button" className={styles.close} onClick={() => { resetContext(), resetMainContext() }}>
               <Close fill="#FFFFFF" />
-            </button>
+            </button>}
             {/* {isFiltersSet ? (
               <button type="button" className={styles.close} onClick={() => setFilter(initFilter())}>
                 <Close fill="#FFFFFF" />
