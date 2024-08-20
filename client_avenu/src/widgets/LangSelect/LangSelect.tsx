@@ -6,11 +6,12 @@ import { RussianFlag } from '@/shared/assets/RussianFlag';
 import { usePathName } from '@/shared/hooks/usePathName';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import Select, { components } from 'react-select'
 
 import styles from './LangSelector.module.sass'
 import { useMainContext } from '../Contex/MainProvider';
+import { ArrowDown } from '@/shared/assets/ArrowDown';
 
 
 
@@ -32,24 +33,27 @@ const IndicatorSeparator = () => {
 
 
 const IndicatorsContainer = (props: any) => {
+    const fill = !props.selectProps.menuIsOpen ? '#FFFFFF' : '#98042D';
+
     return (
         <components.IndicatorsContainer {...props}>
             <div className={styles.indicatorContainer}>
-                {props.children}
+                <ArrowDown fill={fill} />
+                {/* {props.children} */}
             </div>
         </components.IndicatorsContainer>
     )
 }
 
-const Control = (props: any) => {
-    return (
-        <components.Control {...props}>
-            <div className={styles.control}>
-                {props.children}
-            </div>
-        </components.Control>
-    )
-}
+// const Control = (props: any) => {
+//     return (
+//         <components.Control {...props}>
+//             <div className={styles.control}>
+//                 {props.children}
+//             </div>
+//         </components.Control>
+//     )
+// }
 
 
 const formatOptionLabel = (item: any, isHaveIcon: boolean) => {
@@ -66,7 +70,7 @@ const formatOptionLabel = (item: any, isHaveIcon: boolean) => {
 
 const LangSelect = () => {
     const path = usePathName();
-    const { width } = useMainContext();
+    const { width: contextWidth } = useMainContext();
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const locale = useLocale();
@@ -75,6 +79,11 @@ const LangSelect = () => {
         { value: 'ru', label: 'RU', icon: <RussianFlag /> },
         { value: 'en', label: 'EN', icon: <GreatBritanFlag /> },
     ]
+    const [width, setWidth] = useState(contextWidth)
+
+    useEffect(() => {
+        setWidth(contextWidth)
+    }, [contextWidth])
 
 
     const onSelectChange = (e: any) => {
@@ -87,9 +96,15 @@ const LangSelect = () => {
     const customStyles = {
         container: (defaultStyles: any, state: any) => ({
             ...defaultStyles,
-            width: width > 1200 ? '115px' : (width > 600 ? '100px' : '70px'),
-            height: width > 1200 ? '47px' : (width > 600 ? '32px' : '27px'),
-            maxWidth: '200px',
+            // width: width > 1200 ? 115 : (width > 600 ? 100 : 70),
+
+            // height: width > 1200 ? 47 : (width > 600 ? 32 : 27),
+            width: 'auto',
+            height: 'auto',
+            maxWidth: 200,
+            minWidth: 100,
+            maxHeight: 47,
+            minHeight: 27,
             cursor: 'pointer',
             borderRadius: '5px',
             border: '0.5px solid #FFFFFF'
@@ -106,7 +121,7 @@ const LangSelect = () => {
         }),
         valueContainer: (defaultStyles: any, state: any) => ({
             ...defaultStyles,
-            // padding: 8,
+
             display: 'flex',
             alignItems: 'center',
         }),
@@ -123,17 +138,15 @@ const LangSelect = () => {
         control: (defaultStyles: any) => ({
             ...defaultStyles,
             backgroundColor: 'transparent',
-            height: width > 1200 ? '47px' : (width > 600 ? '27px' : '25px'),
+            // height: width > 1200 ? '47px' : (width > 600 ? '27px' : '25px'),
             display: 'flex',
             alignItems: 'center',
             padding: 0,
-            gap: '10px',
+            // gap: '10px',
             minHeight: 'auto',
-            // padding: '10px',
-            fontSize: width > 1200 ? '14px' : '10px',
+            // fontSize: width > 1200 ? '14px' : '10px',
             border: 'none',
             boxShadow: 'none',
-            // borderRadius: '12px',
             cursor: 'pointer',
         }),
         indicatorsContainer: (defaultStyles: any, state: any) => ({
@@ -141,21 +154,18 @@ const LangSelect = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'absolute',
-            right: width > 1200 ? 10 : 0,
-            top: '25%',
-            width: width > 1200 ? '25px' : '20px',
-            height: width > 1200 ? '25px' : '20px',
-            // transform: 'translateY(-30%)',
+            width: 35,
+            // width: width > 1200 ? '25px' : '20px',
+            // height: width > 1200 ? '25px' : '20px',
             transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
 
-            // translateY: '-20%',
-            // width: '25px',
-            // height: '25px',
+
+
         }),
         menu: (defaultStyles: any) => ({
             ...defaultStyles,
-            top: width > 1200 ? 80 : 30,
+            // top: width > 1200 ? 80 : 30,
+            top: 50,
             right: 0,
             width: 180,
             dispay: 'flex',
@@ -198,7 +208,7 @@ const LangSelect = () => {
 
             <Select
                 defaultValue={options.find(item => item.value === locale)}
-                components={{ IndicatorSeparator, MenuList, IndicatorsContainer, Control }}
+                components={{ IndicatorSeparator, MenuList, IndicatorsContainer }}
                 instanceId="lang-select"
                 options={options}
                 onChange={onSelectChange}
@@ -206,6 +216,7 @@ const LangSelect = () => {
                 formatOptionLabel={item => formatOptionLabel(item, true)}
                 menuPlacement={'top'}
                 styles={customStyles}
+
             // menuIsOpen
 
             />
