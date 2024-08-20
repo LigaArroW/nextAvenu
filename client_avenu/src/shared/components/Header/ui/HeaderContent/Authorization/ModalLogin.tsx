@@ -1,6 +1,8 @@
 'use client';
 
-import styles from '@/shared/components/Modals/Modal.module.sass'
+// import styles from '@/shared/components/Modals/Modal.module.sass'
+import styles from './ModalLogin.module.sass'
+
 import { Close } from "@/shared/assets/Close";
 import { useRouter } from "next/navigation";
 import LoginContent from '@/shared/components/LoginContent/LoginContent'
