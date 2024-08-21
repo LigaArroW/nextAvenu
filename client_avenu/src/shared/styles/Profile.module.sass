@@ -340,6 +340,7 @@ $card-color: #FFFFFF
         .main
             .label
                 font-weight: 500
+                width: 30%
 
             .dropdown_button
                 padding: 10px
@@ -362,15 +363,15 @@ $card-color: #FFFFFF
             top: 40px
             width: calc(100% - 180px)
 
-        .content
-            width: auto
-            padding: 0 15px
-            gap: 30px
+    .content
+        width: auto
+        padding: 0 15px
+        gap: 30px
 
-            .title
-                text-align: center
-                align-self: center
-                font-size: 22px
+        .title
+            text-align: center
+            align-self: center
+            font-size: 22px
 
             .main_info
                 &.full_width
@@ -410,7 +411,7 @@ $card-color: #FFFFFF
                         gap: 10px
 
                         .label
-                            width: 160px
+                            width: 30%
 
                         input,
                         textarea
@@ -430,10 +431,20 @@ $card-color: #FFFFFF
                 width: 225px
                 align-self: center
 
+    .input_field
+        .label
+            width: 30% !important
+    .textarea_field
+        .label
+            width: 30% !important
+
 @media (max-width: 900px)
     .wrapper_content
         .content
             .main_info
+                form
+                    button
+                        align-self: center
                 .search
                     width: 100%
 
@@ -491,10 +502,14 @@ $card-color: #FFFFFF
                             height: 15px
                             width: 15px
 
+                button
+                    width: 100%
     .dropdown
         font-size: 12px
 
-        // .main
+        .main
+            .label
+                width: 30% !important
         // &.column .description
         //     font-size: 9px
 
@@ -509,3 +524,18 @@ $card-color: #FFFFFF
     .input_value
         flex-grow: 1
         width: auto
+
+    .input_field
+        input
+            width: 64% !important
+        .label
+            width: 30% !important
+    .textarea_field
+        textarea
+            width: 64% !important
+        .label
+            width: 30% !important
+
+    .main
+        .label
+            width: 30% !important
