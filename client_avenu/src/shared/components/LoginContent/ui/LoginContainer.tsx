@@ -104,14 +104,14 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ closeModal = () => { }
                 minLength={6}
             />
             {errorForm !== "" ? <div className={styles.error}>{errorForm}</div> : null}
-            <div className={styles.forgot_password} onClick={() => { router.push(`/${locale}/forgot_password`) }}>
+            <div className={styles.forgot_password} onClick={() => { router.push(`/${locale}/forgot_password`), closeModal() }}>
                 {t("global.forgot_your_password")}?
             </div>
             <ButtonSubmitForm
                 disabled={(loginText !== '' && passwordText.length >= 6) ? false : true}
                 text="global.enter"
             />
-            <button type="button" onClick={() => { router.push(`/${locale}/email_login`) }} >
+            <button type="button" onClick={() => { router.push(`/${locale}/email_login`), closeModal() }} >
                 {t('global.enter_to_email')}
             </button>
         </form>

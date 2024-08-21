@@ -1,3 +1,4 @@
+'use client'
 import styles from '@/shared/styles/Header.module.sass';
 
 
@@ -9,6 +10,8 @@ import ButtonLogout from '@/widgets/ButtonLogout/ButtonLogout';
 import LangSelect from '@/widgets/LangSelect/LangSelect';
 import SearchModel from '@/widgets/SearchModel/SearchModel';
 import Authorization from './Authorization/Authorization';
+import { useLocale, useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 
 type token = {
@@ -22,15 +25,16 @@ interface IHeaderContentProps {
 }
 
 
-const HeaderContent: React.FC<IHeaderContentProps> = async ({ agency, customer }) => {
-    const t = await getTranslations();
-    const locale = await getLocale();
+const HeaderContent: React.FC<IHeaderContentProps> = ({ agency, customer }) => {
+    const t = useTranslations();
+    const locale = useLocale();
+    const [isNavigationMobileActive, setIsNavigationMobileActive] = useState(false);
 
     return (
         <header className={styles.header}>
             <div className={styles.main_navigation}>
-                <HeaderNav />
-                <div className={styles.user}>
+                <HeaderNav isNavigationMobileActive={isNavigationMobileActive} setIsNavigationMobileActive={setIsNavigationMobileActive}/>
+                <div className={styles.user} onClick={() => setIsNavigationMobileActive(false)}>
                     <User />
                     {(customer || agency)
                         ?

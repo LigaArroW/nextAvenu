@@ -96,7 +96,7 @@ const RegistrationContainer = () => {
                     >
                         {isTermsApplyChecked && <Check fill="#98042D" />}
                     </span>
-                    <div className={styles.text}>
+                    <div className={`${styles.text} ${styles.terms}`}>
                         {t("global.i_have_read")} <span>Terms and Conditions, Privacy policy</span>
                     </div>
                 </label>

@@ -4,27 +4,32 @@ import { useMedia } from 'react-use';
 import { LinksList } from '../../linksList';
 import { INavigationLink } from '@/types/main/navigationLink';
 import Link from 'next/link';
-import { useLocale, useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePathName } from '@/shared/hooks/usePathName';
 import LogoRedIcon from '@/shared/assets/logo.png';
 import LogoIcon from '@/shared/assets/logo_white.png';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Menu } from '@/shared/assets/Menu';
 import { Close } from '@/shared/assets/Close';
 
+interface IHeaderNavProps {
+    setIsNavigationMobileActive: Dispatch<SetStateAction<boolean>>
+    isNavigationMobileActive: boolean
+}
 
-const HeaderNav = () => {
+const HeaderNav: React.FC<IHeaderNavProps> = ({ setIsNavigationMobileActive, isNavigationMobileActive }) => {
     const t = useTranslations();
     const pathName = usePathName();
     const locale = useLocale();
     const isMobile = useMedia('(max-width: 1201px)', false);
-    const [isNavigationMobileActive, setIsNavigationMobileActive] = useState(false);
+    // const [isNavigationMobileActive, setIsNavigationMobileActive] = useState(false);
     const [modalShow, setModalShow] = useState(false);
 
     const handleMenuOnClick = () => {
         // setIsNoScroll(!isNoScroll);
         setIsNavigationMobileActive(!isNavigationMobileActive);
+        // closeMenu(!menu);
     };
 
 
@@ -67,7 +72,7 @@ const HeaderNav = () => {
 
                 {isMobile && <Image src={LogoRedIcon} alt="logo" width={158} height={70} />}
             </ul>
-        
+
         </>
 
 
