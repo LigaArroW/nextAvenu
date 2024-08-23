@@ -16,17 +16,19 @@ import { getFiltredFields } from "@/lib/models/getModelsFilter";
 import { calcIsNew } from "@/shared/constant/calcIsNew";
 
 import styles from '@/shared/styles/Home.module.sass'
+import { Person } from "@/lib/auth/authAction";
 
 interface IHomeProps {
     type: HomePageType;
     forModerator?: boolean;
+    agency?: Person
 }
 
 
 
-const Home: React.FC<IHomeProps> = async ({ type, forModerator = false }) => {
+const Home: React.FC<IHomeProps> = async ({ type, forModerator = false, agency }) => {
     const t = await getTranslations()
-    const models = await getModels()
+    const models = await getModels(Number(agency?._id))
     // console.log(models);
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 

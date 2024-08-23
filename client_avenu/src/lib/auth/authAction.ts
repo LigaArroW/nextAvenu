@@ -6,6 +6,7 @@ import { verify } from "jsonwebtoken"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { getLocale } from "next-intl/server"
+import { getModels } from "../models/getDataModel"
 
 type Admin = {
     _id: string
@@ -64,6 +65,11 @@ export async function getAuthDataUserAction(): Promise<Person> {
         const person = cookieStore.getAll().filter(cookie => cookie.name.includes('Token'))[0]
 
         const decode = verify(person.value, process.env.JWT_TOKEN_SECRET!) as Person
+
+        if (decode.roles === RolesUsers.Agency) {
+            await getModels(Number(decode._id))
+        }
+
         return {
             _id: decode._id,
             roles: decode.roles,
@@ -102,6 +108,11 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Pr
 
         const decode = verify(cookie!, process.env.JWT_TOKEN_SECRET!) as Person
 
+        if (decode.roles === RolesUsers.Agency) {
+            await getModels(Number(decode._id))
+        }
+
+
         return {
             _id: decode._id,
             roles: decode.roles,
@@ -132,7 +143,7 @@ export async function setAuthAction(tokenName: RolesUsersToTokenRoles = RolesUse
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-        
+
     })
 }
 

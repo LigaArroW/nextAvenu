@@ -61,6 +61,7 @@ const HomeModel: React.FC<IHomeModelProps> = ({ model, viewType, forModerator = 
   };
   const isOnline = useMemo(() => calcIsOnline(), [model]);
 
+
   const makeHiddenPhoneNumber = (phoneNumber: string) => {
     var replacedStr = phoneNumber.substring(9, 15);
     return phoneNumber.replace(replacedStr, "XXX-XX");
