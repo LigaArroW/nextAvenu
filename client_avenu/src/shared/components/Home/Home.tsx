@@ -28,7 +28,7 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = async ({ type, forModerator = false, agency }) => {
     const t = await getTranslations()
-    const models = await getModels(Number(agency?._id))
+    const models = await getModels(agency?._id)
     // console.log(models);
     const filtredFields: Partial<IGeneral> = await getFiltredFields()
 

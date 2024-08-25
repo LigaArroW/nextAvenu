@@ -18,7 +18,7 @@ export async function getPages() {
 
 export async function updatePage({ page }: { page: IPage }) {
 
-    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_faq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/update_page', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -30,6 +30,8 @@ export async function updatePage({ page }: { page: IPage }) {
         }),
 
     })
+
+    
     revalidateTag('pages')
     return await response.json()
 

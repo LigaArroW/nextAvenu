@@ -16,7 +16,7 @@ export async function getFaqs() {
 
 export async function addFaq({ faq }: { faq: IFaq }) {
 
-    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/addFaq', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_faq', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export async function updateFaq({ faq }: { faq: IFaq }) {
 
 }
 
-export async function deleteFaq({ faq }: { faq: IFaq }) {
+export async function deleteFaq({ id }: { id: number }) {
 
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/delete_faq', {
         method: 'POST',
@@ -61,7 +61,7 @@ export async function deleteFaq({ faq }: { faq: IFaq }) {
         },
         body: JSON.stringify({
             params: {
-                faq: faq,
+                id
             }
         }),
 

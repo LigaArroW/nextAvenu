@@ -227,7 +227,7 @@ app.post("/api/delete_faq", FaqController.deleteFaq);
 // app.post("/api/delete_faq", checkPermissions([R.Admin]), FaqController.deleteFaq);
 
 app.get("/api/pages", PageController.getPages);
-app.post("/api/update_page", checkPermissions([R.Admin]), PageController.updatePage);
+app.post("/api/update_page", PageController.updatePage);
 // app.post("/api/update_page", checkPermissions([R.Admin]), PageController.updatePage);
 
 app.get("/api/proposals", ProposalController.getProposals);

@@ -3,13 +3,13 @@ $text-color: #1B1B1B
 $background-color: #E1E2E7
 $card-color: #FFFFFF
 
-.faq_container
+.page_container
     display: flex
     width: 100%
     gap: 30px
     flex-grow: 1
 
-    .faq_list
+    .page_list
         height: 100%
         overflow: auto
         display: flex
@@ -30,17 +30,12 @@ $card-color: #FFFFFF
             margin-bottom: 25px
             font-weight: 500
 
-        button
-            margin-top: 30px
-            align-self: center
-            width: 250px
-
-        .faq_item_container
+        .page_item_container
             display: flex
             gap: 15px
             align-items: center
 
-            .faq_item
+            .page_item
                 padding: 10px 15px
                 word-wrap: break-word
                 cursor: pointer
@@ -66,7 +61,7 @@ $card-color: #FFFFFF
         flex-direction: column
         gap: 30px
         height: 100vh
-        // overflow: auto
+        overflow: auto
         flex-grow: 1
 
         .content_title
@@ -100,30 +95,10 @@ $card-color: #FFFFFF
                     justify-content: center
                     gap: 15px
 
-                    &.quill_part
-
-                        height: 500px
-                        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
-                        flex-direction: column
-                        &.small
-                            height: 300px
-
-                        &.wrong
-                            border: 1px solid $action-color
-
-                        button
-                            margin-top: 0
-
-                    input
-                        width: calc(100% - 70px)
-
                     .quill
-                        width: calc(100%)
-                        height: 500px
+                        width: 100%
+                        height: 65vh
                         box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25)
-
-                        &.small
-                            height: 300px
 
                         &.wrong
                             border: 1px solid $action-color
@@ -149,6 +124,3 @@ $card-color: #FFFFFF
             button
                 align-self: center
                 margin-top: 30px
-
-.wrong
-    border: 1px solid $action-color

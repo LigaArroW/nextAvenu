@@ -67,7 +67,7 @@ export async function getAuthDataUserAction(): Promise<Person> {
         const decode = verify(person.value, process.env.JWT_TOKEN_SECRET!) as Person
 
         if (decode.roles === RolesUsers.Agency) {
-            await getModels(Number(decode._id))
+            await getModels(decode._id)
         }
 
         return {
@@ -109,7 +109,7 @@ export async function getAuthUserAction(tokenName: keyof typeof TokensRoles): Pr
         const decode = verify(cookie!, process.env.JWT_TOKEN_SECRET!) as Person
 
         if (decode.roles === RolesUsers.Agency) {
-            await getModels(Number(decode._id))
+            await getModels(decode._id)
         }
 
 

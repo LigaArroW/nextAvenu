@@ -1,18 +1,21 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from "react";
-// import ReactQuill from "react-quill";
+import { useEffect, useState } from "react";
+
 
 import { IFaq } from "@/types/faq/faq";
 import styles from "./Faq.module.sass";
-import { addFaq, deleteFaq, updateFaq } from "@/lib/faq/faqAction";
+import { addFaq, deleteFaq, getFaqs, updateFaq } from "@/lib/faq/faqAction";
 import MessageModal from "@/shared/components/Modals/MessageModal";
 import ConfirmMessageModal from "@/shared/components/Modals/ConfirmMessageModal";
 import { initFaq } from "@/types/faq/initFaq";
 import { Close } from "@/shared/assets/Close";
-import dynamic from "next/dynamic";
+
+
+import { useQuill } from 'react-quilljs';
+
+
 import '@/widgets/quill.css';
-import 'react-quill/dist/quill.snow.css';
 
 
 
@@ -21,99 +24,105 @@ interface IFaqProps {
     faqs: IFaq[]
 }
 
+
+const modules = {
+    toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+
+        [{ indent: '-1' }, { indent: '+1' }],
+        ['clean'],
+    ],
+    clipboard: {
+        matchVisual: false,
+    },
+};
+
+
 const Faq: React.FC<IFaqProps> = ({ faqs }) => {
-    const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-    const [selectedFaq, setSelectedFaq] = useState({} as IFaq);
-    const [answer, setAnswer] = useState("");
-    const [answerEng, setAnswerEng] = useState("");
+    const [selectedFaq, setSelectedFaq] = useState(initFaq());
+    const [answerState, setAnswerState] = useState(false);
+    const [answerEngState, setAnswerEngState] = useState(false);
+
     const [isMessageModalShow, setIsMessageModalShow] = useState(false);
     const [isConfirmModalShow, setIsConfirmModalShow] = useState(false);
     const [infoMessage, setInfoMessage] = useState("");
     const [deletedFaq, setDeletedFaq] = useState(0);
-    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-    const quillRefAnswer = useRef<typeof ReactQuill>(null);
-    const quillRefAnswerEng = useRef<typeof ReactQuill>(null);
+    const [isButtonEnabled, setIsButtonEnabled] = useState(true);
+    const { quill: answer, quillRef: setAnswer } = useQuill({ modules, theme: 'snow' });
+    const { quill: answerEng, quillRef: setAnswerEng } = useQuill({ modules, theme: 'snow' });
+
+
 
     useEffect(() => {
-        setSelectedFaq({} as IFaq);
-    }, [faqs]);
+        var element = document.getElementById("content");
+        element?.scrollTo({ top: 0 });
+    }, [selectedFaq]);
 
-    // useEffect(() => {
-    //     var element = document.getElementById("content");
-    //     element?.scrollTo({ top: 0 });
-    // }, [selectedFaq]);
-
-    // useEffect(() => {
-    //     if (faqStatuses.addFaq.status === ServerStatusType.Success) {
-    //         setInfoMessage("Вопрос добавлен");
-    //         setSelectedFaq({} as IFaq);
-    //         setIsMessageModalShow(true);
-    //         setFaqStatuses({ ...faqStatuses, addFaq: initServerStatus() });
-    //         getFaqs();
-    //     }
-    //     if (faqStatuses.addFaq.status === ServerStatusType.Error) {
-    //         setInfoMessage("Ошибка при добавлении вопроса");
-    //         setIsMessageModalShow(true);
-    //         setFaqStatuses({ ...faqStatuses, addFaq: initServerStatus() });
-    //     }
-    //     if (faqStatuses.updateFaq.status === ServerStatusType.Success) {
-    //         setInfoMessage("Вопрос обновлен");
-    //         setSelectedFaq({} as IFaq);
-    //         setIsMessageModalShow(true);
-    //         setFaqStatuses({ ...faqStatuses, updateFaq: initServerStatus() });
-    //         getFaqs();
-    //     }
-    //     if (faqStatuses.updateFaq.status === ServerStatusType.Error) {
-    //         setInfoMessage("Ошибка при обновлении вопроса");
-    //         setIsMessageModalShow(true);
-    //         setFaqStatuses({ ...faqStatuses, updateFaq: initServerStatus() });
-    //     }
-    //     if (faqStatuses.deleteFaq.status === ServerStatusType.Success) {
-    //         setFaqStatuses({ ...faqStatuses, deleteFaq: initServerStatus() });
-    //         setIsConfirmModalShow(false);
-    //         setAnswer("");
-    //         setAnswerEng("");
-    //         getFaqs();
-    //     }
-    //     if (faqStatuses.deleteFaq.status === ServerStatusType.Error) {
-    //         setInfoMessage("Ошибка при удалении вопроса");
-    //         setIsConfirmModalShow(false);
-    //         setIsMessageModalShow(true);
-    //         setFaqStatuses({ ...faqStatuses, deleteFaq: initServerStatus() });
-    //     }
-    // }, [faqStatuses]);
 
     useEffect(() => {
-        if (selectedFaq.id !== undefined) {
+        if (answer && answerEng) {
+            answer.on('text-change', function (delta, oldDelta, source) {
+                setAnswerState(answer.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0);
+            })
+            answerEng.on('text-change', function (delta, oldDelta, source) {
+                setAnswerEngState(answerEng.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0);
+            })
+        }
+
+    }, [answer, answerEng])
+
+    useEffect(() => {
+        if (selectedFaq.id !== undefined && answer !== undefined && answerEng !== undefined) {
+
             setIsButtonEnabled(
                 selectedFaq.question.trim().length > 0 &&
-                selectedFaq.question_eng.trim().length > 0 &&
-                answer.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0 &&
-                answerEng.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0
+                selectedFaq.question_eng.trim().length > 0 && answerEngState && answerState
+                // answer.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0 &&
+                // answerEng.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").trim().length > 0
             );
         }
-    }, [selectedFaq, answer, answerEng]);
+    }, [selectedFaq, answer, answerEng, answerEngState, answerState]);
 
-    const toolbarOptions = [
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ script: "sub" }, { script: "super" }],
-        [{ indent: "-1" }, { indent: "+1" }],
-        ["clean"],
-    ];
+    useEffect(() => {
+        if (answer && answerEng) {
+            answer.clipboard.dangerouslyPasteHTML(selectedFaq.answer);
+            answerEng.clipboard.dangerouslyPasteHTML(selectedFaq.answer_eng);
+        }
+    }, [answer, answerEng, selectedFaq.answer, selectedFaq.answer_eng]);
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         if (
             selectedFaq.question.trim().length > 0 &&
             selectedFaq.question_eng.trim().length > 0 &&
-            answer.trim().length > 0 &&
-            answerEng.trim().length > 0
+            answer && answer?.getText().trim().length > 0 &&
+            answerEng && answerEng?.getText().trim().length > 0
         ) {
             if (selectedFaq.id > 0) {
-                updateFaq({ faq: { ...selectedFaq, answer: answer, answer_eng: answerEng } });
+                const upd = await updateFaq({ faq: { ...selectedFaq, answer: answer?.getSemanticHTML(), answer_eng: answerEng?.getSemanticHTML() } });
+                if (upd.success) {
+                    setInfoMessage("Вопрос обновлен");
+                    setIsMessageModalShow(true);
+                }
+                if (!upd.success) {
+                    setInfoMessage("Ошибка при обновлении вопроса");
+                    setIsMessageModalShow(true);
+                }
             } else {
-                addFaq({ faq: { ...selectedFaq, answer: answer, answer_eng: answerEng } });
+                const add = await addFaq({ faq: { ...selectedFaq, answer: answer?.getSemanticHTML(), answer_eng: answerEng?.getSemanticHTML() } });
+                if (add.success) {
+                    setInfoMessage("Вопрос добавлен");
+                    setIsMessageModalShow(true);
+                    const newFaqs = await getFaqs();
+                    setSelectedFaq(newFaqs[newFaqs.length - 1]);
+
+                }
+                if (!add.success) {
+                    setInfoMessage("Ошибка при добавлении вопроса");
+                    setIsMessageModalShow(true);
+                }
+
             }
         }
     };
@@ -128,6 +137,16 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
         setIsConfirmModalShow(true);
     };
 
+    const handleCondirmDelete = async () => {
+        deleteFaq({ id: deletedFaq })
+
+        setIsConfirmModalShow(false);
+        setSelectedFaq(initFaq())
+        answer?.setText("");
+        answerEng?.setText("");
+    }
+
+
     return (
         <div className={styles.faq_container}>
             <div className={styles.faq_list}>
@@ -138,8 +157,13 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                             className={`${styles.faq_item} ${selectedFaq.id === faqItem.id ? styles.active : ""}`}
                             onClick={() => {
                                 setSelectedFaq(faqItem);
-                                setAnswer(faqItem.answer);
-                                setAnswerEng(faqItem.answer_eng);
+
+
+                                // answer?.clipboard.dangerouslyPasteHTML(faqItem.answer);
+                                // answerEng?.clipboard.dangerouslyPasteHTML(faqItem.answer_eng);
+
+                                // answer?.setText(faqItem.answer);
+                                // answerEng?.setText(faqItem.answer_eng);
                             }}
                         >
                             {faqItem.question}
@@ -150,8 +174,8 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                     type="button"
                     onClick={() => {
                         setSelectedFaq(initFaq());
-                        setAnswer("");
-                        setAnswerEng("");
+                        answer?.setText("");
+                        answerEng?.setText("");
                     }}
                 >
                     Добавить вопрос
@@ -181,7 +205,12 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                                     type="text"
                                     required
                                     onChange={(event) =>
-                                        setSelectedFaq({ ...selectedFaq, question: event.target.value, answer: answer, answer_eng: answerEng })
+                                        setSelectedFaq({
+                                            ...selectedFaq,
+                                            question: event.target.value,
+                                            // answer: answer?.getText() || "",
+                                            // answer_eng: answerEng?.getText() || ""
+                                        })
                                     }
                                     value={selectedFaq.question}
                                     className={selectedFaq.question.trim() === "" ? styles.wrong : ""}
@@ -203,8 +232,8 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                                         setSelectedFaq({
                                             ...selectedFaq,
                                             question_eng: event.target.value,
-                                            answer: answer,
-                                            answer_eng: answerEng,
+                                            // answer: answer?.getText() || "",
+                                            // answer_eng: answerEng?.getText() || "",
                                         })
                                     }
                                     value={selectedFaq.question_eng}
@@ -222,26 +251,20 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                         <div className={styles.form_row}>
                             <div className={styles.part_title}>Ответ</div>
                             <div className={styles.part}>
-                                <ReactQuill
-                                    // ref={quillRefAnswer}
-                                    className={`${styles.quill} ${answer.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
-                                        ? styles.wrong
-                                        : ""
-                                        }`}
-                                    theme="snow"
-                                    value={answer}
-                                    onChange={setAnswer}
-                                    modules={{ toolbar: toolbarOptions }}
-                                    // onKeyUp={() => setAnswer(`${quillRefAnswer.current?.getEditorContents()}`)}
-                                />
+                                <div className={`${styles.quill} ${answer?.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
+                                    ? styles.wrong
+                                    : ""
+                                    }`}>
+                                    <div ref={setAnswer} />
+                                </div>
                                 <div
                                     className={`${styles.close} ${answer !== undefined &&
-                                        answer.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length > 0
+                                        answer.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length > 0
                                         ? styles.active
                                         : ""
                                         }`}
                                     onClick={() => {
-                                        setAnswer("");
+                                        answer?.deleteText(0, answer.getText().length);
                                         setSelectedFaq({ ...selectedFaq, answer: "" });
                                     }}
                                     title="Очистить поле"
@@ -250,26 +273,21 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                                 </div>
                             </div>
                             <div className={styles.part}>
-                                <ReactQuill
-                                    // ref={quillRefAnswerEng}
-                                    className={`${styles.quill} ${answerEng.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
-                                        ? styles.wrong
-                                        : ""
-                                        }`}
-                                    theme="snow"
-                                    value={answerEng}
-                                    onChange={setAnswerEng}
-                                    modules={{ toolbar: toolbarOptions }}
-                                    // onKeyUp={() => setAnswerEng(`${quillRefAnswerEng.current?.getEditorContents()}`)}
-                                />
+                                <div className={`${styles.quill} ${answerEng?.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length === 0
+                                    ? styles.wrong
+                                    : ""
+                                    }`}>
+                                    <div ref={setAnswerEng} />
+                                </div>
                                 <div
                                     className={`${styles.close} ${answerEng !== undefined &&
-                                        answerEng.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length > 0
+                                        answerEng.getText().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br>", "").length > 0
                                         ? styles.active
                                         : ""
                                         }`}
                                     onClick={() => {
-                                        setAnswerEng("");
+                                        // setAnswerEng("");
+                                        answerEng?.deleteText(0, answerEng.getText().length);
                                         setSelectedFaq({ ...selectedFaq, answer_eng: "" });
                                         console.log(answerEng);
                                     }}
@@ -285,20 +303,19 @@ const Faq: React.FC<IFaqProps> = ({ faqs }) => {
                     </form>
                 </div>
             ) : null}
-            {/* <MessageModal
+            {isMessageModalShow && <MessageModal
                 text={infoMessage}
                 buttonText="Ok"
                 handlerButtonClick={handleMessageOnClick}
-                isShow={isMessageModalShow}
-            />
+            />}
             <ConfirmMessageModal
                 text="Вы действительно хотите удалить вопрос?"
                 okButtonText="Удалить"
-                handlerOkOnClick={() => deleteFaq({ id: deletedFaq })}
+                handlerOkOnClick={() => handleCondirmDelete()}
                 cancelButtonText="Отмена"
                 isShow={isConfirmModalShow}
                 setIsShow={setIsConfirmModalShow}
-            /> */}
+            />
         </div>
     );
 };

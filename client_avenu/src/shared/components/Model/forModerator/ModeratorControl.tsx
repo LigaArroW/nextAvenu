@@ -5,7 +5,7 @@ import { IModel } from "@/types/model/model/model"
 import styles from '@/shared/styles/Model.module.sass'
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { updateModel } from "@/lib/models/postDataModels"
+import { updateModel, updateModelEnableByModerator } from "@/lib/models/postDataModels"
 
 
 
@@ -22,10 +22,8 @@ const ModeratorControl: React.FC<IModeratorControl> = ({ forModerator = false, m
     // const isModelEnable = model.is_enable;
 
     const handleClick = async (enable: boolean) => {
-        // const tempModel = { ...model, is_enable_by_moderator: enable }
-
-        // const res = await updateModel({ ...model, is_enable_by_moderator: enable })
-        updateModel({ model: { ...model, is_enable_by_moderator: enable } })
+     
+        updateModelEnableByModerator({model_id: model.id, is_enable_by_moderator: enable})
         // if (res?.success) {
         setIsModelEnable(enable);
         // }

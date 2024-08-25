@@ -12,6 +12,7 @@ import ModelInfo from "@/shared/components/Admin/ui/ModelInfo/ModelInfo";
 import AdminVerifyContent from "@/shared/components/Admin/ui/AdminVerifyContent/AdminVerifyContent";
 import { IModel } from "@/types/model/model/model";
 import { INavigationLink } from "@/types/main/navigationLink";
+import { redirect } from "next/navigation";
 
 // import { verify } from "jsonwebtoken";
 export async function generateMetadata() {
@@ -45,6 +46,10 @@ export default async function AdminModeratorPage({ params: { locale } }: { param
         )
     }
 
+    if(list.link === 'FAQ'){
+        // redirect(`/${locale}/admin-moderator/${list.link}`)
+        redirect(`/${locale}/${list.link_url}`)
+    }
 
 
     return (
