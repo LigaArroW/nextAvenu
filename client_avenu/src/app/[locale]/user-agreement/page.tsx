@@ -1,7 +1,9 @@
+
 import styles from '@/shared/styles/UserAgreement.module.sass'
 import { IPage } from '@/types/page/page';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import parse from "html-react-parser";
+import { getPages } from '@/lib/pages/pagesAction';
 
 export async function generateMetadata() {
     const t = await getTranslations();
@@ -11,15 +13,12 @@ export async function generateMetadata() {
     };
 }
 
-const getPage = async () => {
-    const responce = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/pages', { cache: 'force-cache' });
-    return responce.json();
-}
+
 
 export default async function UserAgreementPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
     const t = await getTranslations();
-    const pages = await getPage();
+    const pages = await getPages();
     // console.log("🚀 ~ UserAgreementPage ~ pages:", pages)
 
     return (

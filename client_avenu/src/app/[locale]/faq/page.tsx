@@ -1,3 +1,4 @@
+import { getFaqs } from "@/lib/faq/faqAction";
 import FAQ from "@/shared/components/FAQ/FAQ";
 import { IFaq } from "@/types/faq/faq";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
@@ -12,17 +13,12 @@ export async function generateMetadata() {
 }
 
 
-async function getFAQs() {
-    const responce = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/faqs', { cache: 'force-cache' });
-
-    return responce.json();
-}
 
 export default async function FAQPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
-    const faqs: IFaq[] = await getFAQs();
+
 
     return (
-        <FAQ faqs={faqs} />
+        <FAQ  />
     )
 }

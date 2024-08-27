@@ -7,7 +7,7 @@ import { revalidateTag } from "next/cache"
 export async function getFaqs() {
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/faqs',
         {
-            next: { tags: ['Faqs'] }
+            next: { tags: ['Faqs'] },
         }
     )
     return await response.json()
