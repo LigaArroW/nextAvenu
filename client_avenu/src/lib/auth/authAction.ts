@@ -143,12 +143,8 @@ export async function setAuthAction(tokenName: RolesUsersToTokenRoles = RolesUse
     const auth = await getAuthDataUserAction()
     if (auth.token) {
         const tokenName = `${auth.roles}Token` as keyof typeof TokensRoles
-        if (auth.roles === RolesUsers.Admin) {
-            await removeAuthAction(tokenName)
-        }
-        if (auth.roles === RolesUsers.Agency || auth.roles === RolesUsers.Customer) {
-            await removeUserAuthAction(tokenName)
-        }
+        cookies().delete(tokenName)
+
     }
     cookies().set(tokenName, token, {
         httpOnly: true,
