@@ -30,6 +30,7 @@ export default async function ProfileAdvertisementsPage({ params: { locale } }: 
 
     
     const models = await getModels()
+
     const { data } = await getPositionsUp({ agency_id: Number(user._id) })
     const proposals = await getProposals()
     const proposalViews = await getProposalViews()

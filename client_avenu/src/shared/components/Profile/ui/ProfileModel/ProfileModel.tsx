@@ -34,6 +34,7 @@ import { ProposalStatus } from "@/enums/proposalStatus";
 import { IProposalView } from "@/types/proposal/proposalView";
 import Link from "next/link";
 import { Person } from "@/lib/auth/authAction";
+import { getModelOne } from "@/lib/models/getDataModel";
 
 
 interface IProfileModel {
@@ -43,16 +44,18 @@ interface IProfileModel {
     person: Person
 }
 
-const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person }) => {
+const ProfileModel: React.FC<IProfileModel> = ({ model: modelDef, proposals, proposalViews, person }) => {
 
     const t = useTranslations();
     const locale = useLocale()
+    const [model, setModel] = useState(modelDef);
     const [isModelEnable, setIsModelEnable] = useState(model.is_enable);
     const [isConfirmModalShow, setIsConfirmModalShow] = useState(false);
     const [infoMessage, setInfoMessage] = useState("");
     const [isMessageModalShow, setIsMessageModalShow] = useState(false);
     const [isOrdersNew, setIsOrdersNew] = useState(false);
     const [isModalShow, setIsModalShow] = useState(false);
+
 
 
 
@@ -130,6 +133,19 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
         }
     };
 
+
+    const handleCapchaClick = async () => {
+        console.log(modelDef.positionsUpLeft);
+
+        console.log(model.positionsUpLeft, 'сначала');
+        const modelTmp = await getModelOne(model.id.toString())
+        if (modelTmp) {
+
+            setModel({ ...modelTmp, positionsUpLeft: modelDef.positionsUpLeft - 1 })
+        }
+        console.log(model, 'потом');
+        setIsModalShow(false)
+    }
 
     return (
         <div className={styles.model}>
@@ -307,7 +323,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                 handlerButtonClick={() => setIsMessageModalShow(false)}
 
             />}
-            {isModalShow && <UpdatePositionInfoModal handlerButtonClick={() => setIsModalShow(false)} agency_id={model.agency_id} model_id={model.id} person={person} />}
+            {isModalShow && <UpdatePositionInfoModal handlerButtonClick={handleCapchaClick} agency_id={model.agency_id} model_id={model.id} person={person} />}
         </div>
     );
 };
