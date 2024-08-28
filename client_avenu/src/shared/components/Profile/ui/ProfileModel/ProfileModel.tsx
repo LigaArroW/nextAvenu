@@ -135,15 +135,13 @@ const ProfileModel: React.FC<IProfileModel> = ({ model: modelDef, proposals, pro
 
 
     const handleCapchaClick = async () => {
-        console.log(modelDef.positionsUpLeft);
 
-        console.log(model.positionsUpLeft, 'сначала');
         const modelTmp = await getModelOne(model.id.toString())
         if (modelTmp) {
 
             setModel({ ...modelTmp, positionsUpLeft: modelDef.positionsUpLeft - 1 })
         }
-        console.log(model, 'потом');
+
         setIsModalShow(false)
     }
 
