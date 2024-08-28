@@ -47,6 +47,8 @@ export async function getPositionsUp({ agency_id }: { agency_id: number }) {
 
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/get_positions_up', {
         method: 'POST',
+        next: { revalidate: 5 },
+        cache: 'no-store',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -57,7 +59,7 @@ export async function getPositionsUp({ agency_id }: { agency_id: number }) {
         }),
 
     })
-    revalidateTag('Models')
+    // revalidateTag('Models')
     return await response.json()
 
 }

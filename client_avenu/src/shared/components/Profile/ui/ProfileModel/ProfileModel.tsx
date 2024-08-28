@@ -8,7 +8,7 @@ import { PhotoStatus } from "@/enums/photoStatus";
 import Image from "next/image";
 import { IPhoto } from "@/types/model/photo/photo";
 import { ModalType } from "@/shared/components/Modals/ModalType";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Close } from "@/shared/assets/Close";
 import { PhotoType } from "@/enums/photoType";
 import { Edit } from "@/shared/assets/Edit";
@@ -44,11 +44,10 @@ interface IProfileModel {
     person: Person
 }
 
-const ProfileModel: React.FC<IProfileModel> = ({ model: modelDef, proposals, proposalViews, person }) => {
+const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person }) => {
 
     const t = useTranslations();
     const locale = useLocale()
-    const [model, setModel] = useState(modelDef);
     const [isModelEnable, setIsModelEnable] = useState(model.is_enable);
     const [isConfirmModalShow, setIsConfirmModalShow] = useState(false);
     const [infoMessage, setInfoMessage] = useState("");
@@ -136,13 +135,12 @@ const ProfileModel: React.FC<IProfileModel> = ({ model: modelDef, proposals, pro
 
     const handleCapchaClick = async () => {
 
-        const modelTmp = await getModelOne(model.id.toString())
-        if (modelTmp) {
 
-            setModel({ ...modelTmp, positionsUpLeft: modelDef.positionsUpLeft - 1 })
-        }
 
+
+        
         setIsModalShow(false)
+
     }
 
     return (
@@ -176,7 +174,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model: modelDef, proposals, pro
                         {t("model.improve_position")}
                     </button>
                 </div>
-                <div>{t("model.update_this_hour_left") + ' ' + (model.positionsUpLeft || 6)}</div>
+                <div>{t("model.update_this_hour_left") + ' ' + (model.positionsUpLeft !== undefined ? model.positionsUpLeft : 6)}</div>
             </div>
             <div className={`${styles.part} ${styles.right}`}>
                 <div className={styles.main}>
