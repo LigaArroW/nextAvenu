@@ -22,6 +22,7 @@ interface IAdvertisements {
 
 
 const Advertisements: React.FC<IAdvertisements> = ({ person, models, positionsUp, proposals, proposalViews }) => {
+    console.log("🚀 ~ positionsUp:", positionsUp)
     const t = useTranslations();
     const locale = useLocale()
     const router = useRouter()
