@@ -44,10 +44,9 @@ interface IProfileModel {
     model: IModel
     person: Person
     setPositionUp: Dispatch<SetStateAction<any[]>>
-    setModels: Dispatch<SetStateAction<IModel[]>>
 }
 
-const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person, setPositionUp, setModels }) => {
+const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person, setPositionUp }) => {
 
     const t = useTranslations();
     const locale = useLocale()
@@ -141,8 +140,13 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
     const handleCapchaClick = async () => {
         const { data } = await getPositionsUp({ agency_id: Number(person._id) })
         setPositionUp(data)
-        const models = await getModels(person._id)
-        setModels(models)
+        const mod = await getModelOne(model.id.toString())
+
+        if (mod) {
+            model.last_position_update = mod.last_position_update
+            console.log(model.last_position_update);
+
+        }
 
         setIsModalShow(false)
 

@@ -83,7 +83,7 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, 
             </div>
             <div className={styles.models_wrapper}>
                 {searchedModels.map((model: IModel) => (
-                    <ProfileModel model={model} key={model.id} proposals={proposals} proposalViews={proposalViews} person={person} setPositionUp={setPositionUp} setModels={SetModels} />
+                    <ProfileModel model={model} key={model.id} proposals={proposals} proposalViews={proposalViews} person={person} setPositionUp={setPositionUp} />
                 ))}
             </div>
             <button type="button" onClick={() => router.push(`/${locale}/profile/model_settings/parameters/new`)}>
