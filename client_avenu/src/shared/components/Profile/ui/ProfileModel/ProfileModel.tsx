@@ -47,7 +47,7 @@ interface IProfileModel {
     setModels: Dispatch<SetStateAction<IModel[]>>
 }
 
-const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person, setPositionUp,setModels }) => {
+const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person, setPositionUp, setModels }) => {
 
     const t = useTranslations();
     const locale = useLocale()
@@ -101,8 +101,10 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
         }
 
         if (model.is_enable !== isModelEnable) {
+
             data();
         }
+
     }, [isModelEnable, model.id, model.is_enable]);
 
     const handleConfirmDeleteOnClick = async () => {
@@ -193,12 +195,12 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                     model.is_enable_by_moderator
                         ? <div className={styles.toggle_wrapper}>
                             <div
-                                className={`${styles.toggle} ${!model.is_enable ? styles.active : ""}`}
+                                className={`${styles.toggle} ${!isModelEnable ? styles.active : ""}`}
                                 onClick={() => setIsModelEnable(false)}
                             >
                                 {t("model.turned_off")}
                             </div>
-                            <div className={`${styles.toggle} ${model.is_enable ? styles.active : ""}`} onClick={handlerSetModelEnable}>
+                            <div className={`${styles.toggle} ${isModelEnable ? styles.active : ""}`} onClick={handlerSetModelEnable}>
                                 {t("model.turned_on")}
                             </div>
                         </div>
