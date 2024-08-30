@@ -9,8 +9,9 @@ export async function getModels(profile_id: string | undefined = undefined) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models${profile_id !== undefined && profile_id !== '' ? `?profile_id=${profile_id}` : ''}`,
         {
             // body: JSON.stringify({ profile_id: profile_id }),
-            next: { tags: ['Models'] },
-            cache: 'no-store'
+            next: { tags: ['Models'], revalidate: 5 },
+           
+            // cache: 'no-store'
         }
     )
     return await response.json()
