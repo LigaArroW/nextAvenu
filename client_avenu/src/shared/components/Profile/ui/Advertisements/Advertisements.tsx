@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import ProfileModel from '../ProfileModel/ProfileModel';
 import { IProposal } from '@/types/proposal/proposal';
 import { IProposalView } from '@/types/proposal/proposalView';
+import { getModels } from '@/lib/models/getDataModel';
 
 interface IAdvertisements {
     person: Person
@@ -18,6 +19,13 @@ interface IAdvertisements {
     positionsUp: any[]
     proposals: IProposal[]
     proposalViews: IProposalView[]
+}
+
+
+const modelsData = async (person: Person) => {
+    const modelsData = await getModels(person._id);
+
+    return modelsData
 }
 
 
@@ -31,6 +39,13 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, 
 
     const [searchedModels, setSearchedModels] = useState(models.filter((model: IModel) => model.agency_id === Number(person._id)));
     const [searchedName, setSearchedName] = useState("");
+
+
+    useEffect(() => {
+        modelsData(person).then((data) => {
+            SetModels(data)
+        })
+    }, [person, positionsUp])
 
 
     useEffect(() => {
@@ -51,6 +66,8 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, 
         if (models && positionsUp && positionsUp.length > 0) {
 
             modelsTemp = modelsTemp.map(m => {
+                console.log(new Date(m.last_position_update), 'дата модели');
+
                 const positionUp = positionsUp.find((p) => m.id === p.model_id)
                 let positionsUpLeft = 6
                 if (positionUp && positionUp.last_try) {
