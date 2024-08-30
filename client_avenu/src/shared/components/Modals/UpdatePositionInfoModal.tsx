@@ -5,7 +5,7 @@ import styles from "./Modal.module.sass";
 import { useTranslations } from "next-intl";
 import { Person } from "@/lib/auth/authAction";
 import { Close } from "@/shared/assets/Close";
-import { getModelOne } from "@/lib/models/getDataModel";
+import { getModelOne, getModels } from "@/lib/models/getDataModel";
 import axios from "axios";
 import { getPositionsUp } from "@/lib/verification/verificationAction";
 
@@ -259,8 +259,11 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
 
       setTimeout(async () => {
         // getModels({ profile_id: -1 })
-        await getModelOne(model_id.toString())
-        await getPositionsUp({ agency_id: Number(person._id) })
+        // await getModelOne(model_id.toString())
+        
+        // await getModels(person._id.toString())
+        // await getPositionsUp({ agency_id: Number(person._id) })
+     
 
         handlerButtonClick();
       }, 1000)

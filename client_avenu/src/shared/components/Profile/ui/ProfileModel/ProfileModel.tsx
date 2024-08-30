@@ -34,7 +34,8 @@ import { ProposalStatus } from "@/enums/proposalStatus";
 import { IProposalView } from "@/types/proposal/proposalView";
 import Link from "next/link";
 import { Person } from "@/lib/auth/authAction";
-import { getModelOne } from "@/lib/models/getDataModel";
+import { getModelOne, getModels } from "@/lib/models/getDataModel";
+import { getPositionsUp } from "@/lib/verification/verificationAction";
 
 
 interface IProfileModel {
@@ -42,9 +43,11 @@ interface IProfileModel {
     proposalViews: IProposalView[]
     model: IModel
     person: Person
+    setPositionUp: Dispatch<SetStateAction<any[]>>
+    setModels: Dispatch<SetStateAction<IModel[]>>
 }
 
-const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person }) => {
+const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews, person, setPositionUp,setModels }) => {
 
     const t = useTranslations();
     const locale = useLocale()
@@ -134,11 +137,11 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
 
 
     const handleCapchaClick = async () => {
+        const { data } = await getPositionsUp({ agency_id: Number(person._id) })
+        setPositionUp(data)
+        const models = await getModels(person._id)
+        setModels(models)
 
-
-
-
-        
         setIsModalShow(false)
 
     }

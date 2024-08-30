@@ -21,17 +21,21 @@ interface IAdvertisements {
 }
 
 
-const Advertisements: React.FC<IAdvertisements> = ({ person, models, positionsUp, proposals, proposalViews }) => {
-    console.log("🚀 ~ positionsUp:", positionsUp)
+const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, positionsUp: Up, proposals, proposalViews }) => {
+    // console.log("🚀 ~ positionsUp:", positionsUp)
+    const [positionsUp, setPositionUp] = useState(Up);
+    const [models, SetModels] = useState<IModel[]>(modelsDef)
     const t = useTranslations();
     const locale = useLocale()
     const router = useRouter()
 
     const [searchedModels, setSearchedModels] = useState(models.filter((model: IModel) => model.agency_id === Number(person._id)));
     const [searchedName, setSearchedName] = useState("");
- 
+
 
     useEffect(() => {
+
+
         let modelsTemp: IModel[] = []
         if (searchedName.trim() != "") {
             const value = searchedName.trim().toLowerCase();
@@ -61,7 +65,7 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models, positionsUp
         }
 
         setSearchedModels(modelsTemp);
-    
+
 
     }, [models, searchedName, positionsUp, person._id]);
 
@@ -79,7 +83,7 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models, positionsUp
             </div>
             <div className={styles.models_wrapper}>
                 {searchedModels.map((model: IModel) => (
-                    <ProfileModel model={model} key={model.id} proposals={proposals} proposalViews={proposalViews} person={person} />
+                    <ProfileModel model={model} key={model.id} proposals={proposals} proposalViews={proposalViews} person={person} setPositionUp={setPositionUp} setModels={SetModels} />
                 ))}
             </div>
             <button type="button" onClick={() => router.push(`/${locale}/profile/model_settings/parameters/new`)}>
