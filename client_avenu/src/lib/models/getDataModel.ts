@@ -5,6 +5,7 @@ import { IPhoto } from "@/types/model/photo/photo"
 
 
 export async function getModels(profile_id: string | undefined = undefined) {
+
     
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models${profile_id !== undefined && profile_id !== '' ? `?profile_id=${profile_id}` : ''}`,
         {

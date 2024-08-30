@@ -144,7 +144,6 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
 
         if (mod) {
             model.last_position_update = mod.last_position_update
-            console.log(model.last_position_update);
 
         }
 

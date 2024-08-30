@@ -22,17 +22,25 @@ interface IAdvertisements {
 }
 
 
-const modelsData = async (person: Person) => {
-    const modelsData = await getModels(person._id);
+const modelsData = async (id: string) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/models?profile_id=${id}`,
+        {
+            // body: JSON.stringify({ profile_id: profile_id }),
+            // next: { tags: ['Models'], revalidate: 5 },
 
-    return modelsData
+            cache: 'no-store'
+        }
+    )
+
+    return response.json()
+
 }
 
 
 const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, positionsUp: Up, proposals, proposalViews }) => {
-    // console.log("🚀 ~ positionsUp:", positionsUp)
+
     const [positionsUp, setPositionUp] = useState(Up);
-    const [models, SetModels] = useState<IModel[]>(modelsDef)
+    const [models, SetModels] = useState<IModel[]>([])
     const t = useTranslations();
     const locale = useLocale()
     const router = useRouter()
@@ -42,13 +50,17 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, 
 
 
     useEffect(() => {
-        modelsData(person).then((data) => {
+
+        modelsData(person._id).then((data) => {
+
             SetModels(data)
+
         })
     }, [person, positionsUp])
 
 
     useEffect(() => {
+
 
 
         let modelsTemp: IModel[] = []
@@ -66,7 +78,6 @@ const Advertisements: React.FC<IAdvertisements> = ({ person, models: modelsDef, 
         if (models && positionsUp && positionsUp.length > 0) {
 
             modelsTemp = modelsTemp.map(m => {
-                console.log(new Date(m.last_position_update), 'дата модели');
 
                 const positionUp = positionsUp.find((p) => m.id === p.model_id)
                 let positionsUpLeft = 6

@@ -16,6 +16,8 @@ export async function generateMetadata() {
     };
 }
 
+
+
 export default async function ProfileAdvertisementsPage({ params: { locale } }: { params: { locale: string } }) {
     unstable_setRequestLocale(locale);
 
@@ -28,7 +30,7 @@ export default async function ProfileAdvertisementsPage({ params: { locale } }: 
 
 
 
-    
+
     const models = await getModels(person._id)
 
     const { data } = await getPositionsUp({ agency_id: Number(user._id) })
@@ -36,6 +38,6 @@ export default async function ProfileAdvertisementsPage({ params: { locale } }: 
     const proposalViews = await getProposalViews()
 
     return (
-        <Advertisements person={user} models={models} positionsUp={data} proposals={proposals} proposalViews={proposalViews}/>
+        <Advertisements person={user} models={models} positionsUp={data} proposals={proposals} proposalViews={proposalViews} />
     )
 }
