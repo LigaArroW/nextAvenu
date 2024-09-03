@@ -19,7 +19,7 @@ import { IModel } from "@/types/model/model/model";
 import { IGeneral } from "@/types/core/generalFilters";
 import HomeModel from "@/shared/components/HomeModel/HomeModel";
 import { useHomeContext } from "../Context/HomeProvider";
-import { calcIsNew } from "@/shared/constant/calcIsNew";
+import { calcIsNew, modelTypesSearch } from "@/shared/constant/calcIsNew";
 import { IMeetingPlace } from "@/types/core/meetingPlace";
 import { ITarif } from "@/types/model/tarif/tarif";
 import { useMainContext } from "@/widgets/Contex/MainProvider";
@@ -85,6 +85,7 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
 
   useEffect(() => {
 
+
     setViewModelList(
       models.filter((model: IModel) =>
         (forModerator ? true : model.is_enable_by_moderator) &&
@@ -99,7 +100,8 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
         model.height <= maxHeight &&
         (districts.length > 0 ? districts?.includes(model.district_id) : true) &&
         (undergrounds.length > 0 ? undergrounds?.includes(model.underground_id) : true) &&
-        (modelTypes.length > 0 ? modelTypes?.includes(model.type_id) : true) &&
+        (modelTypes.length > 0 ? modelTypesSearch(modelTypes, model) : true) &&
+        // (modelTypes.length > 0 ? modelTypes?.includes(model.type_id) : true) &&
         (hairColors.length > 0 ? hairColors?.includes(model.hair_color_id) : true) &&
         (hairSizes.length > 0 ? hairSizes?.includes(model.hair_size_id) : true) &&
         (pubisHairs.length > 0 ? pubisHairs?.includes(model.pubis_hair_id) : true) &&
@@ -131,17 +133,18 @@ const Models: React.FC<IModelsProps> = ({ forModerator, models, generalfields })
               model.tarifs.find((modelTarif: ITarif) => modelTarif.work_duration_id === tarif[0])!.price >= tarif[1] &&
               model.tarifs.find((modelTarif: ITarif) => modelTarif.work_duration_id === tarif[0])!.price <= tarif[2]
           ).length === tarifs.length
-          : true) &&
-        (modelTypes !== undefined &&
-          modelTypes.length > 0 &&
-          modelTypes.includes(modelTypes.length + 1)
-          ? calcIsNew(model.create_date)
-          : true) &&
-        (modelTypes !== undefined &&
-          modelTypes.length > 0 &&
-          modelTypes.includes(modelTypes.length + 2)
-          ? model.is_verified
-          : true)
+          : true) 
+        //   &&
+        // (modelTypes !== undefined &&
+        //   modelTypes.length > 0 &&
+        //   modelTypes.includes(7)
+        //   ? calcIsNew(model.create_date)
+        //   : true) &&
+        // (modelTypes !== undefined &&
+        //   modelTypes.length > 0 &&
+        //   modelTypes.includes(8)
+        //   ? model.is_verified
+        //   : true)
 
 
       )

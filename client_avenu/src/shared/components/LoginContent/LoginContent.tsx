@@ -1,24 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useTranslation } from "react-i18next";
+import {  useState } from "react";
 
-// import ReCAPTCHA from "react-google-recaptcha";
-
-// import { useActions } from "../../hooks/useActions";
-// import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 import styles from "./LoginContent.module.sass";
 import { useTranslations } from "next-intl";
-// import { ProfileApi } from "@/api/profile/profile.api";
-import { useRouter } from "next/navigation";
 import LoginContainer from "./ui/LoginContainer";
 import RegistrationContainer from "./ui/RegistrationContainer";
 
-// import { ModalType } from "../Modals/ModalType";
-// import { ServerStatusType } from "../../enums/serverStatusType";
-// import { initServerStatus } from "../../types/main/serverStatus";
 
 interface ILoginContentProps {
   onClose?: () => void

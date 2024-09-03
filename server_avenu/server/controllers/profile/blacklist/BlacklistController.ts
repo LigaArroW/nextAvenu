@@ -31,7 +31,8 @@ const getBlacklist = (_request, response) => {
 
 const addBlacklist = (request, response) => {
   try {
-    const sql = "INSERT INTO blacklist (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?) WHERE agency_id = ?;";
+    const sql = "INSERT INTO blacklist (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?);";
+    // const sql = "INSERT INTO blacklist (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?) WHERE agency_id = ?;";
     const query = mysql.format(sql, [
       "agency_id",
       "country_id",
@@ -43,7 +44,7 @@ const addBlacklist = (request, response) => {
       request.body.params.city_id,
       request.body.params.phone_number,
       request.body.params.description,
-      request.body.params.agency_id
+      // request.body.params.agency_id
     ]);
     console.log(query);
 

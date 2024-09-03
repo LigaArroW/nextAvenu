@@ -63,7 +63,7 @@ export default function RegisterEmail(props: any) {
                 style={button}
                 //href={`http://${process.env.REACT_APP_SITE_NAME}:${process.env.SITE_PORT}/${locale}/confirm/${token}/${login}`}
                 target="_blank"
-                href={`https://sexgirl.kz/${locale}/confirm/${token}/${login}`}
+                href={`${process.env.NEXT_PUBLIC_SITE_DOMAIN}/${locale}/confirm/${token}/${login}`}
                 >
                 <Text style={{ marginTop: "10px", fontSize: "15px", color: "#FFFFFF", fontWeight: "500" }}>
                   {emailButtonText}

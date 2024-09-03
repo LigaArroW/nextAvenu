@@ -6,8 +6,6 @@ import styles from "../Filters.module.sass";
 
 
 import { Check } from "@/shared/assets/Check";
-import { useSearchParams } from "next/navigation";
-import queryString from "query-string";
 import { IGeneral } from "@/types/core/generalFilters";
 import { IModelType } from "@/types/core/modelType";
 import { useHomeContext } from "../../Context/HomeProvider";
@@ -19,11 +17,11 @@ interface IModelTypesSelectorProps {
 
 const ModelTypesSelector: React.FC<IModelTypesSelectorProps> = ({ filters }) => {
   const t = useTranslations();
-  const searchParams = useSearchParams();
+
   const locale = useLocale();
   const { modelTypes, setModelTypes } = useHomeContext()
 
-  const filter = queryString.parse(searchParams.toString());
+
 
 
   return (

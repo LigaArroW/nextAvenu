@@ -10,7 +10,6 @@ import { ZodError } from "zod";
 import { IBlacklist } from "@/types/profile/blacklist/blacklist";
 
 export async function addToBlackListAction(prevState: IContactUsForm, data: FormData): Promise<IContactUsForm> {
-    console.log('🚀 ~ addToBlackListAction ~ data:', data);
 
     const t = await getTranslations();
     try {
@@ -32,10 +31,8 @@ export async function addToBlackListAction(prevState: IContactUsForm, data: Form
             phone,
             agency_id
         })
-        console.log("🚀 ~ addToBlackListAction ~ messages:", messages)
 
-        const res = await postFormData({ blacklist: { id: messages.id, agency_id: messages.agency_id, country_id: messages.country, city_id: messages.city, phone_number: messages.phone, description: messages.description } })
-        console.log("🚀 ~ addToBlackListAction ~ res:", res)
+        await postFormData({ blacklist: { id: messages.id, agency_id: messages.agency_id, country_id: messages.country, city_id: messages.city, phone_number: messages.phone, description: messages.description } })
 
         return {
             success: true,

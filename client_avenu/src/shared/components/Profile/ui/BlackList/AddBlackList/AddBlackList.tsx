@@ -191,7 +191,7 @@ const AddBlackList: React.FC<IAddBlackList> = ({ person, blacklist, cities, coun
                         <div className={styles.label}>{t("profile.description_of_the_event")}</div>
                         <textarea
                             required
-                            onChange={(event) => setBlacklistItem({ ...blacklistItem, description: event.target.value.trim() })}
+                            onChange={(event) => setBlacklistItem({ ...blacklistItem, description: event.target.value })}
                             value={blacklistItem.description}
                             onClick={() => setActiveComponent(ComponentType.None)}
                         />

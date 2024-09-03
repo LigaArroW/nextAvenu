@@ -232,36 +232,45 @@ var register = function (request, response) {
                                         pass: "hfqarnmrocxwvxpp",
                                     },
                                 });
-                                transporter.sendMail(mailOptions, function (error, _info) {
-                                    if (error) {
-                                        return response.status(500).json({
-                                            success: false,
-                                            message: "server.mistake_try_again",
-                                            error: error,
-                                        });
-                                    }
-                                    else {
-                                        var sql = "UPDATE profiles SET ?? = ?, is_confirmed = 0 WHERE id = ?; DELETE FROM deleted_profiles WHERE id = ?";
-                                        var query = mysql.format(sql, [
-                                            "password",
-                                            request.body.params.password,
-                                            profiles_1[0].id,
-                                            deletedProfiles_1[0].id,
-                                        ]);
-                                        connectionPool_1.connectionPool.query(query, function (error) {
-                                            if (error) {
-                                                return response.status(404).json({
-                                                    success: false,
-                                                    message: "server.mistake_try_again",
-                                                    error: error,
+                                transporter.sendMail(mailOptions, function (error, _info) { return __awaiter(void 0, void 0, void 0, function () {
+                                    var sql, hash, query;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!error) return [3 /*break*/, 1];
+                                                return [2 /*return*/, response.status(500).json({
+                                                        success: false,
+                                                        message: "server.mistake_try_again",
+                                                        error: error,
+                                                    })];
+                                            case 1:
+                                                sql = "UPDATE profiles SET ?? = ?, is_confirmed = 0 WHERE id = ?; DELETE FROM deleted_profiles WHERE id = ?";
+                                                return [4 /*yield*/, bcrypt.hash(request.body.params.password, saltRounds)];
+                                            case 2:
+                                                hash = _a.sent();
+                                                query = mysql.format(sql, [
+                                                    "password",
+                                                    hash,
+                                                    profiles_1[0].id,
+                                                    deletedProfiles_1[0].id,
+                                                ]);
+                                                connectionPool_1.connectionPool.query(query, function (error) {
+                                                    if (error) {
+                                                        return response.status(404).json({
+                                                            success: false,
+                                                            message: "server.mistake_try_again",
+                                                            error: error,
+                                                        });
+                                                    }
+                                                    else {
+                                                        return response.status(200).json({ success: true });
+                                                    }
                                                 });
-                                            }
-                                            else {
-                                                return response.status(200).json({ success: true });
-                                            }
-                                        });
-                                    }
-                                });
+                                                _a.label = 3;
+                                            case 3: return [2 /*return*/];
+                                        }
+                                    });
+                                }); });
                             }
                         }
                     });

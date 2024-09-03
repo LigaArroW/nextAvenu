@@ -176,7 +176,7 @@ const register = (request, response) => {
                     pass: "hfqarnmrocxwvxpp",
                   },
                 });
-                transporter.sendMail(mailOptions, (error, _info) => {
+                transporter.sendMail(mailOptions, async (error, _info) => {
                   if (error) {
                     return response.status(500).json({
                       success: false,
@@ -186,9 +186,10 @@ const register = (request, response) => {
                   } else {
                     const sql =
                       "UPDATE profiles SET ?? = ?, is_confirmed = 0 WHERE id = ?; DELETE FROM deleted_profiles WHERE id = ?";
+                    const hash = await bcrypt.hash(request.body.params.password, saltRounds);
                     const query = mysql.format(sql, [
                       "password",
-                      request.body.params.password,
+                      hash,
                       profiles[0].id,
                       deletedProfiles[0].id,
                     ]);
