@@ -2,11 +2,8 @@ import { IModel } from "@/types/model/model/model";
 
 export const calcIsNew = (create_date: Date) => {
     var now = new Date();
-    console.log("🚀 ~ calcIsNew ~ now:", now)
     var createDate = new Date(create_date);
-    console.log("🚀 ~ calcIsNew ~ createDate:", createDate)
     var difference = Math.abs(now.getTime() - createDate.getTime()) / (1000 * 60 * 60 * 24);
-    console.log(difference)
     return difference <= 7;
 };
 
