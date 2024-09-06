@@ -37,6 +37,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
   };
 
   async function handleUploadPhoto() {
+    
     setIsButtonEnable(false);
     let image = document.getElementById("cropped-image") as HTMLImageElement;
     (image as any).crossOrigin = "anonymous";

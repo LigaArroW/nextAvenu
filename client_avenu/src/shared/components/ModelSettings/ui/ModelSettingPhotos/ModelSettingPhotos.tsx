@@ -105,6 +105,11 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
         models && setModel(models)
     };
 
+    const handleAcceptPhoto = async () => {
+        setPhotoCropModal(false)
+        const models = await getModelOne(model.id.toString());
+        models && setModel(models)
+    }
 
     return (
         <div className={pageStyles.content}>
@@ -250,7 +255,7 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
                     </div>
                 </div>
             </div>
-            {photoCropModal && <PhotoCropModal filename={filename} closeModal={() => setPhotoCropModal(false)} />}
+            {photoCropModal && <PhotoCropModal filename={filename} closeModal={handleAcceptPhoto} />}
             <ConfirmMessageModal
                 text={t("global.delete_photo_question")}
                 okButtonText={t("global.delete")}

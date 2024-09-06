@@ -130,7 +130,7 @@ const ModelSettingServices: React.FC<IModelSettingServices> = ({ person, filters
                                                 >
                                                     {modelService.price > -1 && <CheckIcon fill="#98042D" />}
                                                 </span>
-                                                <div className={'text'}>
+                                                <div className={`text ${styles.text}`}>
                                                     {locale === "ru"
                                                         ? serviceCategory.services.find((service: IService) => service.id === modelService.service_id)
                                                             ?.service
