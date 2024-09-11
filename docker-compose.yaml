@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: esco_db_${REACT_APP_SITE_NAME}
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_USER: ${SQL_USER}
+      MARIADB_ROOT_PASSWORD: ${SQL_PASSWORD}
+      MARIADB_DATABASE: ${SQL_DB}
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
+    container_name: escort_app_${REACT_APP_SITE_NAME}
+    build: .
+    restart: always
+    environment:
+      NODE_ENV: production
+    ports:
+      - ${SITE_PORT}:8001
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - media_data:/app/uploads/media
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  media_data:
