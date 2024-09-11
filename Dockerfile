@@ -16,7 +16,7 @@ COPY server_avenu ./server_avenu
 COPY . .
 
 # Выполняем сборку (если требуется, можно указать сборку фронтэнда отдельно)
-RUN npm run build:all
+#RUN npm run build:all
 
 # Указываем команду запуска сервера
 CMD ["node", "server_avenu/server.js"]
