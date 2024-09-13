@@ -30,6 +30,21 @@ services:
     volumes:
       - media_data:/app/uploads/media
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      MARIADB_USER: ${SQL_USER}
+      MARIADB_ROOT_PASSWORD: ${SQL_PASSWORD}
+      MARIADB_DATABASE: ${SQL_DB}
+      # PMA_HOST: db
+      # PMA_USER: ${SQL_USER}
+      # PMA_PASSWORD: ${SQL_PASSWORD}
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
