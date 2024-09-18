@@ -11,13 +11,13 @@ const mysql = require("mysql");
 
 const uploadCheckPhoto = (request, response) => {
   try {
-    const modelId = request.body.model_id
-    if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-      return response.status(500).json({
-        success: false,
-        message: "server.mistake_try_again",
-      });
-    }
+    // const modelId = request.body.model_id
+    // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+    //   return response.status(500).json({
+    //     success: false,
+    //     message: "server.mistake_try_again",
+    //   });
+    // }
 
     if (request.files) {
       const file = request.files.checkPhoto;

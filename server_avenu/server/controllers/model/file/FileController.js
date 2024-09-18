@@ -45,13 +45,13 @@ var path = require("path");
 var mysql = require("mysql");
 var uploadCheckPhoto = function (request, response) {
     try {
-        var modelId = request.body.model_id;
-        if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
-            return response.status(500).json({
-                success: false,
-                message: "server.mistake_try_again",
-            });
-        }
+        // const modelId = request.body.model_id
+        // if (!request.isAdmin && !(request.models && modelId && request.models.includes(+modelId))) {
+        //   return response.status(500).json({
+        //     success: false,
+        //     message: "server.mistake_try_again",
+        //   });
+        // }
         if (request.files) {
             var file = request.files.checkPhoto;
             var directory = path.join(serverConfig_1.default.directory, "uploads", "media", "check_photos");
