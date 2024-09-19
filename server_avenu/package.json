@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "tsc server.ts && nodemon server.js",
-    "build": "tsc server.ts && node server.js"
+    "build": "tsc server.ts && node server.js",
+    "tsc": "tsc server_avenu/server.ts"
   },
   "dependencies": {
     "axios": "^1.6.2",
