@@ -270,7 +270,7 @@ app.get('/api/photos/:photo', (req, res) => {
   }
 })
 app.get('/api/check_photos/:photo', (req, res) => {
-  // console.log('Photo requested:', req.params.photo);
+  console.log('Photo requested:', req.params.photo);
 
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/check_photos');
