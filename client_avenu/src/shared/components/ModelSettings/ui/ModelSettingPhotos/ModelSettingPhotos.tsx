@@ -19,8 +19,9 @@ import Image from "next/image";
 import PhotoCropModal from "@/shared/components/Modals/PhotoCropModal";
 import { uploadCheckPhoto, uploadTmpPublicPhoto } from "@/lib/photo/photoUpload";
 import { deletePhoto, updateMainPhoto } from "@/lib/photo/photoAction";
-import { getModel, getModelOne, getModelsAgency } from "@/lib/models/getDataModel";
+import { getModel, getModelOne, getModels, getModelsAgency } from "@/lib/models/getDataModel";
 import { Person } from "@/lib/auth/authAction";
+import { IModel } from "@/types/model/model/model";
 
 
 interface IModelSettingPhotos {
@@ -44,13 +45,37 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
 
 
     const handleCheckOnChange = async (event: any) => {
-        uploadCheckPhoto({
+        const upl = await uploadCheckPhoto({
             file: event.target.files[0],
             model_id: model.id,
             onUploadProgress: (data: any) => {
                 setCheckPhotoProgress(Math.round(100 * (data.loaded / data.total!)));
             },
         });
+
+
+        if (upl.success) {
+            setCheckPhotoProgress(-1);
+            // const models = await getModelOne(model.id.toString());
+            // models && setModel(models)
+            // console.log(model);
+            const models = await getModel({ profile_id: Number(person._id) }) as IModel[]
+            const modelAnother = models.find(m => m.id === model.id)
+            modelAnother && setModel(modelAnother)
+
+
+            // const modelAnother = await getModels(person._id) as IModel[]
+            // console.log(modelAnother.find(m => m.id === model.id),' modelAnother');
+            // const models = await getModels(person._id) as IModel[]
+            // modelAnother && setModel(modelAnother)
+            // console.log(modelAnother);
+
+        }
+        if (!upl.success) {
+            setCheckPhotoProgress(-1);
+
+        }
+
         event.target.value = "";
     };
 
@@ -67,12 +92,12 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
         });
         if (upl.success) {
             setPhotoCropModal(true)
-            setCheckPhotoProgress(-1)
+            // setCheckPhotoProgress(-1)
             setPublicPhotoProgress(-1)
         }
         if (!upl.success) {
             setPublicPhotoProgress(-1);
-            setCheckPhotoProgress(-1);
+            // setCheckPhotoProgress(-1);
         }
 
         event.target.value = "";
@@ -84,6 +109,7 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
     };
 
     const handleConfirmDeleteOnClick = async () => {
+        
         const del = await deletePhoto({ photo: deletedPhoto });
 
         if (!del.success) {
@@ -170,7 +196,7 @@ const ModelSettingPhotos: React.FC<IModelSettingPhotos> = ({ person }) => {
                                     >
                                         {/* <img src={`/uploads${photo.photo_url}`} alt="" /> */}
                                         <Image
-                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(photo.photo_url)?.split('/')[3]}`}
+                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/check_photos/${(photo.photo_url)?.split('/')[3]}`}
                                             alt=""
                                             width={300}
                                             height={500}

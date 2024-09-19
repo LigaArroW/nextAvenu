@@ -104,12 +104,24 @@ var deletePhoto = function (request, response) {
                             console.log(error);
                     });
                 }
-                if (fs.existsSync(path.join(directory, request.body.params.photo.photo_url.replace("/media/photos/", "/media/photos/thumbs/")))) {
-                    (0, fs_1.unlink)(path.join(directory, request.body.params.photo.photo_url.replace("/media/photos/", "/media/photos/thumbs/")), function (error) {
-                        if (error)
-                            console.log(error);
-                    });
-                }
+                // if (
+                //   fs.existsSync(
+                //     path.join(
+                //       directory,
+                //       (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
+                //     )
+                //   )
+                // ) {
+                //   unlink(
+                //     path.join(
+                //       directory,
+                //       (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
+                //     ),
+                //     (error) => {
+                //       if (error) console.log(error);
+                //     }
+                //   );
+                // }
                 var sqlPhotos = "SELECT * FROM photos WHERE model_id = ?;";
                 var queryPhotos = mysql.format(sqlPhotos, [request.body.params.photo.model_id]);
                 connectionPool_1.connectionPool.query(queryPhotos, function (error, data) {

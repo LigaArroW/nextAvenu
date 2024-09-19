@@ -256,6 +256,28 @@ app.get('/api/photos/:photo', (req, res) => {
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/photos');
   const files = fs.readdirSync(folderPath);
+  if(!files) {
+    res.status(404).send('Folder not found');
+  }
+
+  const photo = files.find(file => file === name);
+  if (!photo) {
+    res.status(404).send('Photo not found');
+  } else {
+    // console.log('Photo found:', photo);
+
+    res.sendFile(path.join(folderPath, photo));
+  }
+})
+app.get('/api/check_photos/:photo', (req, res) => {
+  // console.log('Photo requested:', req.params.photo);
+
+  const name = req.params.photo;
+  const folderPath = path.join(__dirname, '/uploads/media/check_photos');
+  const files = fs.readdirSync(folderPath);
+  if(!files) {
+    res.status(404).send('Folder not found');
+  }
 
   const photo = files.find(file => file === name);
   if (!photo) {

@@ -29,7 +29,7 @@ const getModelsForAll = (request, response) => {
 }
 
 const getModelsForAgency = (request, response) => {
-  console.log(request.query.profile_id, 'getModelsForAgency');
+  // console.log(request.query.profile_id, 'getModelsForAgency');
   const sql = "UPDATE models SET last_online = ? WHERE agency_id = ?; SELECT * FROM models WHERE agency_id = ? ORDER BY last_position_update DESC; SELECT * FROM contacts; SELECT * FROM model_piercings; SELECT * FROM blocked_countries; SELECT * FROM photos ORDER BY is_main DESC, type DESC, status DESC; SELECT * FROM tarifs; SELECT * FROM work_times; SELECT * FROM model_services; SELECT * FROM videos ORDER BY status DESC; SELECT * FROM model_languages; SELECT * FROM model_feedbacks ORDER BY create_date DESC; SELECT * FROM model_proposal_places;";
   const query = mysql.format(sql, [new Date(), request.query.profile_id, request.query.profile_id]);
   return getModels(response, query)

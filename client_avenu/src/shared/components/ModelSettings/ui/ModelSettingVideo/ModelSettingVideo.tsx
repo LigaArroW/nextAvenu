@@ -14,7 +14,8 @@ import { deleteVideo } from "@/lib/video/videoAction";
 import { Video } from "@/shared/assets/Video";
 import ConfirmMessageModal from "@/shared/components/Modals/ConfirmMessageModal";
 import MessageModal from "@/shared/components/Modals/MessageModal";
-import { getModelOne } from "@/lib/models/getDataModel";
+import { getModel, getModelOne } from "@/lib/models/getDataModel";
+import { IModel } from "@/types/model/model/model";
 
 interface IModelSettingVideo {
     person: Person
@@ -54,11 +55,14 @@ const ModelSettingVideo: React.FC<IModelSettingVideo> = ({ person }) => {
                     setVideoProgress(Math.round(100 * (data.loaded / data.total!)));
                 },
             });
-       
+
             if (upl.success) {
                 setVideoProgress(-1);
-                const models = await getModelOne(model.id.toString());
-                models && setModel(models)
+                // const models = await getModelOne(model.id.toString());
+                // models && setModel(models)
+                const models = await getModel({ profile_id: Number(person._id) }) as IModel[]
+                const modelAnother = models.find(m => m.id === model.id)
+                modelAnother && setModel(modelAnother)
             }
 
             if (!upl.success) {

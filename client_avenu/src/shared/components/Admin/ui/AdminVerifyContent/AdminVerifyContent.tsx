@@ -30,7 +30,7 @@ const AdminVerifyContent: React.FC<IAdminVerifyContent> = ({ data, idx, model, m
                 <div className={styles.photo_container}>
                     {/* <img src={`/uploads${data.photo_url}`} alt="" /> */}
                     <Image
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/photos/${(data.photo_url)?.split('/')[3]}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}api/check_photos/${(data.photo_url)?.split('/')[3]}`}
                         alt=""
                         width={500}
                         height={500}

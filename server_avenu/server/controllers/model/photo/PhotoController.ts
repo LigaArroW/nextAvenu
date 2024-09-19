@@ -70,24 +70,24 @@ const deletePhoto = (request, response) => {
             if (error) console.log(error);
           });
         }
-        if (
-          fs.existsSync(
-            path.join(
-              directory,
-              (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
-            )
-          )
-        ) {
-          unlink(
-            path.join(
-              directory,
-              (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
-            ),
-            (error) => {
-              if (error) console.log(error);
-            }
-          );
-        }
+        // if (
+        //   fs.existsSync(
+        //     path.join(
+        //       directory,
+        //       (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
+        //     )
+        //   )
+        // ) {
+        //   unlink(
+        //     path.join(
+        //       directory,
+        //       (request.body.params.photo.photo_url as String).replace("/media/photos/", "/media/photos/thumbs/")
+        //     ),
+        //     (error) => {
+        //       if (error) console.log(error);
+        //     }
+        //   );
+        // }
         
         const sqlPhotos = "SELECT * FROM photos WHERE model_id = ?;";
         const queryPhotos = mysql.format(sqlPhotos, [request.body.params.photo.model_id]);
