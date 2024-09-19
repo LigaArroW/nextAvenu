@@ -256,7 +256,7 @@ app.get('/api/photos/:photo', (req, res) => {
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/photos');
   const files = fs.readdirSync(folderPath);
-  if(!files) {
+  if (!files) {
     res.status(404).send('Folder not found');
   }
 
@@ -274,8 +274,11 @@ app.get('/api/check_photos/:photo', (req, res) => {
 
   const name = req.params.photo;
   const folderPath = path.join(__dirname, '/uploads/media/check_photos');
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
+  }
   const files = fs.readdirSync(folderPath);
-  if(!files) {
+  if (!files) {
     res.status(404).send('Folder not found');
   }
 
