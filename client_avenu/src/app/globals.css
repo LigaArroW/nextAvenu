@@ -451,6 +451,31 @@ button[disabled] {
 }
 
 
+.spinner {
+    position: absolute;
+    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 6px solid var(--card-color);
+    border-top-color: var(--action-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 @media (min-width: 1201px) {
     button:hover {
         background-color: var(--action-hover-color);

@@ -168,7 +168,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                     height={500}
                 />
 
-                <div>{t("model.last_position_update")}</div>
+                <div className={styles.position_update}>{t("model.last_position_update")}</div>
                 <div>{new Date(model.last_position_update).toLocaleDateString() + ' ' + new Date(model.last_position_update).toLocaleTimeString()}</div>
                 <div className={styles.part_bottom}>
                     <button

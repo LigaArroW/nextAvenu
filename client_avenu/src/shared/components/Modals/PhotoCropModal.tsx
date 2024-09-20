@@ -28,7 +28,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
   const [crop, setCrop] = useState<Crop>({ x: 0, y: 0, unit: "px", height: 80, width: 60 });
   const [imageSize, setImageSize] = useState([0, 0]);
   const [isButtonEnable, setIsButtonEnable] = useState(true);
-
+  const [isLoad, setIsLoad] = useState(false);
 
 
   const handleCloseOnClick = () => {
@@ -37,7 +37,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
   };
 
   async function handleUploadPhoto() {
-    
+    setIsLoad(true);
     setIsButtonEnable(false);
     let image = document.getElementById("cropped-image") as HTMLImageElement;
     (image as any).crossOrigin = "anonymous";
@@ -52,6 +52,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
         models && setModel(models)
         closeModal();
         setIsButtonEnable(true);
+        setIsLoad(false);
       }
     });
 
@@ -97,6 +98,7 @@ const PhotoCropModal: React.FC<IPhotoCropModalProps> = ({ filename, closeModal }
         onClick={handleCloseOnClick}
       />
       <div className={`${styles.modal_content} ${styles.photo_crop}`}>
+        {isLoad && <div className={'spinner'}></div>}
         <div className={styles.modal_close} onClick={handleCloseOnClick}>
           <CloseIcon fill="#1B1B1B" />
         </div>
