@@ -75,6 +75,7 @@ const postFormData = async ({ blacklist }: { blacklist: IBlacklist }) => {
             }
         )
     })
+    
     if (!res.ok) {
 
         throw new Error('Failed to send message');

@@ -130,7 +130,9 @@ const getCaptcha = async (request, response) => {
             const sql = "UPDATE verification SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ? and ?? = ?;";
             const query = mysql.format(sql, [
               "attempts_number",
-              (lastTryDate == newTryDate) ? (attempts - 1) : 5,
+              attempts,
+              // (lastTryDate == newTryDate) ? (attempts) : 5,
+              // (lastTryDate == newTryDate) ? (attempts - 1) : 5,
               "verification_key",
               verificationKey,
               "last_try",
@@ -210,6 +212,23 @@ const verifyCaptcha = (request, response) => {
       } else {
         const keyOriginal = data[0].verification_key;
         const keyUser = request.body.params.key
+
+
+        const lastTryDate = (new Date(data[0].last_try).toISOString()).substring(0, 13);
+        const newTryDate = (new Date().toISOString()).substring(0, 13);
+        const attempts = data[0].attempts_number;
+        const sql = "UPDATE verification SET ?? = ? WHERE ?? = ? and ?? = ?;";
+        const queryAtte = mysql.format(sql, [
+          "attempts_number",
+          // (attempts - 1),
+          (lastTryDate == newTryDate) ? (attempts - 1) : 5,
+          "agency_id",
+          request.body.params.agency_id,
+          "model_id",
+          request.body.params.model_id,
+        ]);
+
+
         if (keyOriginal == keyUser) {
           const sql = "UPDATE models SET ?? = ? WHERE id = ?";
           const query = mysql.format(sql,
@@ -225,7 +244,22 @@ const verifyCaptcha = (request, response) => {
                 message: "Ошибка при получении модели",
               });
             } else {
-              return response.status(200).json({ success: true });
+
+              connectionPool.query(queryAtte, (error) => {
+                if (error) {
+                  return response.status(200).json({
+                    success: false,
+                    message: "server.mistake_try_again",
+                    error: error,
+                  });
+                } else {
+                  return response.status(200).json({ success: true });
+                }
+              });
+
+
+
+              // return response.status(200).json({ success: true });
             }
           });
         } else {

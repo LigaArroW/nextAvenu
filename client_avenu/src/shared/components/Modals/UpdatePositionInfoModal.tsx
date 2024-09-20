@@ -36,6 +36,7 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
   const [program, setProgram] = useState(null);
   const [frameId, setFrameId] = useState(null as any);
+  const [isCapchaSuccess, setIsCapchaSuccess] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -238,9 +239,11 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
     setDecodedKey(lastKey)
 
     if (decryptData[step + 1]) {
+
       setShader(decryptData[step + 1].value);
       setStep(step + 1);
     } else {
+
       const verify = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/verify_captcha", {
         params: {
           agency_id: agency_id,
@@ -260,10 +263,9 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
       setTimeout(async () => {
         // getModels({ profile_id: -1 })
         // await getModelOne(model_id.toString())
-        
+
         // await getModels(person._id.toString())
         // await getPositionsUp({ agency_id: Number(person._id) })
-     
 
         handlerButtonClick();
       }, 1000)

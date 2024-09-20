@@ -138,14 +138,16 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
 
 
     const handleCapchaClick = async () => {
-        const { data } = await getPositionsUp({ agency_id: Number(person._id) })
-        setPositionUp(data)
-        const mod = await getModelOne(model.id.toString())
+       
+            const { data } = await getPositionsUp({ agency_id: Number(person._id) })
+            setPositionUp(data)
+            const mod = await getModelOne(model.id.toString())
 
-        if (mod) {
-            model.last_position_update = mod.last_position_update
+            if (mod) {
+                model.last_position_update = mod.last_position_update
 
-        }
+            }
+        
 
         setIsModalShow(false)
 
