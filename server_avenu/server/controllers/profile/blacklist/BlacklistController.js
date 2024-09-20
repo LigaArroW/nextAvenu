@@ -32,7 +32,7 @@ var addBlacklist = function (request, response) {
     try {
         var sql = "INSERT INTO blacklist (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?);";
         // const sql = "INSERT INTO blacklist (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?) WHERE agency_id = ?;";
-        var query_1 = mysql.format(sql, [
+        var query = mysql.format(sql, [
             "agency_id",
             "country_id",
             "city_id",
@@ -45,7 +45,7 @@ var addBlacklist = function (request, response) {
             request.body.params.description,
             // request.body.params.agency_id
         ]);
-        connectionPool_1.connectionPool.query(query_1, function (error) {
+        connectionPool_1.connectionPool.query(query, function (error) {
             if (error) {
                 console.log("🚀 ~ connectionPool.query ~ error:", error);
                 return response.status(404).json({
@@ -55,7 +55,6 @@ var addBlacklist = function (request, response) {
                 });
             }
             else {
-                console.log(query_1);
                 return response.status(200).json({ success: true });
             }
         });

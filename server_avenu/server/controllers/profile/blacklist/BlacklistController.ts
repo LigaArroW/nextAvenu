@@ -57,7 +57,7 @@ const addBlacklist = (request, response) => {
           error: error,
         });
       } else {
-        console.log(query);
+
         return response.status(200).json({ success: true });
       }
     });

@@ -52,10 +52,10 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
       window.cancelAnimationFrame(frameId);
       window.cancelAnimationFrame(frameId - 1);
       window.cancelAnimationFrame(frameId + 1);
-      console.log('DRAW')
+      // console.log('DRAW')
       drawCanvas(shader)
     }
-    console.log('changed shader, verificationStarted')
+    // console.log('changed shader, verificationStarted')
   }, [shader, verificationStarted]);
 
   useEffect(() => {
@@ -76,11 +76,11 @@ const UpdatePositionInfoModal: React.FC<IUpdatePositionInfoModalProps> = ({ agen
         token
       },
     }).then((response) => response.data);
-    console.log("get captcha")
+    // console.log("get captcha")
     if (captcha && captcha.success === true) {
       const decryptKey = await decryptString(captcha.key, token);
       const parsed = JSON.parse(decryptKey);
-      console.log("nice captcha")
+      // console.log("nice captcha")
       setDecryptData(parsed)
       setStep(0);
       setShader(parsed[0].value)

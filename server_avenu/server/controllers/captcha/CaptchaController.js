@@ -230,7 +230,7 @@ var verifyCaptcha = function (request, response) {
                 var queryAtte_1 = mysql.format(sql, [
                     "attempts_number",
                     // (attempts - 1),
-                    (lastTryDate == newTryDate) ? (attempts - 1) : 5,
+                    (attempts - 1),
                     "agency_id",
                     request.body.params.agency_id,
                     "model_id",
