@@ -182,7 +182,7 @@ const ProfileModel: React.FC<IProfileModel> = ({ model, proposals, proposalViews
                         {t("model.improve_position")}
                     </button>
                 </div>
-                <div>{t("model.update_this_hour_left") + ' ' + (model.positionsUpLeft !== undefined ? model.positionsUpLeft : 6)}</div>
+                <div className={styles.position_update}>{t("model.update_this_hour_left") + ' ' + (model.positionsUpLeft !== undefined ? model.positionsUpLeft : 6)}</div>
             </div>
             <div className={`${styles.part} ${styles.right}`}>
                 <div className={styles.main}>
