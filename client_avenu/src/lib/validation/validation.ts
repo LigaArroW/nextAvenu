@@ -53,8 +53,8 @@ export const updateProfileSchema = z.object({
 
 export const addToBlackListSchema = z.object({
     id: z.number(),
-    city: z.number().min(1, { message: "validation.message" }),
-    country: z.number().min(1, { message: "validation.message" }),
+    // city: z.number().min(1, { message: "validation.message" }),
+    // country: z.number().min(1, { message: "validation.message" }),
     description: z.string().min(1, { message: "validation.message" }),
     phone: z.string().length(18, { message: "validation.phone" }),
     agency_id: z.number().min(1, { message: "validation.message" }),
