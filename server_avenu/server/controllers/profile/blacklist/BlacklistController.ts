@@ -8,7 +8,8 @@ const mysql = require("mysql");
 const getBlacklist = (_request, response) => {
 
   try {
-    const sql = "SELECT * FROM blacklist WHERE agency_id = ?";
+    // const sql = "SELECT * FROM blacklist WHERE agency_id = ?";
+    const sql = `SELECT * FROM blacklist ${_request.query.agency_id ? 'WHERE agency_id = ?' : ''}`;
     const query = mysql.format(sql, [_request.query.agency_id]);
     connectionPool.query(query, (error, data) => {
       if (error) {

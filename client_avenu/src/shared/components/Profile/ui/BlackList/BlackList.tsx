@@ -10,7 +10,7 @@ import styles from '@/shared/styles/Profile.module.sass'
 import { Close } from "@/shared/assets/Close";
 import { IBlacklistAccess } from "@/types/profile/blacklist/blacklistAccess";
 import { getTranslations } from "next-intl/server";
-import { getBlacklist, getBlacklistAccess } from "@/lib/blackList/blackList";
+import { getAllBlacklist, getBlacklist, getBlacklistAccess } from "@/lib/blackList/blackList";
 import CloseAndConfirm from "../CloseAndConfirm/CloseAndConfirm";
 
 
@@ -23,7 +23,8 @@ const BlackList: React.FC<IBlackList> = async ({ person }) => {
     const t = await getTranslations();
     const blacklist = await getBlacklist({ agency_id: Number(person._id) })
     const blackListAccess = await getBlacklistAccess({ agency_id: Number(person._id) })
-
+    const allBlackList = await getAllBlacklist()
+    
     return (
         <div className={styles.content}>
             <div className={styles.title}>{t("profile.blacklist")}</div>
@@ -59,12 +60,12 @@ const BlackList: React.FC<IBlackList> = async ({ person }) => {
                 {blackListAccess.map((access: IBlacklistAccess) => {
                     if (
                         access.access_to === Number(person._id) &&
-                        blacklist.filter((blacklist_item: IBlacklist) => blacklist_item.agency_id === access.access_to).length > 0
+                        allBlackList.filter((blacklist_item: IBlacklist) => blacklist_item.agency_id === access.access_to).length > 0
                     ) {
                         return (
                             <div key={access.agency_id} className={`${styles.main_info} ${styles.full_width}`}>
                                 <div className={styles.agency}>
-                                    {t("profile.agency_with_id")} {String(access.agency_id).padStart(8, "0")}
+                                    {t("profile.agency_with_id")} {String(access.agency_id)}
                                 </div>
                                 <table className={'table'}>
                                     <thead>
@@ -76,7 +77,7 @@ const BlackList: React.FC<IBlackList> = async ({ person }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {blacklist
+                                        {allBlackList
                                             .filter((blacklist_item: IBlacklist) => blacklist_item.agency_id === access.agency_id)
                                             .map((blacklist_item: IBlacklist) => (
                                                 <tr key={blacklist_item.id}>

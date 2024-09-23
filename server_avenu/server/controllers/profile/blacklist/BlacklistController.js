@@ -5,7 +5,8 @@ var connectionPool_1 = require("../../../connectionPool");
 var mysql = require("mysql");
 var getBlacklist = function (_request, response) {
     try {
-        var sql = "SELECT * FROM blacklist WHERE agency_id = ?";
+        // const sql = "SELECT * FROM blacklist WHERE agency_id = ?";
+        var sql = "SELECT * FROM blacklist ".concat(_request.query.agency_id ? 'WHERE agency_id = ?' : '');
         var query = mysql.format(sql, [_request.query.agency_id]);
         connectionPool_1.connectionPool.query(query, function (error, data) {
             if (error) {

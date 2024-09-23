@@ -16,6 +16,15 @@ export async function getBlacklist({ agency_id }: { agency_id: number }) {
 
 }
 
+export async function getAllBlacklist(){
+    const responce = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/blacklist`,{
+        method: 'GET',
+        next: { tags: ['blacklist'] }
+    })
+
+    return await responce.json()
+}
+
 export async function addBlacklist({ blacklist }: { blacklist: IBlacklist }) {
 
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/add_blacklist', {
