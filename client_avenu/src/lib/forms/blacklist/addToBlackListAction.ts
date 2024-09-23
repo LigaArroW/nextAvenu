@@ -25,14 +25,14 @@ export async function addToBlackListAction(prevState: IContactUsForm, data: Form
 
         const messages = addToBlackListSchema.parse({
             id,
-            city,
-            country,
+            // city,
+            // country,
             description,
             phone,
             agency_id
         })
 
-        await postFormData({ blacklist: { id: messages.id, agency_id: messages.agency_id, country_id: messages.country, city_id: messages.city, phone_number: messages.phone, description: messages.description } })
+        await postFormData({ blacklist: { id: messages.id, agency_id: messages.agency_id, country_id: country, city_id: city, phone_number: messages.phone, description: messages.description } })
 
         return {
             success: true,
@@ -75,6 +75,7 @@ const postFormData = async ({ blacklist }: { blacklist: IBlacklist }) => {
             }
         )
     })
+    
     if (!res.ok) {
 
         throw new Error('Failed to send message');

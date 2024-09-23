@@ -32,7 +32,7 @@ const AddBlackList: React.FC<IAddBlackList> = ({ person, blacklist, cities, coun
     const [filteredCities, setFilteredCities] = useState(cities);
     const [searchedCity, setSearchedCity] = useState("");
     const [activeComponent, setActiveComponent] = useState(ComponentType.None);
-    const [isMessageModalShow, setIsMessageModalShow] = useState(false);
+    // const [isMessageModalShow, setIsMessageModalShow] = useState(false);
     const [isShowModal, setIsShowModal] = useState(false);
     const [infoMessage, setInfoMessage] = useState("");
     const [blacklistItem, setBlacklistItem] = useState<IBlacklist>({ id: 0, city_id: -1, country_id: -1, phone_number: "", description: "" } as IBlacklist);
@@ -40,19 +40,22 @@ const AddBlackList: React.FC<IAddBlackList> = ({ person, blacklist, cities, coun
         'success': false,
         'message': ''
     });
-    console.log(state);
-    
+
+
+
 
     useEffect(() => {
         if (state.success) {
             setIsShowModal(true);
-            setInfoMessage("profile.client_added_to_blacklist");
+            setInfoMessage(t("profile.client_added_to_blacklist"));
+            setBlacklistItem({ id: 0, city_id: -1, country_id: -1, phone_number: "", description: "" } as IBlacklist)
         }
-        if (!state.success) {
+        if (!state.success && state.message) {
+            console.log('state.message', state.message);
             setIsShowModal(true);
             setInfoMessage(state.message);
         }
-    }, [state.message, state.success])
+    }, [state, t])
 
 
 
@@ -212,7 +215,7 @@ const AddBlackList: React.FC<IAddBlackList> = ({ person, blacklist, cities, coun
                     />
                 </form>
             </div>
-            {isMessageModalShow && <MessageModal
+            {isShowModal && <MessageModal
                 text={infoMessage}
                 buttonText={t("global.ok")}
                 handlerButtonClick={() => setIsShowModal(false)}

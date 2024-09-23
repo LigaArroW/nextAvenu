@@ -46,7 +46,6 @@ var addBlacklist = function (request, response) {
             request.body.params.description,
             // request.body.params.agency_id
         ]);
-        console.log(query);
         connectionPool_1.connectionPool.query(query, function (error) {
             if (error) {
                 console.log("🚀 ~ connectionPool.query ~ error:", error);

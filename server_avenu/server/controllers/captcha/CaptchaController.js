@@ -135,7 +135,9 @@ var getCaptcha = function (request, response) { return __awaiter(void 0, void 0,
                                 var sql = "UPDATE verification SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ? and ?? = ?;";
                                 var query = mysql.format(sql, [
                                     "attempts_number",
-                                    (lastTryDate == newTryDate) ? (attempts - 1) : 5,
+                                    attempts,
+                                    // (lastTryDate == newTryDate) ? (attempts) : 5,
+                                    // (lastTryDate == newTryDate) ? (attempts - 1) : 5,
                                     "verification_key",
                                     verificationKey_1,
                                     "last_try",
@@ -221,9 +223,22 @@ var verifyCaptcha = function (request, response) {
             else {
                 var keyOriginal = data[0].verification_key;
                 var keyUser = request.body.params.key;
+                var lastTryDate = (new Date(data[0].last_try).toISOString()).substring(0, 13);
+                var newTryDate = (new Date().toISOString()).substring(0, 13);
+                var attempts = data[0].attempts_number;
+                var sql = "UPDATE verification SET ?? = ? WHERE ?? = ? and ?? = ?;";
+                var queryAtte_1 = mysql.format(sql, [
+                    "attempts_number",
+                    // (attempts - 1),
+                    (attempts - 1),
+                    "agency_id",
+                    request.body.params.agency_id,
+                    "model_id",
+                    request.body.params.model_id,
+                ]);
                 if (keyOriginal == keyUser) {
-                    var sql = "UPDATE models SET ?? = ? WHERE id = ?";
-                    var query = mysql.format(sql, [
+                    var sql_1 = "UPDATE models SET ?? = ? WHERE id = ?";
+                    var query = mysql.format(sql_1, [
                         'last_position_update',
                         new Date(),
                         request.body.params.model_id
@@ -236,7 +251,19 @@ var verifyCaptcha = function (request, response) {
                             });
                         }
                         else {
-                            return response.status(200).json({ success: true });
+                            connectionPool_1.connectionPool.query(queryAtte_1, function (error) {
+                                if (error) {
+                                    return response.status(200).json({
+                                        success: false,
+                                        message: "server.mistake_try_again",
+                                        error: error,
+                                    });
+                                }
+                                else {
+                                    return response.status(200).json({ success: true });
+                                }
+                            });
+                            // return response.status(200).json({ success: true });
                         }
                     });
                 }

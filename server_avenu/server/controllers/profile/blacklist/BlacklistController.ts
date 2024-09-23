@@ -47,7 +47,7 @@ const addBlacklist = (request, response) => {
       request.body.params.description,
       // request.body.params.agency_id
     ]);
-    console.log(query);
+
 
     connectionPool.query(query, (error) => {
       if (error) {
@@ -58,6 +58,7 @@ const addBlacklist = (request, response) => {
           error: error,
         });
       } else {
+
         return response.status(200).json({ success: true });
       }
     });
